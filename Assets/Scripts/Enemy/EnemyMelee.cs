@@ -27,13 +27,10 @@ public class EnemyMelee : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, player.position) < 1.2f)
         {
-            // better to implement animator right away
             transform.Translate(Vector3.back * speed * 50 * Time.deltaTime);
             return;
         }
 
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
-
-
     }
 }

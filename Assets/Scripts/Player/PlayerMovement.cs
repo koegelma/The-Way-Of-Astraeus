@@ -2,55 +2,33 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private float mouseZPos;
-    private Vector3 offset;
-    private Vector3 targetPosition;
-    private bool moveToTarget;
+    [SerializeField] private GameObject groundPlane;
+    private MeshCollider groundColl;
+    private Rigidbody rb;
+    private Vector3 position = Vector3.zero;
+    public float moveSpeed;
 
-    public float speed;
-
+    private void Start()
+    {
+        rb = gameObject.GetComponent<Rigidbody>();
+        groundColl = groundPlane.GetComponent<MeshCollider>();
+    }
     private void Update()
     {
         HndInput();
-        if (moveToTarget) MoveToTarget();
+    }
+
+    private void FixedUpdate()
+    {
+        if (groundColl.bounds.Contains(new Vector3(position.x, 0, position.z))) rb.MovePosition(position); // checks if position is within bounds of groundPlane
     }
 
     private void HndInput()
     {
-        if (Input.GetKey(KeyCode.W)) transform.Translate(Vector3.forward * Time.deltaTime * speed);
-        if (Input.GetKey(KeyCode.S)) transform.Translate(Vector3.back * Time.deltaTime * speed);
-        if (Input.GetKey(KeyCode.A)) transform.Translate(Vector3.left * Time.deltaTime * speed);
-        if (Input.GetKey(KeyCode.D)) transform.Translate(Vector3.right * Time.deltaTime * speed);
-
-        if (Input.GetMouseButton(0)) HndMouseInput();
+        Vector2 inputVec2D = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        inputVec2D = Vector2.ClampMagnitude(inputVec2D, 1); // clamps magnitude of vector to 1, so that diagonal movement isn't faster
+        Vector3 movement = new Vector3(inputVec2D.x, 0, inputVec2D.y);
+        position = rb.position + movement * moveSpeed * Time.fixedDeltaTime;
     }
 
-    private void HndMouseInput()
-    {
-        Ray ray = Camera.allCameras[0].ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit))
-        {
-            targetPosition = new Vector3(hit.point.x, transform.position.y, hit.point.z);
-            moveToTarget = true;
-        }
-    }
-
-    private void MoveToTarget()
-    {
-        if (Vector3.Distance(transform.position, targetPosition) > 0.05f)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * speed);
-            return;
-        }
-        transform.position = targetPosition;
-        moveToTarget = false;
-    }
-
-    // if player attacks
-    public void CancelMovement()
-    {
-        moveToTarget = false;
-    }
 }

@@ -1,32 +1,31 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyShooter : MonoBehaviour
 {
     [SerializeField] private GameObject projectile;
+    [SerializeField] private float projectileSpeed;
+    [SerializeField] private float projectileDamage;
     [SerializeField] private Transform firePosition;
-    [SerializeField] private float timeBetweenShots;
-    private float shootCountdown;
+    [SerializeField] private float fireRate;
+    private float fireCountdown;
     private Transform player;
 
     private void Start()
     {
         player = GameObject.Find("Player").transform;
-        shootCountdown = timeBetweenShots;
+        fireCountdown = fireRate * Random.Range(0.25f, 1);
     }
     private void Update()
     {
         LookAtPlayer();
 
-        if (shootCountdown <= 0f)
+        if (fireCountdown <= 0f && Vector3.Distance(player.position, transform.position) < 40)
         {
             Shoot();
-            shootCountdown = timeBetweenShots;
+            fireCountdown = 1 / fireRate;
             return;
         }
-        shootCountdown -= Time.deltaTime;
+        fireCountdown -= Time.deltaTime;
     }
 
     private void LookAtPlayer()
@@ -37,6 +36,8 @@ public class EnemyShooter : MonoBehaviour
 
     private void Shoot()
     {
-        Instantiate(projectile, firePosition.position, transform.rotation);
+        GameObject newProjectile = Instantiate(projectile, firePosition.position, transform.rotation);
+        newProjectile.GetComponent<Projectile>().SetToEnemyProjectile();
+        newProjectile.GetComponent<Projectile>().SetProjectileValues(projectileSpeed, projectileDamage);
     }
 }
