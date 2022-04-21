@@ -17,7 +17,7 @@ public class Projectile : MonoBehaviour
     private void Update()
     {
         Translate();
-        if (distanceTravelled > 100) Destroy(gameObject);
+        if (distanceTravelled > 500) Destroy(gameObject);
     }
 
     public void SetProjectileValues(float _speed, float _damage)
@@ -40,12 +40,12 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider collObj)
     {
-        if ((isEnemyProjectile && collObj.GetComponent<PlayerHealth>()) || (!isEnemyProjectile && collObj.GetComponent<EnemyShooter>())) Damage(collObj.gameObject);
+        if ((isEnemyProjectile && collObj.GetComponentInParent<PlayerHealth>()) || (!isEnemyProjectile && collObj.GetComponent<EnemyShooter>())) Damage(collObj.gameObject);
     }
 
     private void Damage(GameObject target)
     {
-        if (target.GetComponent<PlayerHealth>()) target.GetComponent<PlayerHealth>().SubtractHealth(damageAmount);
+        if (target.GetComponentInParent<PlayerHealth>()) target.GetComponentInParent<PlayerHealth>().SubtractHealth(damageAmount);
         if (target.GetComponent<EnemyHealth>()) target.GetComponent<EnemyHealth>().SubtractHealth(damageAmount);
         Destroy(gameObject);
     }

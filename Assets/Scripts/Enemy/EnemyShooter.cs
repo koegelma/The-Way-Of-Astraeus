@@ -12,7 +12,7 @@ public class EnemyShooter : MonoBehaviour
 
     private void Start()
     {
-        player = GameObject.Find("Player").transform;
+        player = GameObject.Find("PlayerShip").transform;
         fireCountdown = fireRate * Random.Range(0.25f, 1);
     }
     private void Update()

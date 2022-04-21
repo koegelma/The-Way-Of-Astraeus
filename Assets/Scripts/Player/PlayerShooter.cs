@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class PlayerShooter : MonoBehaviour
@@ -6,7 +5,8 @@ public class PlayerShooter : MonoBehaviour
     [SerializeField] private GameObject projectile;
     [SerializeField] private float projectileSpeed;
     [SerializeField] private float projectileDamage;
-    [SerializeField] private Transform firePosition;
+    [SerializeField] private Transform leftFirePosition;
+    [SerializeField] private Transform rightFirePosition;
     [SerializeField] private float fireRate;
     private float fireCountdown = 0;
 
@@ -24,8 +24,10 @@ public class PlayerShooter : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            GameObject newProjectile = Instantiate(projectile, firePosition.position, Quaternion.identity);
-            newProjectile.GetComponent<Projectile>().SetProjectileValues(projectileSpeed, projectileDamage);
+            GameObject leftProjectile = Instantiate(projectile, leftFirePosition.position, Quaternion.identity);
+            leftProjectile.GetComponent<Projectile>().SetProjectileValues(projectileSpeed, projectileDamage);
+            GameObject rightProjectile = Instantiate(projectile, rightFirePosition.position, Quaternion.identity);
+            rightProjectile.GetComponent<Projectile>().SetProjectileValues(projectileSpeed, projectileDamage);
             fireCountdown = 1 / fireRate;
         }
     }
