@@ -29,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
     {
         float horizAxisVal = Input.GetAxisRaw("Horizontal");
         float vertAxisVal = Input.GetAxisRaw("Vertical");
+        
         // Translation
         Vector2 inputVec2D = new Vector2(horizAxisVal, vertAxisVal);
         inputVec2D = Vector2.ClampMagnitude(inputVec2D, 1);
