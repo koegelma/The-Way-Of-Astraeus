@@ -27,28 +27,31 @@ public class PlayerMovement : MonoBehaviour
 
     private void HndInput()
     {
+        float horizAxisVal = Input.GetAxisRaw("Horizontal");
+        float vertAxisVal = Input.GetAxisRaw("Vertical");
         // Translation
-        Vector2 inputVec2D = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        inputVec2D = Vector2.ClampMagnitude(inputVec2D, 1); // clamps magnitude of vector to 1, so that diagonal movement isn't faster
+        Vector2 inputVec2D = new Vector2(horizAxisVal, vertAxisVal);
+        inputVec2D = Vector2.ClampMagnitude(inputVec2D, 1);
         Vector3 movement = new Vector3(inputVec2D.x, 0, inputVec2D.y);
         position = rb.position + movement * moveSpeed * Time.fixedDeltaTime;
 
         // Rotation
-        // TODO: sometimes buggy when switching rapidly between left/right
-        float roll = turnSpeed * Time.deltaTime * Input.GetAxisRaw("Horizontal") * -1;
-        if (roll == 0)
-        {
-            if (transform.rotation.z > -0.005f && transform.rotation.z < 0.005f)
-            {
-                transform.eulerAngles = new Vector3(0, 0, 0);
-                return;
-            }
-            float rotation = turnSpeed * Time.deltaTime * transform.rotation.z * -5;
-            transform.Rotate(0, 0, rotation);
-            return;
-        }
-        if (transform.rotation.eulerAngles.z > maxRollAngle && transform.rotation.eulerAngles.z < 360 - maxRollAngle) return;
-        transform.Rotate(0, 0, roll);
-    }
+        float rotation = transform.rotation.eulerAngles.z;
+        if (rotation > 180) rotation -= 360;
 
+        if (horizAxisVal == 0 && rotation != 0) // rotate back to 0 if idle
+        {
+            if (rotation < 0) rotation += turnSpeed * Time.deltaTime;
+            if (rotation > 0) rotation -= turnSpeed * Time.deltaTime;
+            if (rotation >= -1 && rotation <= 1) rotation = 0;
+        }
+
+        if (horizAxisVal < 0) rotation += turnSpeed * Time.deltaTime;
+        if (horizAxisVal > 0) rotation -= turnSpeed * Time.deltaTime;
+
+        if (horizAxisVal < 0 && rotation > maxRollAngle) rotation = maxRollAngle;
+        if (horizAxisVal > 0 && rotation < -maxRollAngle) rotation = -maxRollAngle;
+
+        transform.localRotation = Quaternion.Euler(0, 0, rotation);
+    }
 }

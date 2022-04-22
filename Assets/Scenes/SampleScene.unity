@@ -853,7 +853,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 191ced9846689714398ed909c5e9284a, type: 2}
+  - {fileID: 2100000, guid: aeee7071bea0a4c478b4fea5933c5f79, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1640,7 +1640,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   offset: {x: 0, y: 100, z: 25}
   player: {fileID: 5236071983523838746}
-  moveSpeed: 2
 --- !u!65 &3170533474652842679
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2088,9 +2087,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundPlane: {fileID: 1419616314}
-  turnSpeed: 150
-  maxRollAngle: 25
-  moveSpeed: 25
+  turnSpeed: 120
+  maxRollAngle: 20
+  moveSpeed: 60
 --- !u!114 &5233427633972404516
 MonoBehaviour:
   m_ObjectHideFlags: 0
