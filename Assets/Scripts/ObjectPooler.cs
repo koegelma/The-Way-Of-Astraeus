@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PoolTag { LASERPROJECTILE, MISSILEPROJECTILE, HITEXPLOSION }
+public enum PoolTag { LASERPROJECTILE, MISSILEPROJECTILE, HITEXPLOSION, SHIPEXPLOSION }
 public class ObjectPooler : MonoBehaviour
 {
     [System.Serializable]
@@ -25,6 +25,7 @@ public class ObjectPooler : MonoBehaviour
         poolDictionary = new Dictionary<string, Queue<GameObject>>();
 
         AllocateObjectPool(PoolTag.HITEXPLOSION.ToString(), PoolTag.HITEXPLOSION, 30);
+        AllocateObjectPool(PoolTag.SHIPEXPLOSION.ToString(), PoolTag.SHIPEXPLOSION, 10);
     }
 
     public void AllocateObjectPool(string _tag, PoolTag _poolTag, int _size)
@@ -52,7 +53,16 @@ public class ObjectPooler : MonoBehaviour
 
     public void DeallocateObjectPool(string _tag)
     {
-
+        if (!poolDictionary.ContainsKey(_tag))
+        {
+            Debug.LogError("Pool with tag " + _tag + "doesn't exist.");
+            return;
+        }
+        foreach (GameObject obj in poolDictionary[_tag])
+        {
+            Destroy(obj);
+        }
+        poolDictionary.Remove(_tag);
     }
 
     public GameObject SpawnFromPool(string _tag, Vector3 _position, Quaternion _rotation)

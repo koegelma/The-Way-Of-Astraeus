@@ -9,19 +9,17 @@ public class EnemyShooter : MonoBehaviour
     [SerializeField] private ParticleSystem shootingParticle;
     [SerializeField] private float fireRate;
     private float fireCountdown;
-    private Transform player;
+    //private Transform player;
 
     private void Start()
     {
-        player = GameObject.Find("PlayerShip").transform;
-        fireCountdown = fireRate * Random.Range(5, 10);
+        //player = GameObject.Find("PlayerShip").transform;
+        fireCountdown = fireRate * Random.Range(2, 4);
     }
     private void Update()
     {
-        //LookAtPlayer();
-
-
-        if (fireCountdown <= 0f && Vector3.Distance(player.position, transform.position) < 70)
+        if (fireCountdown <= 0f)
+        //&& Vector3.Distance(player.position, transform.position) < 70)
         {
             Shoot();
             fireCountdown = 1 / fireRate;
@@ -30,15 +28,9 @@ public class EnemyShooter : MonoBehaviour
         fireCountdown -= Time.deltaTime;
     }
 
-    private void LookAtPlayer()
-    {
-        transform.LookAt(player);
-        transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-    }
-
     private void Shoot()
     {
-        GameObject newProjectile = Instantiate(projectile, firePosition.position, transform.rotation);
+        GameObject newProjectile = Instantiate(projectile, firePosition.position, transform.rotation); // TODO: get from obj pool
         newProjectile.GetComponent<Projectile>().SetToEnemyProjectile();
         newProjectile.GetComponent<Projectile>().SetProjectileValues(projectileSpeed, projectileDamage);
         shootingParticle.Play();

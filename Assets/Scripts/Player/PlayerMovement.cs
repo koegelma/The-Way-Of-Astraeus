@@ -3,13 +3,12 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private GameObject groundPlane;
     [SerializeField] private float turnSpeed;
     [SerializeField] private float maxRollAngle;
     private float barrelRollAngle;
     private float barrelRollDirection;
     private bool isBarrelRolling;
-    private MeshCollider groundColl;
+    private MeshCollider boundsColl;
     private Rigidbody rb;
     private Vector3 position = Vector3.zero;
     public float moveSpeed;
@@ -17,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
-        groundColl = groundPlane.GetComponent<MeshCollider>();
+        boundsColl = Bounds.bounds.GetComponent<MeshCollider>();
     }
     private void Update()
     {
@@ -26,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (groundColl.bounds.Contains(new Vector3(position.x, groundColl.transform.position.y, position.z))) rb.MovePosition(position); // checks if position is within bounds (x,z) of groundPlane
+        if (boundsColl.bounds.Contains(new Vector3(position.x, boundsColl.transform.position.y, position.z))) rb.MovePosition(position); // checks if position is within bounds (x,z) of groundPlane
     }
 
     private void HndInput()
