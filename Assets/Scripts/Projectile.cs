@@ -1,26 +1,22 @@
+using System.Collections;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    [SerializeField] private GameObject explosion;
+    [SerializeField] private float lifeTimeSeconds;
     private float speed;
     private float damageAmount;
-    private float distanceTravelled;
-    private Vector3 lastPosition;
     private bool isEnemyProjectile;
-    private bool hasHit;
-
-    private void Start()
+   
+    private void OnEnable()
     {
-        distanceTravelled = 0;
-        lastPosition = transform.position;
+        StartCoroutine(DisableGameObject(lifeTimeSeconds));
     }
+
 
     private void Update()
     {
-        if (hasHit) return;
         Translate();
-        if (distanceTravelled > 500) Destroy(gameObject);
     }
 
     public void SetProjectileValues(float _speed, float _damage)
@@ -37,26 +33,25 @@ public class Projectile : MonoBehaviour
     private void Translate()
     {
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
-        distanceTravelled += Vector3.Distance(transform.position, lastPosition);
-        lastPosition = transform.position;
     }
 
-    private void OnTriggerEnter(Collider collObj)
+    private void OnTriggerEnter(Collider _collObj)
     {
-        if ((isEnemyProjectile && collObj.GetComponentInParent<PlayerHealth>()) || (!isEnemyProjectile && collObj.GetComponentInParent<EnemyHealth>())) Damage(collObj.gameObject);
+        if ((isEnemyProjectile && _collObj.GetComponentInParent<PlayerHealth>()) || (!isEnemyProjectile && _collObj.GetComponentInParent<EnemyHealth>())) Damage(_collObj.gameObject);
     }
 
-    private void Damage(GameObject target)
+    private void Damage(GameObject _target)
     {
-        hasHit = true;
-        GameObject explosionEffect = Instantiate(explosion, transform.position, Quaternion.identity);
-        Destroy(explosionEffect, 2f);
-        MeshRenderer renderer = GetComponent<MeshRenderer>();
-        renderer.enabled = false;
+        ObjectPooler.instance.SpawnFromPool(PoolTag.HITEXPLOSION.ToString(), transform.position, Quaternion.identity);
 
-        if (target.GetComponentInParent<PlayerHealth>()) target.GetComponentInParent<PlayerHealth>().SubtractHealth(damageAmount);
-        if (target.GetComponentInParent<EnemyHealth>()) target.GetComponentInParent<EnemyHealth>().SubtractHealth(damageAmount);
+        if (_target.GetComponentInParent<PlayerHealth>()) _target.GetComponentInParent<PlayerHealth>().SubtractHealth(damageAmount);
+        if (_target.GetComponentInParent<EnemyHealth>()) _target.GetComponentInParent<EnemyHealth>().SubtractHealth(damageAmount);
+        gameObject.SetActive(false);
+    }
 
-        Destroy(gameObject, 2f);
+    private IEnumerator DisableGameObject(float _seconds)
+    {
+        yield return new WaitForSeconds(_seconds);
+        gameObject.SetActive(false);
     }
 }

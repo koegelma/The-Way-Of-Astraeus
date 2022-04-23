@@ -13,15 +13,15 @@ public class PlayerHealth : MonoBehaviour
     public float GetHealth() { return health; }
     public float GetStartHealth() { return startHealth; }
 
-    public void AddHealth(float amount)
+    public void AddHealth(float _amount)
     {
-        if (health + amount <= startHealth) health += amount;
+        if (health + _amount <= startHealth) health += _amount;
         else health = startHealth;
     }
 
-    public void SubtractHealth(float amount)
+    public void SubtractHealth(float _amount)
     {
-        if (health - amount >= 0) health -= amount;
+        if (health - _amount >= 0) health -= _amount;
         else health = 0;
     }
 }

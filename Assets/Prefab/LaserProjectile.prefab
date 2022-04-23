@@ -109,3 +109,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosion: {fileID: 8818273213262690481, guid: 98c092af227f40d4493c529c9fc3224b, type: 3}
+  lifeTimeSeconds: 4

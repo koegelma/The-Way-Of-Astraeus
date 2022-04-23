@@ -15,9 +15,9 @@ public class EnemyHealth : MonoBehaviour
         if (health <= 0) Destroy(gameObject);
     }
 
-    public void SubtractHealth(float amount)
+    public void SubtractHealth(float _amount)
     {
-        if (health - amount >= 0) health -= amount;
+        if (health - _amount >= 0) health -= _amount;
         else health = 0;
         Debug.Log(gameObject.name + " health = " + health);
     }
