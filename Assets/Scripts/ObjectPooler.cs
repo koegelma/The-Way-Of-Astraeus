@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PoolTag { LASERPROJECTILE, MISSILEPROJECTILE, HITEXPLOSION, SHIPEXPLOSION }
+public enum PoolTag { LASERPROJECTILE, MISSILEPROJECTILE, SMALLHITEXPLOSION, LARGEHITEXPLOSION, SHIPEXPLOSION }
 public class ObjectPooler : MonoBehaviour
 {
     [System.Serializable]
@@ -23,8 +23,8 @@ public class ObjectPooler : MonoBehaviour
     private void Start()
     {
         poolDictionary = new Dictionary<string, Queue<GameObject>>();
-
-        AllocateObjectPool(PoolTag.HITEXPLOSION.ToString(), PoolTag.HITEXPLOSION, 30);
+        AllocateObjectPool(PoolTag.SMALLHITEXPLOSION.ToString(), PoolTag.SMALLHITEXPLOSION, 30);
+        AllocateObjectPool(PoolTag.LARGEHITEXPLOSION.ToString(), PoolTag.LARGEHITEXPLOSION, 15);
         AllocateObjectPool(PoolTag.SHIPEXPLOSION.ToString(), PoolTag.SHIPEXPLOSION, 10);
     }
 

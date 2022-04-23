@@ -11,4 +11,9 @@ public class Powerup : MonoBehaviour
             powerupEffect.Apply(collObj.gameObject);
         }
     }
+
+    private void Update()
+    {
+        transform.position += Vector3.back * 20 * Time.deltaTime;
+    }
 }

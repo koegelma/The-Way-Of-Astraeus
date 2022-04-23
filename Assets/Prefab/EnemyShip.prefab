@@ -204,6 +204,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startHealth: 50
+  smallHealthChance: 0.15
+  smallHealthBuff: {fileID: 1313511603319146065, guid: d30b55f3cc6ed4547a12db5d6a89fb87, type: 3}
 --- !u!114 &805032080796172243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,7 +220,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectile: {fileID: 2682579628323612856, guid: 396dd0189fd5b974a9e8cc64ea407510, type: 3}
   projectileSpeed: 50
-  projectileDamage: 10
+  projectileDamage: 25
   firePosition: {fileID: 4147726485629749182}
   shootingParticle: {fileID: 4147726484632019747}
   fireRate: 1

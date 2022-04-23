@@ -7,7 +7,8 @@ public class Projectile : MonoBehaviour
     private float speed;
     private float damageAmount;
     private bool isEnemyProjectile;
-   
+    private PoolTag hitExplosion;
+
     private void OnEnable()
     {
         StartCoroutine(DisableGameObject(lifeTimeSeconds));
@@ -23,6 +24,9 @@ public class Projectile : MonoBehaviour
     {
         speed = _speed;
         damageAmount = _damage;
+
+        if (damageAmount >= 20) hitExplosion = PoolTag.LARGEHITEXPLOSION;
+        else hitExplosion = PoolTag.SMALLHITEXPLOSION;
     }
 
     public void SetToEnemyProjectile()
@@ -42,7 +46,7 @@ public class Projectile : MonoBehaviour
 
     private void Damage(GameObject _target)
     {
-        ObjectPooler.instance.SpawnFromPool(PoolTag.HITEXPLOSION.ToString(), transform.position, Quaternion.identity);
+        ObjectPooler.instance.SpawnFromPool(hitExplosion.ToString(), transform.position, Quaternion.identity);
 
         if (_target.GetComponentInParent<PlayerHealth>()) _target.GetComponentInParent<PlayerHealth>().SubtractHealth(damageAmount);
         if (_target.GetComponentInParent<EnemyHealth>()) _target.GetComponentInParent<EnemyHealth>().SubtractHealth(damageAmount);

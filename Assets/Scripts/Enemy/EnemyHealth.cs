@@ -5,6 +5,8 @@ public class EnemyHealth : MonoBehaviour
 {
     [SerializeField] private float startHealth;
     private float health;
+    [SerializeField] private float smallHealthChance; // 0 - 1.0
+    [SerializeField] private GameObject smallHealthBuff;
 
     private void Start()
     {
@@ -25,7 +27,14 @@ public class EnemyHealth : MonoBehaviour
 
     private void Die()
     {
+        if (IsLucky(smallHealthChance)) Instantiate(smallHealthBuff, transform.position, Quaternion.identity);
         ObjectPooler.instance.SpawnFromPool(PoolTag.SHIPEXPLOSION.ToString(), transform.position, Quaternion.identity);
         Destroy(gameObject);
+    }
+
+    private bool IsLucky(float chance)
+    {
+        if (Random.value <= chance) return true;
+        return false;
     }
 }

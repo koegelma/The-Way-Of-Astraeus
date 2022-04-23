@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -7,20 +8,25 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float maxRollAngle;
     private float barrelRollAngle;
     private float barrelRollDirection;
+    [SerializeField] private float barrelCooldownTime;
+    [SerializeField] private Image circularCooldown;
+    private float barrelCooldown = 0;
     private bool isBarrelRolling;
     private MeshCollider boundsColl;
     private Rigidbody rb;
-    private Vector3 position = Vector3.zero;
+    private Vector3 position;
     public float moveSpeed;
 
     private void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
         boundsColl = Bounds.bounds.GetComponent<MeshCollider>();
+        position = transform.position;
     }
     private void Update()
     {
         HndInput();
+        UpdateCooldownUI();
     }
 
     private void FixedUpdate()
@@ -33,12 +39,20 @@ public class PlayerMovement : MonoBehaviour
         float horizAxisVal = Input.GetAxisRaw("Horizontal");
         float vertAxisVal = Input.GetAxisRaw("Vertical");
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && horizAxisVal != 0) // implement cooldown timer
+        if (barrelCooldown <= 0)
         {
-            isBarrelRolling = true;
-            barrelRollAngle = 0;
-            barrelRollDirection = horizAxisVal;
+            if (Input.GetKeyDown(KeyCode.LeftShift) && horizAxisVal != 0) // implement cooldown timer
+            {
+                isBarrelRolling = true;
+                barrelRollAngle = 0;
+                barrelRollDirection = horizAxisVal;
+                barrelCooldown = barrelCooldownTime;
+            }
+
         }
+        barrelCooldown -= Time.deltaTime;
+
+
 
         if (isBarrelRolling)
         {
@@ -92,6 +106,12 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 movement = new Vector3(barrelRollDirection, 0, 0);
         position = rb.position + movement * (barrelRollSpeed / 8) * Time.fixedDeltaTime;
+    }
+
+    private void UpdateCooldownUI()
+    {
+        if (barrelCooldown <= 0) circularCooldown.fillAmount = 0;
+        if (barrelCooldown > 0) circularCooldown.fillAmount = barrelCooldown / barrelCooldownTime;
     }
 
 }
