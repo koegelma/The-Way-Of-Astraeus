@@ -8,6 +8,12 @@ public class Projectile : MonoBehaviour
     private float damageAmount;
     private bool isEnemyProjectile;
     private PoolTag hitExplosion;
+    private ObjectPooler objectPooler;
+
+    private void Start()
+    {
+        objectPooler = ObjectPooler.instance;
+    }
 
     private void OnEnable()
     {
@@ -46,10 +52,21 @@ public class Projectile : MonoBehaviour
 
     private void Damage(GameObject _target)
     {
-        ObjectPooler.instance.SpawnFromPool(hitExplosion.ToString(), transform.position, Quaternion.identity);
+        objectPooler.SpawnFromPool(hitExplosion.ToString(), transform.position, Quaternion.identity);
+        GameObject damageUIGameObject = objectPooler.SpawnFromPool(PoolTag.DAMAGEUI.ToString(), transform.position, Quaternion.identity);
+        DamageUI damageUI = damageUIGameObject.GetComponent<DamageUI>();
+        damageUI.SetDamageAmount(damageAmount);
 
-        if (_target.GetComponentInParent<PlayerHealth>()) _target.GetComponentInParent<PlayerHealth>().SubtractHealth(damageAmount);
-        if (_target.GetComponentInParent<EnemyHealth>()) _target.GetComponentInParent<EnemyHealth>().SubtractHealth(damageAmount);
+        if (_target.GetComponentInParent<PlayerHealth>())
+        {
+            _target.GetComponentInParent<PlayerHealth>().SubtractHealth(damageAmount);
+            damageUI.SetColor(Color.red);
+        }
+        if (_target.GetComponentInParent<EnemyHealth>())
+        {
+            _target.GetComponentInParent<EnemyHealth>().SubtractHealth(damageAmount);
+            damageUI.SetColor(Color.yellow);
+        }
         gameObject.SetActive(false);
     }
 

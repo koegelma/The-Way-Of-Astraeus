@@ -17,6 +17,7 @@ public class PlayerShooter : MonoBehaviour
     {
         objectPooler = ObjectPooler.instance;
         objectPooler.AllocateObjectPool(gameObject.name, projectile, Mathf.RoundToInt(fireRate * 5));
+        objectPooler.AllocateObjectPool(PoolTag.DAMAGEUI.ToString(), PoolTag.DAMAGEUI, Mathf.RoundToInt(fireRate * 5));
     }
 
     private void Update()

@@ -5139,6 +5139,8 @@ MonoBehaviour:
     prefab: {fileID: 8818273213262690481, guid: f82cd12bdd13f5549bf3583b442b6527, type: 3}
   - poolTag: 4
     prefab: {fileID: 8032339053882938850, guid: 564bd19438ab0574296fbaee8eee57ea, type: 3}
+  - poolTag: 5
+    prefab: {fileID: 7345704943292113848, guid: f965ee51af3ca624cb4f74948418e8fd, type: 3}
 --- !u!4 &430320357
 Transform:
   m_ObjectHideFlags: 0
@@ -20236,6 +20238,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerHealth: {fileID: 5233427633972404516}
   healthBar: {fileID: 1623629484}
+  background: {fileID: 492380867}
 --- !u!114 &862908119
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PoolTag { LASERPROJECTILE, MISSILEPROJECTILE, SMALLHITEXPLOSION, LARGEHITEXPLOSION, SHIPEXPLOSION }
+public enum PoolTag { LASERPROJECTILE, MISSILEPROJECTILE, SMALLHITEXPLOSION, LARGEHITEXPLOSION, SHIPEXPLOSION, DAMAGEUI }
 public class ObjectPooler : MonoBehaviour
 {
     [System.Serializable]
