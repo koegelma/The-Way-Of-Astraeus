@@ -18,14 +18,41 @@ public class ObjectPooler : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        poolDictionary = new Dictionary<string, Queue<GameObject>>();
     }
 
     private void Start()
     {
-        poolDictionary = new Dictionary<string, Queue<GameObject>>();
         AllocateObjectPool(PoolTag.SMALLHITEXPLOSION.ToString(), PoolTag.SMALLHITEXPLOSION, 30);
         AllocateObjectPool(PoolTag.LARGEHITEXPLOSION.ToString(), PoolTag.LARGEHITEXPLOSION, 15);
         AllocateObjectPool(PoolTag.SHIPEXPLOSION.ToString(), PoolTag.SHIPEXPLOSION, 10);
+    }
+
+    public void CreatePool(string _tag, GameObject _gameObject, int _size)
+    {
+        Queue<GameObject> objectPool = new Queue<GameObject>();
+        for (int i = 0; i < _size; i++)
+        {
+            GameObject obj = Instantiate(_gameObject);
+            obj.SetActive(false);
+            objectPool.Enqueue(obj);
+        }
+        poolDictionary.Add(_tag, objectPool);
+    }
+
+    public void CreatePoolFromArray(string _tag, GameObject[] _gameObjects, int _size)
+    {
+        Queue<GameObject> objectPool = new Queue<GameObject>();
+        for (int i = 0; i < _gameObjects.Length; i++)
+        {
+            for (int s = 0; s < _size; s++)
+            {
+                GameObject obj = Instantiate(_gameObjects[i]);
+                obj.SetActive(false);
+                objectPool.Enqueue(obj);
+            }
+        }
+        poolDictionary.Add(_tag, objectPool);
     }
 
     public void AllocateObjectPool(string _tag, PoolTag _poolTag, int _size)

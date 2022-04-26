@@ -10,15 +10,24 @@ public class DamageUI : MonoBehaviour
 
     private void OnEnable()
     {
-        StartCoroutine(DisableGameObject(1));
+        //StartCoroutine(DisableGameObject(1));
         scaleFactor = 1;
         transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
+    }
+
+    private void OnDisable()
+    {
+        damageAmount.text = null;
     }
 
     private void Update()
     {
         scaleFactor -= Time.deltaTime;
-        if (scaleFactor < 0) scaleFactor = 0;
+        if (scaleFactor < 0)
+        {
+            scaleFactor = 0;
+            gameObject.SetActive(false);
+        }
         transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
     }
 
@@ -32,10 +41,10 @@ public class DamageUI : MonoBehaviour
         damageAmount.color = _color;
     }
 
-    private IEnumerator DisableGameObject(float _seconds)
-    {
-        yield return new WaitForSeconds(_seconds);
-        damageAmount.text = null;
-        gameObject.SetActive(false);
-    }
+    /*  private IEnumerator DisableGameObject(float _seconds)
+     {
+         yield return new WaitForSeconds(_seconds);
+         damageAmount.text = null;
+         gameObject.SetActive(false);
+     } */
 }
