@@ -1,13 +1,20 @@
+using System;
 using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private float startHealth;
+    [SerializeField] private ParticleSystem addHealthEffect;
     private float health;
 
     private void Start()
     {
         health = startHealth;
+    }
+
+    private void Update()
+    {
+        if (health <= 0) Die();
     }
 
     public float GetHealth() { return health; }
@@ -17,6 +24,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if (health + _amount <= startHealth) health += _amount;
         else health = startHealth;
+        addHealthEffect.Play();
     }
 
     public void SubtractHealth(float _amount)
@@ -24,4 +32,11 @@ public class PlayerHealth : MonoBehaviour
         if (health - _amount >= 0) health -= _amount;
         else health = 0;
     }
+
+    private void Die()
+    {
+        ObjectPooler.instance.SpawnFromPool(PoolTag.SHIPEXPLOSION.ToString(), transform.position, Quaternion.identity);
+        gameObject.SetActive(false);
+    }
+
 }

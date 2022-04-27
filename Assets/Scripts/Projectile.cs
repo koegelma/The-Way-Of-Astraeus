@@ -66,6 +66,7 @@ public class Projectile : MonoBehaviour
         {
             _target.GetComponentInParent<EnemyHealth>().SubtractHealth(damageAmount);
             damageUI.SetColor(Color.yellow);
+            GameManager.instance.AddTotalDamage(damageAmount);
         }
         gameObject.SetActive(false);
     }

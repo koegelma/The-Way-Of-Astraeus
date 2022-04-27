@@ -7,10 +7,14 @@ public class HealthBar : MonoBehaviour
     [SerializeField] private PlayerHealth playerHealth;
     [SerializeField] private Image healthBar;
     [SerializeField] private Image background;
+    [SerializeField] private Text currentLife;
+    [SerializeField] private Text maxLife;
     private bool healthBarEnabled;
+    private Animator animator;
 
     private void Start()
     {
+        animator = GetComponent<Animator>();
         StartCoroutine(DisableHealthBar(0));
     }
 
@@ -24,6 +28,8 @@ public class HealthBar : MonoBehaviour
         else if (!healthBarEnabled) EnableHealthbar();
 
         healthBar.fillAmount = playerHealth.GetHealth() / playerHealth.GetStartHealth();
+        currentLife.text = playerHealth.GetHealth().ToString() + " ";
+        maxLife.text = "| " + playerHealth.GetStartHealth().ToString();
     }
 
     private void EnableHealthbar()
@@ -31,14 +37,23 @@ public class HealthBar : MonoBehaviour
         healthBarEnabled = true;
         healthBar.enabled = true;
         background.enabled = true;
+        currentLife.enabled = true;
+        maxLife.enabled = true;
+        animator.SetTrigger("TrFadeIn");
     }
 
     private IEnumerator DisableHealthBar(float _seconds)
     {
         healthBarEnabled = false;
         healthBar.fillAmount = playerHealth.GetHealth() / playerHealth.GetStartHealth();
+        currentLife.text = playerHealth.GetHealth().ToString() + " ";
+        maxLife.text = "| " + playerHealth.GetStartHealth().ToString();
+        animator.SetTrigger("TrFadeOut");
         yield return new WaitForSeconds(_seconds);
         healthBar.enabled = false;
         background.enabled = false;
+        currentLife.enabled = false;
+        maxLife.enabled = false;
+
     }
 }

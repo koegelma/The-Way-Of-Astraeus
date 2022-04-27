@@ -15,6 +15,7 @@ public class EnemyHealth : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.instance.gameEnded) gameObject.SetActive(false);
         if (health <= 0) Die();
     }
 

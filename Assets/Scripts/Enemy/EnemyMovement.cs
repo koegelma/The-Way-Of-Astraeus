@@ -14,7 +14,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void Start()
     {
-        target = EnemyWaypoints.waypoints[0];
+        target = EnemyWaypoints.waypoints[Random.Range(0, EnemyWaypoints.waypoints.Length)];
         boundsColl = Bounds.bounds.GetComponent<MeshCollider>();
     }
 

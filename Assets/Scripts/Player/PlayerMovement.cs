@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Update()
     {
+        if (Time.timeScale == 0) return;
         HndInput();
         UpdateCooldownUI();
     }
