@@ -30,6 +30,7 @@ public class EnemyHealth : MonoBehaviour
     {
         if (IsLucky(smallHealthChance)) Instantiate(smallHealthBuff, transform.position, Quaternion.identity);
         ObjectPooler.instance.SpawnFromPool(PoolTag.SHIPEXPLOSION.ToString(), transform.position, Quaternion.identity);
+        EnemySpawner.enemiesToDie--;
         Destroy(gameObject);
     }
 

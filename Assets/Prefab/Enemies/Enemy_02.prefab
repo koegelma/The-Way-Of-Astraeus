@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 805032080796172243}
   - component: {fileID: 3846821825053763552}
   m_Layer: 0
-  m_Name: EnemyShip
+  m_Name: Enemy_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -153,7 +153,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 020568ce6bb9b3245a24630d5282ca24, type: 2}
+  - {fileID: 2100000, guid: ec39a84ad2f7de748af283edd7ffa3c1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -203,8 +203,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c40b92aa8a61334e8888678345b6be5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startHealth: 50
-  smallHealthChance: 0.15
+  startHealth: 75
+  smallHealthChance: 0.1
   smallHealthBuff: {fileID: 1313511603319146065, guid: d30b55f3cc6ed4547a12db5d6a89fb87, type: 3}
 --- !u!114 &805032080796172243
 MonoBehaviour:
@@ -223,7 +223,7 @@ MonoBehaviour:
   projectileDamage: 25
   firePosition: {fileID: 4147726485629749182}
   shootingParticle: {fileID: 4147726484632019747}
-  fireRate: 1
+  fireRate: 1.5
 --- !u!114 &3846821825053763552
 MonoBehaviour:
   m_ObjectHideFlags: 0
