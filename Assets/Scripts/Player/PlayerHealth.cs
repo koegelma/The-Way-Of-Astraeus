@@ -6,6 +6,8 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private float startHealth;
     [SerializeField] private ParticleSystem addHealthEffect;
     private float health;
+    public float StartHealth { get { return startHealth; } }
+    public float Health { get { return health; } }
 
     private void Start()
     {
@@ -16,9 +18,6 @@ public class PlayerHealth : MonoBehaviour
     {
         if (health <= 0) Die();
     }
-
-    public float GetHealth() { return health; }
-    public float GetStartHealth() { return startHealth; }
 
     public void AddHealth(float _amount)
     {

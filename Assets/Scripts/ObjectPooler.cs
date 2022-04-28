@@ -78,18 +78,25 @@ public class ObjectPooler : MonoBehaviour
         poolDictionary.Add(_tag, objectPool);
     }
 
-    public void DeallocateObjectPool(string _tag)
+    public void DelayDeallocatingObjectPool(string _tag, float _secondsToWait)
     {
+        StartCoroutine(DeallocateObjectPool(_tag, _secondsToWait));
+    }
+
+    public IEnumerator DeallocateObjectPool(string _tag, float _secondsToWait)
+    {
+        yield return new WaitForSeconds(_secondsToWait);
         if (!poolDictionary.ContainsKey(_tag))
         {
             Debug.LogError("Pool with tag " + _tag + "doesn't exist.");
-            return;
+            yield return null;
         }
         foreach (GameObject obj in poolDictionary[_tag])
         {
             Destroy(obj);
         }
         poolDictionary.Remove(_tag);
+        //Debug.Log("Object pool " + _tag + " deallocated");
     }
 
     public GameObject SpawnFromPool(string _tag, Vector3 _position, Quaternion _rotation)

@@ -38,6 +38,7 @@ public class Projectile : MonoBehaviour
     public void SetToEnemyProjectile()
     {
         isEnemyProjectile = true;
+        transform.localRotation = Quaternion.Euler(0, 180, 0);
     }
 
     private void Translate()
@@ -47,15 +48,31 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider _collObj)
     {
-        if ((isEnemyProjectile && _collObj.GetComponentInParent<PlayerHealth>()) || (!isEnemyProjectile && _collObj.GetComponentInParent<EnemyHealth>())) Damage(_collObj.gameObject);
+        if (!isEnemyProjectile && _collObj.GetComponentInParent<Shield>())
+        {
+            if (_collObj.GetComponentInParent<Shield>().ShieldActive)
+            {
+                Damage(_collObj.gameObject, true);
+                return;
+            }
+        }
+        if ((isEnemyProjectile && _collObj.GetComponentInParent<PlayerHealth>()) || (!isEnemyProjectile && _collObj.GetComponentInParent<EnemyHealth>())) Damage(_collObj.gameObject, false);
     }
 
-    private void Damage(GameObject _target)
+    private void Damage(GameObject _target, bool shield)
     {
         objectPooler.SpawnFromPool(hitExplosion.ToString(), transform.position, Quaternion.identity);
         GameObject damageUIGameObject = objectPooler.SpawnFromPool(PoolTag.DAMAGEUI.ToString(), transform.position, Quaternion.identity);
         DamageUI damageUI = damageUIGameObject.GetComponent<DamageUI>();
         damageUI.SetDamageAmount(damageAmount);
+
+        if (shield)
+        {
+            _target.GetComponentInParent<Shield>().SubtractHealth(damageAmount);
+            damageUI.SetColor(Color.cyan);
+            gameObject.SetActive(false);
+            return;
+        }
 
         if (_target.GetComponentInParent<PlayerHealth>())
         {

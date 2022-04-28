@@ -17,7 +17,7 @@ public class PlayerShooter : MonoBehaviour
     private void Start()
     {
         objectPooler = ObjectPooler.instance;
-        projectilePool = gameObject.name + PoolTag.LASERPROJECTILE.ToString();
+        projectilePool = gameObject.name + projectile;
 
         objectPooler.AllocateObjectPool(projectilePool, projectile, Mathf.RoundToInt(fireRate * 5)); // adjust when multiple locations implemented, or fireRate changes over time
         objectPooler.AllocateObjectPool(PoolTag.DAMAGEUI.ToString(), PoolTag.DAMAGEUI, Mathf.RoundToInt(fireRate * 5)); // properly adjust to include possible hits from enemies
@@ -35,7 +35,7 @@ public class PlayerShooter : MonoBehaviour
 
     private void HndInput()
     {
-        if (Input.GetKey(KeyCode.Space) || Input.GetMouseButton(0))
+        if (Input.GetKey(KeyCode.Space)) //|| Input.GetMouseButton(0))
         {
             //GameObject leftProjectile = Instantiate(projectile, leftFirePosition.position, Quaternion.identity);
             GameObject leftProjectile = objectPooler.SpawnFromPool(projectilePool, leftFirePosition.position, Quaternion.identity);

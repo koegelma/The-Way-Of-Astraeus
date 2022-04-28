@@ -8,8 +8,7 @@ public class GameOver : MonoBehaviour
 
     private void OnEnable()
     {
-        totalDamage.text = Mathf.RoundToInt(GameManager.instance.GetTotalDamage()).ToString("#,#");
-        //Time.timeScale = 0;
+        totalDamage.text = Mathf.RoundToInt(GameManager.instance.TotalDamage).ToString("#,#");
     }
 
     public void Continue()

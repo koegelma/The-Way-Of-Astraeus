@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
@@ -23,7 +22,6 @@ public class EnemyHealth : MonoBehaviour
     {
         if (health - _amount >= 0) health -= _amount;
         else health = 0;
-        //Debug.Log(gameObject.name + " health = " + health);
     }
 
     private void Die()
@@ -34,9 +32,9 @@ public class EnemyHealth : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private bool IsLucky(float chance)
+    private bool IsLucky(float _chance)
     {
-        if (Random.value <= chance) return true;
+        if (Random.value <= _chance) return true;
         return false;
     }
 }

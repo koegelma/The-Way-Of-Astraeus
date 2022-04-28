@@ -5,11 +5,12 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance;
-    private float totalDamage;
-    public bool gameEnded;
     [SerializeField] private PlayerHealth playerHealth;
     [SerializeField] private GameObject gameOverUI;
+    private float totalDamage;
+    public float TotalDamage { get { return totalDamage; } }
+    public static GameManager instance;
+    public bool gameEnded;
 
     private void Awake()
     {
@@ -23,7 +24,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (playerHealth.GetHealth() <= 0) StartCoroutine(EndGame());
+        if (playerHealth.Health <= 0) StartCoroutine(EndGame());
     }
 
     private IEnumerator EndGame()
@@ -31,11 +32,6 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1);
         gameEnded = true;
         gameOverUI.SetActive(true);
-    }
-
-    public float GetTotalDamage()
-    {
-        return totalDamage;
     }
 
     public void AddTotalDamage(float _damage)

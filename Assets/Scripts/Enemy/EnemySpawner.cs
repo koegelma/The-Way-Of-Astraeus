@@ -6,14 +6,20 @@ public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private GameObject stageClearedUI;
     [SerializeField] private Wave[] waves;
-    [SerializeField] private Transform[] spawnpoints;
+    private Transform[] spawnpoints;
     private int waveIndex = 0;
     private int[] enemiesToSpawn;
+    private float countdown;
+    private int Spawnpoint { get { return Random.Range(0, spawnpoints.Length); } }
     public static int enemiesToDie;
-    private float countdown = 3;
 
     private void Start()
     {
+        spawnpoints = new Transform[transform.childCount];
+        for (int i = 0; i < spawnpoints.Length; i++)
+        {
+            spawnpoints[i] = transform.GetChild(i);
+        }
         SpawnWave();
     }
 
@@ -27,7 +33,6 @@ public class EnemySpawner : MonoBehaviour
                 waveIndex++;
                 if (waveIndex == waves.Length)
                 {
-                    Debug.Log("Level won!");
                     StopAllCoroutines();
                     stageClearedUI.SetActive(true);
                     this.enabled = false;
@@ -35,6 +40,7 @@ public class EnemySpawner : MonoBehaviour
                 }
                 SpawnWave();
             }
+            //Display: Next Wave in ...
             countdown -= Time.deltaTime;
         }
     }
@@ -42,9 +48,7 @@ public class EnemySpawner : MonoBehaviour
     private void SpawnWave()
     {
         Wave wave = waves[waveIndex];
-
         countdown = waves[waveIndex].timeBetweenNextWave;
-
         enemiesToSpawn = new int[waves[waveIndex].enemies.Length];
         enemiesToDie = 0;
 
@@ -60,7 +64,9 @@ public class EnemySpawner : MonoBehaviour
     {
         Enemy enemy = waves[waveIndex].enemies[_enemiesIndex];
 
-        Instantiate(enemy.enemyPrefab, spawnpoints[Spawnpoint()].position, transform.rotation);
+        if (enemiesToSpawn[_enemiesIndex] == enemy.count) yield return new WaitForSeconds(enemy.timeBetweenFirstSpawn);
+
+        Instantiate(enemy.enemyPrefab, spawnpoints[Spawnpoint].position, transform.rotation);
         enemiesToSpawn[_enemiesIndex]--;
 
         if (enemiesToSpawn[_enemiesIndex] > 0)
@@ -68,10 +74,5 @@ public class EnemySpawner : MonoBehaviour
             yield return new WaitForSeconds(enemy.timeBetweenSpawns);
             StartCoroutine(SpawnEnemies(_enemiesIndex));
         }
-    }
-
-    private int Spawnpoint()
-    {
-        return Random.Range(0, spawnpoints.Length);
     }
 }
