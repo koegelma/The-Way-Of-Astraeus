@@ -1,21 +1,45 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private GameObject ui;
+    [SerializeField] private GameObject optionsUI;
+    [SerializeField] private GameObject exitRunUI;
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)) Toggle();
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            TogglePauseMenu();
+            if (optionsUI.activeSelf) ToggleOptions();
+            if (exitRunUI.activeSelf) ToggleExitRun();
+        }
     }
 
-    public void Toggle()
+    public void TogglePauseMenu()
     {
         ui.SetActive(!ui.activeSelf);
         if (ui.activeSelf) Time.timeScale = 0;
         else Time.timeScale = 1;
+    }
+
+    public void ToggleOptions()
+    {
+        optionsUI.SetActive(!optionsUI.activeSelf);
+        if (optionsUI.activeSelf) ui.SetActive(false);
+        else ui.SetActive(true);
+    }
+
+    public void ToggleExitRun()
+    {
+        exitRunUI.SetActive(!exitRunUI.activeSelf);
+    }
+
+    public void ConfirmExitRun()
+    {
+        // GO TO MENU
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

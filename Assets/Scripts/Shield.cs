@@ -72,7 +72,7 @@ public class Shield : MonoBehaviour
 
     public void SubtractHealth(float _amount)
     {
-        if (health - _amount >= 0) health -= _amount;
+        if (health - _amount > 0) health -= _amount;
         else
         {
             health = 0;

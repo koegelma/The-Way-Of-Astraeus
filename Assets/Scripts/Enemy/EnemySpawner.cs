@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private GameObject stageClearedUI;
+    [SerializeField] private Text waveCountdown;
     [SerializeField] private Wave[] waves;
     private Transform[] spawnpoints;
     private int waveIndex = 0;
@@ -31,6 +33,7 @@ public class EnemySpawner : MonoBehaviour
             if (countdown <= 0)
             {
                 waveIndex++;
+                waveCountdown.text = null;
                 if (waveIndex == waves.Length)
                 {
                     StopAllCoroutines();
@@ -39,8 +42,9 @@ public class EnemySpawner : MonoBehaviour
                     return;
                 }
                 SpawnWave();
+                return;
             }
-            //Display: Next Wave in ...
+            waveCountdown.text = Mathf.Round(countdown) + "...";
             countdown -= Time.deltaTime;
         }
     }

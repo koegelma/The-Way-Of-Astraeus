@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float barrelCooldownTime;
     [SerializeField] private Image circularCooldown;
     private float barrelCooldown = 0;
-    private bool isBarrelRolling;
+    private bool barrelRoll;
     private MeshCollider boundsColl;
     private Rigidbody rb;
     private Vector3 position;
@@ -42,9 +42,9 @@ public class PlayerMovement : MonoBehaviour
 
         if (barrelCooldown <= 0)
         {
-            if (Input.GetKeyDown(KeyCode.LeftShift) && horizAxisVal != 0) // implement cooldown timer
+            if (Input.GetKeyDown(KeyCode.LeftShift) && horizAxisVal != 0)
             {
-                isBarrelRolling = true;
+                barrelRoll = true;
                 barrelRollAngle = 0;
                 barrelRollDirection = horizAxisVal;
                 barrelCooldown = barrelCooldownTime;
@@ -53,9 +53,7 @@ public class PlayerMovement : MonoBehaviour
         }
         barrelCooldown -= Time.deltaTime;
 
-
-
-        if (isBarrelRolling)
+        if (barrelRoll)
         {
             BarrelRoll();
             return;
@@ -103,7 +101,7 @@ public class PlayerMovement : MonoBehaviour
         transform.localRotation = Quaternion.Euler(0, 0, rotation);
 
         barrelRollAngle += barrelRollSpeed * Time.deltaTime;
-        if (barrelRollAngle >= 360) isBarrelRolling = false;
+        if (barrelRollAngle >= 360) barrelRoll = false;
 
         Vector3 movement = new Vector3(barrelRollDirection, 0, 0);
         position = rb.position + movement * (barrelRollSpeed / 8) * Time.fixedDeltaTime;

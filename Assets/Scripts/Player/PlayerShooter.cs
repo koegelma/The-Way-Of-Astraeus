@@ -11,6 +11,7 @@ public class PlayerShooter : MonoBehaviour
     [SerializeField] private ParticleSystem rightShootingParticle;
     [SerializeField] private float fireRate;
     private float fireCountdown = 0;
+    private bool autoShoot = false;
     private ObjectPooler objectPooler;
     private string projectilePool;
 
@@ -25,6 +26,7 @@ public class PlayerShooter : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.B)) ToggleAutoShoot();
         if (fireCountdown <= 0)
         {
             HndInput();
@@ -35,7 +37,7 @@ public class PlayerShooter : MonoBehaviour
 
     private void HndInput()
     {
-        if (Input.GetKey(KeyCode.Space)) //|| Input.GetMouseButton(0))
+        if (Input.GetKey(KeyCode.Space) || autoShoot) //|| Input.GetMouseButton(0))
         {
             //GameObject leftProjectile = Instantiate(projectile, leftFirePosition.position, Quaternion.identity);
             GameObject leftProjectile = objectPooler.SpawnFromPool(projectilePool, leftFirePosition.position, Quaternion.identity);
@@ -47,5 +49,10 @@ public class PlayerShooter : MonoBehaviour
             rightShootingParticle.Play();
             fireCountdown = 1 / fireRate;
         }
+    }
+
+    private void ToggleAutoShoot()
+    {
+        autoShoot = !autoShoot;
     }
 }

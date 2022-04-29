@@ -25,7 +25,11 @@ public class HealthBar : MonoBehaviour
             if (healthBarEnabled) StartCoroutine(DisableHealthBar(3));
             return;
         }
-        else if (!healthBarEnabled) EnableHealthbar();
+        else if (!healthBarEnabled)
+        {
+            StopAllCoroutines();
+            EnableHealthbar();
+        }
 
         healthBar.fillAmount = playerHealth.Health / playerHealth.StartHealth;
         currentLife.text = playerHealth.Health.ToString() + " ";
@@ -54,6 +58,5 @@ public class HealthBar : MonoBehaviour
         background.enabled = false;
         currentLife.enabled = false;
         maxLife.enabled = false;
-
     }
 }

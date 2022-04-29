@@ -13,13 +13,13 @@ public class EnemyShooter : MonoBehaviour
     private float fireCountdown;
     private ObjectPooler objectPooler;
     private string projectilePool;
-    private string m_ID = Guid.NewGuid().ToString();
+    private string myID = Guid.NewGuid().ToString();
 
     private void Start()
     {
-        fireCountdown = 1 * UnityEngine.Random.Range(2, 4) / fireRate;
+        fireCountdown = UnityEngine.Random.Range(2, 4) / fireRate;
         objectPooler = ObjectPooler.instance;
-        projectilePool = m_ID + projectile.ToString();
+        projectilePool = myID + projectile.ToString();
         objectPooler.AllocateObjectPool(projectilePool, projectile, Mathf.RoundToInt(fireRate * 6));
     }
     private void Update()
@@ -43,6 +43,6 @@ public class EnemyShooter : MonoBehaviour
 
     private void OnDestroy()
     {
-        objectPooler.DelayDeallocatingObjectPool(projectilePool, 3);
+        if (objectPooler != null) objectPooler.DelayDeallocatingObjectPool(projectilePool, 2); // if objectPooler gets destroyed before enemy
     }
 }

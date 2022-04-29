@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
+        Time.timeScale = 1;
         gameEnded = false;
         totalDamage = 0;
     }
