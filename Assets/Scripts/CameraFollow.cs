@@ -14,7 +14,6 @@ public class CameraFollow : MonoBehaviour
     private void Start()
     {
         playerMovement = player.GetComponent<PlayerMovement>();
-        boundsColl = CameraBounds.bounds.GetComponent<MeshCollider>();
         InvokeRepeating("GetPlayerMoveSpeed", 0, 1); // maybe change to start of location, if it's not possible to change speed during location
         newSpeed = moveSpeed / 10;
     }
@@ -23,17 +22,6 @@ public class CameraFollow : MonoBehaviour
     {
         float currSpeed = moveSpeed;
         Vector3 targetPosition = player.position + offset;
-        /* if (!boundsColl.bounds.Contains(new Vector3(targetPosition.x, boundsColl.transform.position.y, targetPosition.z)))
-        {
-            t += 0.1f;
-            currSpeed = Mathf.Lerp(currSpeed, newSpeed, t);
-            //currMoveSpeed /= 5;
-        }
-        else
-        {
-            t = 0;
-            currSpeed = moveSpeed;
-        } */
         transform.position = Vector3.Lerp(transform.position, targetPosition, currSpeed * Time.deltaTime);
     }
 

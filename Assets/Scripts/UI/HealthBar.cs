@@ -20,7 +20,7 @@ public class HealthBar : MonoBehaviour
 
     private void Update()
     {
-        if (playerHealth.Health >= playerHealth.StartHealth)
+        if (playerHealth.Health >= playerHealth.MaxHealth)
         {
             if (healthBarEnabled) StartCoroutine(DisableHealthBar(3));
             return;
@@ -31,9 +31,9 @@ public class HealthBar : MonoBehaviour
             EnableHealthbar();
         }
 
-        healthBar.fillAmount = playerHealth.Health / playerHealth.StartHealth;
+        healthBar.fillAmount = playerHealth.Health / playerHealth.MaxHealth;
         currentLife.text = playerHealth.Health.ToString() + " ";
-        maxLife.text = "| " + playerHealth.StartHealth.ToString();
+        maxLife.text = "| " + playerHealth.MaxHealth.ToString();
     }
 
     private void EnableHealthbar()
@@ -49,9 +49,9 @@ public class HealthBar : MonoBehaviour
     private IEnumerator DisableHealthBar(float _seconds)
     {
         healthBarEnabled = false;
-        healthBar.fillAmount = playerHealth.Health / playerHealth.StartHealth;
+        healthBar.fillAmount = playerHealth.Health / playerHealth.MaxHealth;
         currentLife.text = playerHealth.Health.ToString() + " ";
-        maxLife.text = "| " + playerHealth.StartHealth.ToString();
+        maxLife.text = "| " + playerHealth.MaxHealth.ToString();
         animator.SetTrigger("TrFadeOut");
         yield return new WaitForSeconds(_seconds);
         healthBar.enabled = false;

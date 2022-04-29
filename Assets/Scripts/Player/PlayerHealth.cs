@@ -1,17 +1,17 @@
 using System;
 using UnityEngine;
 
-public class PlayerHealth : MonoBehaviour
+public class PlayerHealth : MonoBehaviour, ISaveable
 {
-    [SerializeField] private float startHealth;
+    [SerializeField] private float maxHealth;
     [SerializeField] private ParticleSystem addHealthEffect;
     private float health;
-    public float StartHealth { get { return startHealth; } }
+    public float MaxHealth { get { return maxHealth; } }
     public float Health { get { return health; } }
 
     private void Start()
     {
-        health = startHealth;
+        health = maxHealth;
     }
 
     private void Update()
@@ -21,8 +21,8 @@ public class PlayerHealth : MonoBehaviour
 
     public void AddHealth(float _amount)
     {
-        if (health + _amount <= startHealth) health += _amount;
-        else health = startHealth;
+        if (health + _amount <= maxHealth) health += _amount;
+        else health = maxHealth;
         addHealthEffect.Play();
     }
 
@@ -36,6 +36,28 @@ public class PlayerHealth : MonoBehaviour
     {
         ObjectPooler.instance.SpawnFromPool(PoolTag.SHIPEXPLOSION.ToString(), transform.position, Quaternion.identity);
         gameObject.SetActive(false);
+    }
+
+    // SAVE LOAD SYSTEM
+
+    public object SaveState()
+    {
+        return new SaveData()
+        {
+            maxHealth = this.maxHealth
+        };
+    }
+
+    public void LoadState(object state)
+    {
+        var saveData = (SaveData)state;
+        maxHealth = saveData.maxHealth;
+    }
+
+    [Serializable]
+    private struct SaveData
+    {
+        public float maxHealth;
     }
 
 }
