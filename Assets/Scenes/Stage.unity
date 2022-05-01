@@ -11942,13 +11942,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   backgroundPrefab: {fileID: 7271270527723512385, guid: 00b562ffb352866409493f5ef45bd945, type: 3}
-  spritePrefabs:
+  isMenu: 0
+  blueSpritePrefabs:
   - {fileID: 21300000, guid: a1d69ece93c905d4cb621bbbfb8879b1, type: 3}
   - {fileID: 21300000, guid: 09dac41bd6c04b841a51810f736aa278, type: 3}
   - {fileID: 21300000, guid: ce8890fae29ed5948b391d0836131534, type: 3}
   - {fileID: 21300000, guid: c3fcc820fc0b0254e942cc161481be13, type: 3}
   - {fileID: 21300000, guid: 748e8a6130de3174aa191d84fef47416, type: 3}
   - {fileID: 21300000, guid: 4508864cc47488a4a81e71ffeed955e2, type: 3}
+  greenSpritePrefabs:
+  - {fileID: 21300000, guid: a3c3d1e19847dd14fb522e3f6243c5e1, type: 3}
+  - {fileID: 21300000, guid: b5f967acd8b3f064ab87209799553375, type: 3}
+  - {fileID: 21300000, guid: 7c1d3be0f9aa5d34892414378fa33455, type: 3}
+  - {fileID: 21300000, guid: 0f9711e809d80a643a92dfcc845cea43, type: 3}
+  - {fileID: 21300000, guid: 4d89b91639e3d7c40947474ab8b8cb22, type: 3}
+  - {fileID: 21300000, guid: 2293900bc9134f64c96dcf09b548e267, type: 3}
+  purpleSpritePrefabs:
+  - {fileID: 21300000, guid: 19d3d92f6b976ff47a86ecb6dfd834a1, type: 3}
+  - {fileID: 21300000, guid: 2f6dbd3007ff5a444a8cb02340b13fe4, type: 3}
+  - {fileID: 21300000, guid: aee1909c152b92e47adc54cca588c386, type: 3}
+  - {fileID: 21300000, guid: adbe6e2f7ba3f3f4bba887a9928cf65d, type: 3}
+  - {fileID: 21300000, guid: 2e9cafb087a745f43b4ab98276779aaf, type: 3}
+  - {fileID: 21300000, guid: 4e90a5a1236088c4080901f3ddccd47c, type: 3}
+  - {fileID: 21300000, guid: c2ffb70d234622e4a990281cc4107876, type: 3}
+  starFieldSpritePrefabs:
+  - {fileID: 21300000, guid: cdbc66cad42d2684bba58fac3683516a, type: 3}
+  - {fileID: 21300000, guid: 00a3f5f8d6f474d4db951a088cd3330d, type: 3}
+  - {fileID: 21300000, guid: 583dc2c45055ea143811f602624ef222, type: 3}
+  - {fileID: 21300000, guid: 84ce8b4dc05f2754899bce69083effe7, type: 3}
+  - {fileID: 21300000, guid: 5f9e2dd617ea10c43aa5d5a487b5e790, type: 3}
 --- !u!4 &306441764
 Transform:
   m_ObjectHideFlags: 0

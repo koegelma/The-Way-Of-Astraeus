@@ -3,20 +3,32 @@ using UnityEngine;
 public class BackgroundManager : MonoBehaviour
 {
     [SerializeField] private GameObject backgroundPrefab;
-    [SerializeField] private Sprite[] spritePrefabs;
+    [SerializeField] private bool isMenu;
+    [SerializeField] private Sprite[] blueSpritePrefabs;
+    [SerializeField] private Sprite[] greenSpritePrefabs;
+    [SerializeField] private Sprite[] purpleSpritePrefabs;
+    [SerializeField] private Sprite[] starFieldSpritePrefabs;
     private GameObject[] backgrounds;
     private GameObject con;
     private int index;
 
     private void Start()
     {
-        con = new GameObject("Backgrounds"); //
+        con = new GameObject("Backgrounds");
 
         backgrounds = new GameObject[3];
         index = backgrounds.Length - 1;
         Vector3 pos = transform.position;
 
+        Sprite[] spritePrefabs = starFieldSpritePrefabs;
+
         int spriteIndex = Random.Range(0, spritePrefabs.Length);
+
+        if (isMenu)
+        {
+            spritePrefabs = starFieldSpritePrefabs;
+            spriteIndex = 0;
+        }
 
         for (int i = 0; i < 3; i++)
         {
@@ -29,23 +41,23 @@ public class BackgroundManager : MonoBehaviour
             }
 
             pos.z -= 205;
-            backgrounds[i].transform.SetParent(con.transform); //
+            backgrounds[i].transform.SetParent(con.transform);
         }
     }
 
     private void Update()
     {
-        con.transform.position += Vector3.back * 20 * Time.deltaTime; //
+        con.transform.position += Vector3.back * 20 * Time.deltaTime;
 
         if (backgrounds[index].transform.position.z <= -307.5f)
         {
-            Vector3 newPosition = backgrounds[GetTopBackground()].GetComponent<Background>().dockingPoint.position;
+            Vector3 newPosition = backgrounds[GetTopIndex()].GetComponent<Background>().dockingPoint.position;
             backgrounds[index].transform.position = newPosition;
             index = GetNextIndex();
         }
     }
 
-    private int GetTopBackground()
+    private int GetTopIndex()
     {
         int topBackGround = index + 1;
         if (topBackGround >= backgrounds.Length) topBackGround = 0;
