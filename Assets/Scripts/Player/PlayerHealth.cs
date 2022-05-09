@@ -39,7 +39,6 @@ public class PlayerHealth : MonoBehaviour, ISaveable
     }
 
     // SAVE LOAD SYSTEM
-
     public object SaveState()
     {
         return new SaveData()

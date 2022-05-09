@@ -9,7 +9,6 @@ public class GameOver : MonoBehaviour
 
     private void OnEnable()
     {
-        //totalDamage.text = Mathf.RoundToInt(GameManager.instance.TotalDamage).ToString("#,#");
         damageDisp = 0;
     }
 
@@ -22,6 +21,8 @@ public class GameOver : MonoBehaviour
 
     public void Continue()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //saveLoadSystem.Save();
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene("0_Menu"); // go to perma talent tree, or menu and invest talents there?
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class BackgroundManager : MonoBehaviour
@@ -11,18 +12,24 @@ public class BackgroundManager : MonoBehaviour
     private GameObject[] backgrounds;
     private GameObject con;
     private int index;
+    //private bool hasSaveData;
 
     private void Start()
     {
+        /* con = new GameObject("Backgrounds");
+        if (!isMenu)
+        {
+            //Debug.Log("loaded");
+            return;
+        } */
         con = new GameObject("Backgrounds");
-
         backgrounds = new GameObject[3];
         index = backgrounds.Length - 1;
         Vector3 pos = transform.position;
 
         Sprite[] spritePrefabs = starFieldSpritePrefabs;
 
-        int spriteIndex = Random.Range(0, spritePrefabs.Length);
+        int spriteIndex = UnityEngine.Random.Range(0, spritePrefabs.Length);
 
         if (isMenu)
         {
@@ -70,4 +77,34 @@ public class BackgroundManager : MonoBehaviour
         if (nextIndex < 0) nextIndex = backgrounds.Length - 1;
         return nextIndex;
     }
+
+/* 
+    // SAVE LOAD SYSTEM
+    public object SaveState()
+    {
+        return new SaveData()
+        {
+            con = this.con,
+            backgrounds = this.backgrounds,
+            index = this.index
+        };
+    }
+
+    public void LoadState(object state)
+    {
+        var saveData = (SaveData)state;
+        con = saveData.con;
+        backgrounds = saveData.backgrounds;
+        index = saveData.index;
+
+        if (saveData.con != null) hasSaveData = true;
+    }
+
+    [Serializable]
+    private struct SaveData
+    {
+        public GameObject con;
+        public GameObject[] backgrounds;
+        public int index;
+    } */
 }

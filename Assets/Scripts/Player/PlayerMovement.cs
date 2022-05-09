@@ -60,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         HndTranslation(new Vector2(horizAxisVal, vertAxisVal));
-        HndRotation(horizAxisVal);
+        HndRotation(horizAxisVal); 
     }
 
     private void HndTranslation(Vector2 _direction)

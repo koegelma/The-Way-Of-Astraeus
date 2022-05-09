@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private PlayerHealth playerHealth;
     [SerializeField] private GameObject gameOverUI;
+    [SerializeField] private SaveLoadSystem saveLoadSystem;
     private float totalDamage;
     public float TotalDamage { get { return totalDamage; } }
     public static GameManager instance;
@@ -15,6 +16,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        saveLoadSystem.Load();
     }
     private void Start()
     {

@@ -15,7 +15,11 @@ public class HealthBar : MonoBehaviour
     private void Start()
     {
         animator = GetComponent<Animator>();
-        StartCoroutine(DisableHealthBar(0));
+        //StartCoroutine(DisableHealthBar(0));
+        healthBar.enabled = false;
+        background.enabled = false;
+        currentLife.enabled = false;
+        maxLife.enabled = false;
     }
 
     private void Update()

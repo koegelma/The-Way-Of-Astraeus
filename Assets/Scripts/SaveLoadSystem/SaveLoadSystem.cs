@@ -5,17 +5,19 @@ using UnityEngine;
 
 public class SaveLoadSystem : MonoBehaviour
 {
+    public bool hasSaved = false;
     public string SavePath => $"{Application.persistentDataPath}/save.txt";
 
-    [ContextMenu("Save")] // call on application exit
-    void Save()
+    //[ContextMenu("Save")] // call on application exit
+    public void Save()
     {
         var state = LoadFile();
         SaveState(state);
         SaveFile(state);
+        hasSaved = true;
     }
-    [ContextMenu("Load")] // call on application start
-    void Load()
+    //[ContextMenu("Load")] // call on application start
+    public void Load()
     {
         var state = LoadFile();
         LoadState(state);

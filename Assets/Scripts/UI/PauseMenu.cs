@@ -39,7 +39,6 @@ public class PauseMenu : MonoBehaviour
 
     public void ConfirmExitRun()
     {
-        // GO TO MENU
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene("0_Menu");
     }
 }
