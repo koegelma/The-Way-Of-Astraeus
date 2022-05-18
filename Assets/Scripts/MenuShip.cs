@@ -17,7 +17,7 @@ public class MenuShip : MonoBehaviour
     {
         rb = gameObject.GetComponent<Rigidbody>();
         rollDirection = -1;
-        targetPosition = new Vector3(0, 0, -15);
+        targetPosition = new Vector3(0, 0, -20);
     }
 
     private void Update()
@@ -50,9 +50,8 @@ public class MenuShip : MonoBehaviour
             transform.position = targetPosition;
             return;
         }
-        //transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime);
         Vector3 direction = targetPosition - transform.position;
-        transform.Translate(direction * 4 * Time.deltaTime);//Vector3.Translate(transform.position, targetPosition, Time.deltaTime);
+        transform.Translate(direction * 4 * Time.deltaTime);
     }
 
     private void BarrelRoll()

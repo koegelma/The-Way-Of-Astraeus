@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     [SerializeField] private GameObject ui;
+    [SerializeField] private GameObject newRunUI;
     //[SerializeField] private GameObject talentsUI;
     [SerializeField] private GameObject optionsUI;
     [SerializeField] private MenuShip menuShip;
@@ -17,8 +18,16 @@ public class MainMenu : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
+    public void ToggleNewRunUI()
+    {
+        newRunUI.SetActive(!newRunUI.activeSelf);
+        if (newRunUI.activeSelf) ui.SetActive(false);
+        else ui.SetActive(true);
+    }
+
     public void NewRun()
     {
+        // check if weapon system picked
         saveLoadSystem.Save();
         StartCoroutine(StartNewRun());
     }
