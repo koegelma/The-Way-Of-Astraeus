@@ -17,6 +17,9 @@ public class PlayerShooter : MonoBehaviour
 
     private void Start()
     {
+        if (PlayerUpgrades.instance.isBallistic) projectile = PoolTag.BULLETPROJECTILE;
+        else projectile = PoolTag.LASERPROJECTILE;
+
         objectPooler = ObjectPooler.instance;
         projectilePool = gameObject.name + projectile;
 
