@@ -31,7 +31,7 @@ public class Projectile : MonoBehaviour
         speed = _speed;
         damageAmount = _damage;
 
-        if (damageAmount >= 20) hitExplosion = PoolTag.LARGEHITEXPLOSION;
+        if (damageAmount >= 20) hitExplosion = PoolTag.LARGEHITEXPLOSION; //change to check if primary or secondary
         else hitExplosion = PoolTag.SMALLHITEXPLOSION;
     }
 

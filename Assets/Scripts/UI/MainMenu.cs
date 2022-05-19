@@ -32,7 +32,6 @@ public class MainMenu : MonoBehaviour
             newRunUI.transform.GetChild(0).gameObject.SetActive(true);
             return;
         }
-        // check if weapon system picked
         saveLoadSystem.Save();
         StartCoroutine(StartNewRun());
     }

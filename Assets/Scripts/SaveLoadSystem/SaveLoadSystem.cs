@@ -8,7 +8,7 @@ public class SaveLoadSystem : MonoBehaviour
     public bool hasSaved = false;
     public string SavePath => $"{Application.persistentDataPath}/save.txt";
 
-    //[ContextMenu("Save")] // call on application exit
+    //[ContextMenu("Save")] // call on scene change / application exit
     public void Save()
     {
         var state = LoadFile();
@@ -16,7 +16,7 @@ public class SaveLoadSystem : MonoBehaviour
         SaveFile(state);
         hasSaved = true;
     }
-    //[ContextMenu("Load")] // call on application start
+    //[ContextMenu("Load")] // call on scene change / application start
     public void Load()
     {
         var state = LoadFile();

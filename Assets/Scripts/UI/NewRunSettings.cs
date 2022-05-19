@@ -16,7 +16,6 @@ public class NewRunSettings : MonoBehaviour
     {
         weaponSysChoosen = true;
         if (transform.GetChild(0).gameObject.activeSelf) transform.GetChild(0).gameObject.SetActive(false);
-        Debug.Log("Ballistic Choosen.");
         PlayerUpgrades.instance.isBallistic = true;
     }
 
@@ -24,7 +23,6 @@ public class NewRunSettings : MonoBehaviour
     {
         weaponSysChoosen = true;
         if (transform.GetChild(0).gameObject.activeSelf) transform.GetChild(0).gameObject.SetActive(false);
-        Debug.Log("Energy Choosen.");
         PlayerUpgrades.instance.isBallistic = false;
     }
 
