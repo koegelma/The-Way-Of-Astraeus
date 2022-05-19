@@ -5,6 +5,8 @@ public class PlayerUpgrades : MonoBehaviour, ISaveable
 {
     private bool hasShield;
     public bool HasShield { get { return hasShield; } }
+    private bool hasArmor;
+    public bool HasArmor { get { return hasArmor; } }
 
     public object SaveState()
     {

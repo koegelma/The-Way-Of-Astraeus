@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,6 +21,7 @@ public class EnemySpawner : MonoBehaviour
         {
             spawnpoints[i] = transform.GetChild(i);
         }
+        GenerateEnemies();
         SpawnWave();
     }
 
@@ -78,5 +78,34 @@ public class EnemySpawner : MonoBehaviour
             yield return new WaitForSeconds(enemy.timeBetweenSpawns);
             StartCoroutine(SpawnEnemies(_enemiesIndex));
         }
+    }
+
+    private void GenerateEnemies()
+    {
+        foreach (Wave wave in waves)
+        {
+            int currentDiff = 0;
+            foreach (Enemy enemy in wave.enemies)
+            {
+                currentDiff += enemy.difficulty * enemy.count;
+            }
+
+            while (wave.difficulty > currentDiff)
+            {
+                int newEnemy = GetRandomEnemy(wave, wave.difficulty - currentDiff);
+                currentDiff += wave.enemies[newEnemy].difficulty;
+                wave.enemies[newEnemy].count++;
+            }
+        }
+    }
+
+    private int GetRandomEnemy(Wave _wave, int _outstandingDiff)
+    {
+        int validEnemies = 0;
+        foreach (Enemy enemy in _wave.enemies)
+        {
+            if (enemy.difficulty <= _outstandingDiff) validEnemies++;
+        }
+        return Random.Range(0, validEnemies);
     }
 }

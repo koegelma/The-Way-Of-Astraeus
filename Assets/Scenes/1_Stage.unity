@@ -6686,7 +6686,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.3843137, g: 0.6165598, b: 0.9607843, a: 1}
+      maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -12686,6 +12686,8 @@ MonoBehaviour:
     prefab: {fileID: 7345704943292113848, guid: f965ee51af3ca624cb4f74948418e8fd, type: 3}
   - poolTag: 1
     prefab: {fileID: 2682579628323612856, guid: 396dd0189fd5b974a9e8cc64ea407510, type: 3}
+  - poolTag: 6
+    prefab: {fileID: 399035228022880402, guid: 45056fe69dec6404a861c0ad9bc151a0, type: 3}
 --- !u!4 &430320357
 Transform:
   m_ObjectHideFlags: 0
@@ -13225,7 +13227,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.3843137, g: 0.6165598, b: 0.9607843, a: 1}
+      maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -35098,9 +35100,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 40, y: -40}
-  m_SizeDelta: {x: 50, y: 50}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -59.410004}
+  m_SizeDelta: {x: 96.05951, y: 59.4075}
+  m_Pivot: {x: 0, y: 0}
 --- !u!114 &1013592401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35934,10 +35936,10 @@ RectTransform:
   m_Father: {fileID: 1013592400}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000014305, y: 0.00000027184}
-  m_SizeDelta: {x: 50, y: 50}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1274059646
 MonoBehaviour:
@@ -47771,45 +47773,73 @@ MonoBehaviour:
   waves:
   - enemies:
     - enemyPrefab: {fileID: 805032080796172240, guid: e6de440af422628408611b2583d40367, type: 3}
-      count: 10
-      timeBetweenFirstSpawn: 0
-      timeBetweenSpawns: 5
+      count: 5
+      difficulty: 1
+      timeBetweenFirstSpawn: 2
+      timeBetweenSpawns: 4
+    difficulty: 5
     timeBetweenNextWave: 3
   - enemies:
     - enemyPrefab: {fileID: 805032080796172240, guid: e6de440af422628408611b2583d40367, type: 3}
-      count: 10
-      timeBetweenFirstSpawn: 0
-      timeBetweenSpawns: 5
-    - enemyPrefab: {fileID: 805032080796172240, guid: 2eb546b48d36761448fa52002a1f6630, type: 3}
-      count: 5
-      timeBetweenFirstSpawn: 3
-      timeBetweenSpawns: 6
-    timeBetweenNextWave: 3
-  - enemies:
-    - enemyPrefab: {fileID: 805032080796172240, guid: 2eb546b48d36761448fa52002a1f6630, type: 3}
-      count: 15
-      timeBetweenFirstSpawn: 0
-      timeBetweenSpawns: 5
-    timeBetweenNextWave: 3
-  - enemies:
-    - enemyPrefab: {fileID: 805032080796172240, guid: b9c197c820cd6814d8fadb7ab571cf44, type: 3}
       count: 2
-      timeBetweenFirstSpawn: 0
-      timeBetweenSpawns: 8
-    timeBetweenNextWave: 3
-  - enemies:
-    - enemyPrefab: {fileID: 805032080796172240, guid: e6de440af422628408611b2583d40367, type: 3}
-      count: 5
-      timeBetweenFirstSpawn: 0
-      timeBetweenSpawns: 3
+      difficulty: 1
+      timeBetweenFirstSpawn: 2
+      timeBetweenSpawns: 4
     - enemyPrefab: {fileID: 805032080796172240, guid: 2eb546b48d36761448fa52002a1f6630, type: 3}
-      count: 5
+      count: 2
+      difficulty: 2
       timeBetweenFirstSpawn: 5
+      timeBetweenSpawns: 4
+    difficulty: 10
+    timeBetweenNextWave: 3
+  - enemies:
+    - enemyPrefab: {fileID: 805032080796172240, guid: e6de440af422628408611b2583d40367, type: 3}
+      count: 2
+      difficulty: 1
+      timeBetweenFirstSpawn: 2
+      timeBetweenSpawns: 4
+    - enemyPrefab: {fileID: 805032080796172240, guid: 2eb546b48d36761448fa52002a1f6630, type: 3}
+      count: 2
+      difficulty: 2
+      timeBetweenFirstSpawn: 5
+      timeBetweenSpawns: 4
+    difficulty: 15
+    timeBetweenNextWave: 3
+  - enemies:
+    - enemyPrefab: {fileID: 805032080796172240, guid: e6de440af422628408611b2583d40367, type: 3}
+      count: 2
+      difficulty: 1
+      timeBetweenFirstSpawn: 2
+      timeBetweenSpawns: 4
+    - enemyPrefab: {fileID: 805032080796172240, guid: 2eb546b48d36761448fa52002a1f6630, type: 3}
+      count: 2
+      difficulty: 2
+      timeBetweenFirstSpawn: 5
+      timeBetweenSpawns: 4
+    - enemyPrefab: {fileID: 805032080796172240, guid: b9c197c820cd6814d8fadb7ab571cf44, type: 3}
+      count: 1
+      difficulty: 5
+      timeBetweenFirstSpawn: 7
       timeBetweenSpawns: 5
+    difficulty: 20
+    timeBetweenNextWave: 3
+  - enemies:
+    - enemyPrefab: {fileID: 805032080796172240, guid: e6de440af422628408611b2583d40367, type: 3}
+      count: 2
+      difficulty: 1
+      timeBetweenFirstSpawn: 2
+      timeBetweenSpawns: 4
+    - enemyPrefab: {fileID: 805032080796172240, guid: 2eb546b48d36761448fa52002a1f6630, type: 3}
+      count: 2
+      difficulty: 2
+      timeBetweenFirstSpawn: 5
+      timeBetweenSpawns: 4
     - enemyPrefab: {fileID: 805032080796172240, guid: b9c197c820cd6814d8fadb7ab571cf44, type: 3}
       count: 2
-      timeBetweenFirstSpawn: 10
-      timeBetweenSpawns: 10
+      difficulty: 5
+      timeBetweenFirstSpawn: 7
+      timeBetweenSpawns: 5
+    difficulty: 28
     timeBetweenNextWave: 0
 --- !u!4 &1774952954
 Transform:
@@ -59730,14 +59760,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2219abec1206ae944a83df932da21914, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectile: 0
-  projectileSpeed: 300
+  projectile: 6
+  projectileSpeed: 350
   projectileDamage: 5
   leftFirePosition: {fileID: 807804137}
   leftShootingParticle: {fileID: 460730607}
   rightFirePosition: {fileID: 1548432732}
   rightShootingParticle: {fileID: 249982533}
-  fireRate: 6
+  fireRate: 4.5
 --- !u!114 &5233427633972404519
 MonoBehaviour:
   m_ObjectHideFlags: 0
