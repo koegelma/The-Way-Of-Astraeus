@@ -37,7 +37,7 @@ public class EnemyShooter : MonoBehaviour
     {
         GameObject newProjectile = objectPooler.SpawnFromPool(projectilePool, firePosition.position, Quaternion.identity);
         newProjectile.GetComponent<Projectile>().SetToEnemyProjectile();
-        newProjectile.GetComponent<Projectile>().SetProjectileValues(projectileSpeed, projectileDamage);
+        newProjectile.GetComponent<Projectile>().SetProjectileValues(projectileSpeed, projectileDamage, 0);
         shootingParticle.Play();
     }
 

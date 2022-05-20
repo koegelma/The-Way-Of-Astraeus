@@ -38,6 +38,7 @@ public class EnemySpawner : MonoBehaviour
                 {
                     StopAllCoroutines();
                     stageClearedUI.SetActive(true);
+                    GameManager.instance.gameEnded = true; //
                     this.enabled = false;
                     return;
                 }

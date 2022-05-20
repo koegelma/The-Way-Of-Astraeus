@@ -9,7 +9,7 @@ public class PlayerShooter : MonoBehaviour
     [SerializeField] private float primProjectileDamage;
     [SerializeField] private float primFireRate;
     private float primFireCountdown = 0;
-    private bool autoShoot = false;
+    private bool autoShoot = true;
     private string primProjectilePool;
 
     [Header("Secondary Weapon")]
@@ -18,6 +18,7 @@ public class PlayerShooter : MonoBehaviour
     [SerializeField] private float secProjectileDamage;
     [SerializeField] private float secFireRate;
     [SerializeField] private Transform secFirePosition;
+    [SerializeField] private float aoeRadius;
     private float secFireCountdown = 0;
     private string secProjectilePool;
     private int secMaxAmmo = 6; // needs to be saved in Save/Load system
@@ -62,7 +63,13 @@ public class PlayerShooter : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.B)) ToggleAutoShoot();
+        // check if stage cleared, then deactivate autoshoot and return from here
+        if (GameManager.instance.gameEnded)
+        {
+            autoShoot = false;
+            return;
+        }
+        if (Input.GetKeyDown(KeyCode.E)) ToggleAutoShoot();
         HndPrimInput();
         HndSecInput();
     }
@@ -74,11 +81,11 @@ public class PlayerShooter : MonoBehaviour
             if (autoShoot) //|| Input.GetMouseButton(0))
             {
                 GameObject leftProjectile = objectPooler.SpawnFromPool(primProjectilePool, leftFirePosition.position, Quaternion.identity);
-                leftProjectile.GetComponent<Projectile>().SetProjectileValues(primProjectileSpeed, primProjectileDamage);
+                leftProjectile.GetComponent<Projectile>().SetProjectileValues(primProjectileSpeed, primProjectileDamage, 0);
                 leftShootingParticle.Play();
 
                 GameObject rightProjectile = objectPooler.SpawnFromPool(primProjectilePool, rightFirePosition.position, Quaternion.identity);
-                rightProjectile.GetComponent<Projectile>().SetProjectileValues(primProjectileSpeed, primProjectileDamage);
+                rightProjectile.GetComponent<Projectile>().SetProjectileValues(primProjectileSpeed, primProjectileDamage, 0);
                 rightShootingParticle.Play();
 
                 primFireCountdown = 1 / primFireRate;
@@ -94,15 +101,8 @@ public class PlayerShooter : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.Space) && secCurAmmo > 0)
             {
-                /* GameObject leftProjectile = objectPooler.SpawnFromPool(secProjectilePool, leftFirePosition.position, Quaternion.identity);
-                leftProjectile.GetComponent<Projectile>().SetProjectileValues(secProjectileSpeed, secProjectileDamage);
-                leftShootingParticle.Play();
-
-                GameObject rightProjectile = objectPooler.SpawnFromPool(secProjectilePool, rightFirePosition.position, Quaternion.identity);
-                rightProjectile.GetComponent<Projectile>().SetProjectileValues(secProjectileSpeed, secProjectileDamage);
-                rightShootingParticle.Play(); */
                 GameObject projectile = objectPooler.SpawnFromPool(secProjectilePool, secFirePosition.position, Quaternion.identity);
-                projectile.GetComponent<Projectile>().SetProjectileValues(secProjectileSpeed, secProjectileDamage);
+                projectile.GetComponent<Projectile>().SetProjectileValues(secProjectileSpeed, secProjectileDamage, aoeRadius);
 
                 secFireCountdown = 1 / secFireRate;
                 secCurAmmo--;

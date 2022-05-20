@@ -110,6 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifeTimeSeconds: 5
+  isSecondaryProjectile: 1
 --- !u!1 &5269226437057391473
 GameObject:
   m_ObjectHideFlags: 0

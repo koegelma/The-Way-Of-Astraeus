@@ -8,7 +8,6 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject newRunUI;
     //[SerializeField] private GameObject talentsUI;
     [SerializeField] private GameObject optionsUI;
-    //[SerializeField] private MenuShip menuShip;
     [SerializeField] private SaveLoadSystem saveLoadSystem;
     private Animator animator;
 

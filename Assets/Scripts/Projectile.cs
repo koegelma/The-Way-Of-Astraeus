@@ -4,8 +4,10 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [SerializeField] private float lifeTimeSeconds;
+    [SerializeField] private bool isSecondaryProjectile;
     private float speed;
     private float damageAmount;
+    private float aoeRadius;
     private bool isEnemyProjectile;
     private PoolTag hitExplosion;
     private ObjectPooler objectPooler;
@@ -26,12 +28,13 @@ public class Projectile : MonoBehaviour
         Translate();
     }
 
-    public void SetProjectileValues(float _speed, float _damage)
+    public void SetProjectileValues(float _speed, float _damage, float _aoeRadius)
     {
         speed = _speed;
         damageAmount = _damage;
+        aoeRadius = _aoeRadius;
 
-        if (damageAmount >= 20) hitExplosion = PoolTag.LARGEHITEXPLOSION; //change to check if primary or secondary
+        if (isSecondaryProjectile) hitExplosion = PoolTag.LARGEHITEXPLOSION;
         else hitExplosion = PoolTag.SMALLHITEXPLOSION;
     }
 
@@ -48,14 +51,31 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider _collObj)
     {
-        if (!isEnemyProjectile && _collObj.GetComponentInParent<Shield>())
+        if (GameManager.instance.gameEnded) return;
+
+        if (!isEnemyProjectile && _collObj.GetComponentInParent<EnemyHealth>())
         {
-            if (_collObj.GetComponentInParent<Shield>().ShieldActive)
+            if (aoeRadius > 0)
             {
-                Damage(_collObj.gameObject, true);
-                return;
+                Collider[] colliders = Physics.OverlapSphere(transform.position, aoeRadius);
+                foreach (Collider collider in colliders)
+                {
+                    // check why instakill & handle behaviour for enemies with shield
+                    // note all cases possible and restructure
+                    if (collider.GetComponentInParent<EnemyHealth>() && collider.gameObject != _collObj.gameObject) Damage(collider.gameObject, false);
+                }
+            }
+
+            if (_collObj.GetComponentInParent<Shield>())
+            {
+                if (_collObj.GetComponentInParent<Shield>().ShieldActive)
+                {
+                    Damage(_collObj.gameObject, true);
+                    return;
+                }
             }
         }
+
         if ((isEnemyProjectile && _collObj.GetComponentInParent<PlayerHealth>()) || (!isEnemyProjectile && _collObj.GetComponentInParent<EnemyHealth>())) Damage(_collObj.gameObject, false);
     }
 
