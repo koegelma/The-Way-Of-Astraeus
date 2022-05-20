@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class PlayerShooter : MonoBehaviour
 {
-    [Header("Primary Projectile")]
+    [Header("Primary Weapon")]
     [SerializeField] private PoolTag primProjectile;
     [SerializeField] private float primProjectileSpeed;
     [SerializeField] private float primProjectileDamage;
@@ -11,11 +11,13 @@ public class PlayerShooter : MonoBehaviour
     private float primFireCountdown = 0;
     private bool autoShoot = false;
     private string primProjectilePool;
-    [Header("Secondary Projectile")]
+
+    [Header("Secondary Weapon")]
     [SerializeField] private PoolTag secProjectile;
     [SerializeField] private float secProjectileSpeed;
     [SerializeField] private float secProjectileDamage;
     [SerializeField] private float secFireRate;
+    [SerializeField] private Transform secFirePosition;
     private float secFireCountdown = 0;
     private string secProjectilePool;
     private int secMaxAmmo = 6; // needs to be saved in Save/Load system
@@ -92,13 +94,15 @@ public class PlayerShooter : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.Space) && secCurAmmo > 0)
             {
-                GameObject leftProjectile = objectPooler.SpawnFromPool(secProjectilePool, leftFirePosition.position, Quaternion.identity);
+                /* GameObject leftProjectile = objectPooler.SpawnFromPool(secProjectilePool, leftFirePosition.position, Quaternion.identity);
                 leftProjectile.GetComponent<Projectile>().SetProjectileValues(secProjectileSpeed, secProjectileDamage);
                 leftShootingParticle.Play();
 
                 GameObject rightProjectile = objectPooler.SpawnFromPool(secProjectilePool, rightFirePosition.position, Quaternion.identity);
                 rightProjectile.GetComponent<Projectile>().SetProjectileValues(secProjectileSpeed, secProjectileDamage);
-                rightShootingParticle.Play();
+                rightShootingParticle.Play(); */
+                GameObject projectile = objectPooler.SpawnFromPool(secProjectilePool, secFirePosition.position, Quaternion.identity);
+                projectile.GetComponent<Projectile>().SetProjectileValues(secProjectileSpeed, secProjectileDamage);
 
                 secFireCountdown = 1 / secFireRate;
                 secCurAmmo--;

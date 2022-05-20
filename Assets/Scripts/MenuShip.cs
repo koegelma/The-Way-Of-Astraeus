@@ -22,13 +22,13 @@ public class MenuShip : MonoBehaviour
 
     private void Update()
     {
-        if (newGameStarting)
+        /* if (newGameStarting)
         {
             ResetRotation();
             TranslateToTarget();
             if (transform.rotation.eulerAngles.z == 0 && transform.position == targetPosition) shipIsInPosition = true;
             return;
-        }
+        } */
 
         BarrelRoll();
     }

@@ -8,7 +8,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject newRunUI;
     //[SerializeField] private GameObject talentsUI;
     [SerializeField] private GameObject optionsUI;
-    [SerializeField] private MenuShip menuShip;
+    //[SerializeField] private MenuShip menuShip;
     [SerializeField] private SaveLoadSystem saveLoadSystem;
     private Animator animator;
 
@@ -27,20 +27,15 @@ public class MainMenu : MonoBehaviour
 
     public void NewRun()
     {
-        if (!newRunUI.GetComponent<NewRunSettings>().weaponSysChoosen)
-        {
-            newRunUI.transform.GetChild(0).gameObject.SetActive(true);
-            return;
-        }
         saveLoadSystem.Save();
         StartCoroutine(StartNewRun());
     }
 
     private IEnumerator StartNewRun()
     {
-        animator.SetTrigger("TrFadeOut");
-        menuShip.newGameStarting = true;
-        yield return new WaitUntil(() => menuShip.shipIsInPosition && saveLoadSystem.hasSaved);
+        animator.SetTrigger("TrFadeOut"); // delete and delegate to SceneChanger
+        //menuShip.newGameStarting = true;
+        yield return new WaitUntil(() => saveLoadSystem.hasSaved); //menuShip.shipIsInPosition
         SceneManager.LoadScene("1_Stage");
     }
 

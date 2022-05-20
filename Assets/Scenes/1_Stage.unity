@@ -11954,6 +11954,7 @@ GameObject:
   - component: {fileID: 296656311}
   - component: {fileID: 296656313}
   - component: {fileID: 296656312}
+  - component: {fileID: 296656314}
   m_Layer: 5
   m_Name: SecAmmoText
   m_TagString: Untagged
@@ -12022,6 +12023,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 296656310}
   m_CullTransparentMesh: 1
+--- !u!114 &296656314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 296656310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.6509804, g: 0.6509804, b: 0.6509804, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &306441762
 GameObject:
   m_ObjectHideFlags: 0
@@ -12400,8 +12416,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
-  m_EffectDistance: {x: 2, y: -2}
+  m_EffectColor: {r: 0.6509804, g: 0.6509804, b: 0.6509804, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &394723365
 GameObject:
@@ -18138,7 +18154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
-  m_EffectDistance: {x: 2, y: -2}
+  m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &499932219
 GameObject:
@@ -34656,6 +34672,7 @@ GameObject:
   - component: {fileID: 842961186}
   - component: {fileID: 842961188}
   - component: {fileID: 842961187}
+  - component: {fileID: 842961189}
   m_Layer: 5
   m_Name: BulletImage (2)
   m_TagString: Untagged
@@ -34720,6 +34737,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 842961185}
   m_CullTransparentMesh: 1
+--- !u!114 &842961189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 842961185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.6509804, g: 0.6509804, b: 0.6509804, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &862908116
 GameObject:
   m_ObjectHideFlags: 0
@@ -35594,6 +35626,7 @@ GameObject:
   - component: {fileID: 1014615792}
   - component: {fileID: 1014615794}
   - component: {fileID: 1014615793}
+  - component: {fileID: 1014615795}
   m_Layer: 5
   m_Name: BulletImage
   m_TagString: Untagged
@@ -35658,6 +35691,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1014615791}
   m_CullTransparentMesh: 1
+--- !u!114 &1014615795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1014615791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.6509804, g: 0.6509804, b: 0.6509804, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1048713896
 GameObject:
   m_ObjectHideFlags: 0
@@ -35779,6 +35827,7 @@ GameObject:
   - component: {fileID: 1101731606}
   - component: {fileID: 1101731608}
   - component: {fileID: 1101731607}
+  - component: {fileID: 1101731609}
   m_Layer: 5
   m_Name: BulletImage (1)
   m_TagString: Untagged
@@ -35843,6 +35892,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1101731605}
   m_CullTransparentMesh: 1
+--- !u!114 &1101731609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1101731605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.6509804, g: 0.6509804, b: 0.6509804, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1111418902
 GameObject:
   m_ObjectHideFlags: 0
@@ -36484,6 +36548,7 @@ GameObject:
   - component: {fileID: 1274059645}
   - component: {fileID: 1274059647}
   - component: {fileID: 1274059646}
+  - component: {fileID: 1274059648}
   m_Layer: 5
   m_Name: CountdownText
   m_TagString: Untagged
@@ -36552,6 +36617,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1274059644}
   m_CullTransparentMesh: 1
+--- !u!114 &1274059648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1274059644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.6509804, g: 0.6509804, b: 0.6509804, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1276234712
 GameObject:
   m_ObjectHideFlags: 0
@@ -36681,6 +36761,7 @@ GameObject:
   - component: {fileID: 1329254937}
   - component: {fileID: 1329254939}
   - component: {fileID: 1329254938}
+  - component: {fileID: 1329254940}
   m_Layer: 5
   m_Name: maxSecAmmoText
   m_TagString: Untagged
@@ -36749,6 +36830,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1329254936}
   m_CullTransparentMesh: 1
+--- !u!114 &1329254940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1329254936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.6509804, g: 0.6509804, b: 0.6509804, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
+--- !u!1 &1336992826
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1336992827}
+  m_Layer: 0
+  m_Name: SecondaryFirePosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1336992827
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1336992826}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.37634578, z: 3.2010343}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1247284162851178819}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1345652657
 GameObject:
   m_ObjectHideFlags: 0
@@ -36841,8 +36967,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
-  m_EffectDistance: {x: 2, y: -2}
+  m_EffectColor: {r: 0.6509804, g: 0.6509804, b: 0.6509804, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &1387048435
 GameObject:
@@ -59442,7 +59568,8 @@ Transform:
   m_LocalRotation: {x: -0.016519237, y: -0, z: -0, w: 0.9998636}
   m_LocalPosition: {x: 0, y: -0.22960265, z: 0.53828}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1336992827}
   m_Father: {fileID: 7427904882943739020}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -1.8930001, y: 0, z: 0}
@@ -60414,8 +60541,9 @@ MonoBehaviour:
   primFireRate: 4.5
   secProjectile: 0
   secProjectileSpeed: 100
-  secProjectileDamage: 20
+  secProjectileDamage: 25
   secFireRate: 1
+  secFirePosition: {fileID: 1336992827}
   secMaxAmmoText: {fileID: 1329254938}
   secCurAmmoText: {fileID: 296656312}
   reloadSound: {fileID: 732587185}
