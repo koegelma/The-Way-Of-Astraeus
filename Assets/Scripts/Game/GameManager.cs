@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
         gameEnded = false;
         totalDamage = 0;
+        Cursor.visible = false;
     }
 
     private void Update()
@@ -35,6 +36,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1);
         gameEnded = true;
         gameOverUI.SetActive(true);
+        Cursor.visible = true;
     }
 
     public void AddTotalDamage(float _damage)

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
@@ -53,57 +54,92 @@ public class Projectile : MonoBehaviour
     {
         if (GameManager.instance.gameEnded) return;
 
+        if (isEnemyProjectile && _collObj.GetComponentInParent<PlayerHealth>())
+        {
+            Damage(_collObj.transform);
+            return;
+        }
+
         if (!isEnemyProjectile && _collObj.GetComponentInParent<EnemyHealth>())
         {
             if (aoeRadius > 0)
             {
+                List<Transform> collidedEnemies = new List<Transform>();
                 Collider[] colliders = Physics.OverlapSphere(transform.position, aoeRadius);
                 foreach (Collider collider in colliders)
                 {
-                    // check why instakill & handle behaviour for enemies with shield
-                    // note all cases possible and restructure
-                    if (collider.GetComponentInParent<EnemyHealth>() && collider.gameObject != _collObj.gameObject) Damage(collider.gameObject, false);
+                    if (collider.GetComponentInParent<EnemyHealth>())
+                    {
+                        Transform rootTransform = collider.transform.root;
+                        if (!collidedEnemies.Contains(rootTransform)) collidedEnemies.Add(rootTransform);
+                    }
                 }
+                AoEDamage(collidedEnemies);
+                return;
             }
-
-            if (_collObj.GetComponentInParent<Shield>())
-            {
-                if (_collObj.GetComponentInParent<Shield>().ShieldActive)
-                {
-                    Damage(_collObj.gameObject, true);
-                    return;
-                }
-            }
+            Damage(_collObj.transform);
         }
-
-        if ((isEnemyProjectile && _collObj.GetComponentInParent<PlayerHealth>()) || (!isEnemyProjectile && _collObj.GetComponentInParent<EnemyHealth>())) Damage(_collObj.gameObject, false);
     }
 
-    private void Damage(GameObject _target, bool shield)
+    private void Damage(Transform _target)
     {
-        objectPooler.SpawnFromPool(hitExplosion.ToString(), transform.position, Quaternion.identity);
-        GameObject damageUIGameObject = objectPooler.SpawnFromPool(PoolTag.DAMAGEUI.ToString(), transform.position, Quaternion.identity);
+        objectPooler.SpawnFromPool(hitExplosion.ToString(), _target.position, Quaternion.identity);
+        GameObject damageUIGameObject = objectPooler.SpawnFromPool(PoolTag.DAMAGEUI.ToString(), _target.position, Quaternion.identity);
         DamageUI damageUI = damageUIGameObject.GetComponent<DamageUI>();
         damageUI.SetDamageAmount(damageAmount);
-
-        if (shield)
-        {
-            _target.GetComponentInParent<Shield>().SubtractHealth(damageAmount);
-            damageUI.SetColor(Color.cyan);
-            gameObject.SetActive(false);
-            return;
-        }
 
         if (_target.GetComponentInParent<PlayerHealth>())
         {
             _target.GetComponentInParent<PlayerHealth>().SubtractHealth(damageAmount);
             damageUI.SetColor(Color.red);
+            gameObject.SetActive(false);
+            return;
         }
+
         if (_target.GetComponentInParent<EnemyHealth>())
         {
+            GameManager.instance.AddTotalDamage(damageAmount);
+            if (_target.GetComponentInParent<Shield>())
+            {
+                if (_target.GetComponentInParent<Shield>().ShieldActive)
+                {
+                    _target.GetComponentInParent<Shield>().SubtractHealth(damageAmount);
+                    damageUI.SetColor(Color.cyan);
+                    gameObject.SetActive(false);
+                    return;
+                }
+            }
             _target.GetComponentInParent<EnemyHealth>().SubtractHealth(damageAmount);
             damageUI.SetColor(Color.yellow);
+            gameObject.SetActive(false);
+        }
+    }
+
+    private void AoEDamage(List<Transform> _targets)
+    {
+        foreach (Transform target in _targets)
+        {
             GameManager.instance.AddTotalDamage(damageAmount);
+            objectPooler.SpawnFromPool(hitExplosion.ToString(), target.position, Quaternion.identity);
+            GameObject damageUIGameObject = objectPooler.SpawnFromPool(PoolTag.DAMAGEUI.ToString(), target.position, Quaternion.identity);
+            DamageUI damageUI = damageUIGameObject.GetComponent<DamageUI>();
+            damageUI.SetDamageAmount(damageAmount);
+
+            if (target.GetComponentInParent<Shield>())
+            {
+                if (target.GetComponentInParent<Shield>().ShieldActive)
+                {
+                    target.GetComponentInParent<Shield>().SubtractHealth(damageAmount);
+                    damageUI.SetColor(Color.cyan);
+                    return;
+                }
+            }
+
+            if (target.GetComponentInParent<EnemyHealth>())
+            {
+                target.GetComponentInParent<EnemyHealth>().SubtractHealth(damageAmount);
+                damageUI.SetColor(Color.yellow);
+            }
         }
         gameObject.SetActive(false);
     }

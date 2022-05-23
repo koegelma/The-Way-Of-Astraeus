@@ -28,7 +28,7 @@ public class ObjectPooler : MonoBehaviour
         AllocateObjectPool(PoolTag.SHIPEXPLOSION.ToString(), PoolTag.SHIPEXPLOSION, 10);
     }
 
-    public void CreatePool(string _tag, GameObject _gameObject, int _size)
+    public void CreatePool(string _tag, GameObject _gameObject, int _size) // not used atm
     {
         Queue<GameObject> objectPool = new Queue<GameObject>();
         for (int i = 0; i < _size; i++)
@@ -40,7 +40,7 @@ public class ObjectPooler : MonoBehaviour
         poolDictionary.Add(_tag, objectPool);
     }
 
-    public void CreatePoolFromArray(string _tag, GameObject[] _gameObjects, int _size)
+    public void CreatePoolFromArray(string _tag, GameObject[] _gameObjects, int _size) // not used atm
     {
         Queue<GameObject> objectPool = new Queue<GameObject>();
         for (int i = 0; i < _gameObjects.Length; i++)
@@ -88,7 +88,7 @@ public class ObjectPooler : MonoBehaviour
         yield return new WaitForSeconds(_secondsToWait);
         if (!poolDictionary.ContainsKey(_tag))
         {
-            Debug.LogError("Pool with tag " + _tag + "doesn't exist.");
+            Debug.LogError("Pool with tag " + _tag + " doesn't exist.");
             yield return null;
         }
         foreach (GameObject obj in poolDictionary[_tag])
@@ -96,14 +96,13 @@ public class ObjectPooler : MonoBehaviour
             Destroy(obj);
         }
         poolDictionary.Remove(_tag);
-        //Debug.Log("Object pool " + _tag + " deallocated");
     }
 
     public GameObject SpawnFromPool(string _tag, Vector3 _position, Quaternion _rotation)
     {
         if (!poolDictionary.ContainsKey(_tag))
         {
-            Debug.LogError("Pool with tag " + _tag + "doesn't exist.");
+            Debug.LogError("Pool with tag " + _tag + " doesn't exist.");
             return null;
         }
         GameObject objToSpawn = poolDictionary[_tag].Dequeue();

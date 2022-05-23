@@ -33,7 +33,7 @@ public class DamageUI : MonoBehaviour
 
     public void SetDamageAmount(float _damageAmount)
     {
-        damageAmount.text = _damageAmount.ToString();
+        damageAmount.text = Mathf.Round(_damageAmount).ToString();
     }
 
     public void SetColor(Color _color)

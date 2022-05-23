@@ -6,6 +6,7 @@ public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private GameObject stageClearedUI;
     [SerializeField] private Text waveCountdown;
+    [SerializeField] private Text waveCounter;
     [SerializeField] private Wave[] waves;
     private Transform[] spawnpoints;
     private int waveIndex = 0;
@@ -23,6 +24,7 @@ public class EnemySpawner : MonoBehaviour
         }
         GenerateEnemies();
         SpawnWave();
+        waveCounter.text = (waveIndex + 1) + " | " + waves.Length;
     }
 
     private void Update()
@@ -38,10 +40,12 @@ public class EnemySpawner : MonoBehaviour
                 {
                     StopAllCoroutines();
                     stageClearedUI.SetActive(true);
-                    GameManager.instance.gameEnded = true; //
+                    GameManager.instance.gameEnded = true;
+                    Cursor.visible = true;
                     this.enabled = false;
                     return;
                 }
+                waveCounter.text = (waveIndex + 1) + " | " + waves.Length;
                 SpawnWave();
                 return;
             }

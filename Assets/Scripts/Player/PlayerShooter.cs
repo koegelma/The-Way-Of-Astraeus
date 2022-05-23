@@ -63,7 +63,6 @@ public class PlayerShooter : MonoBehaviour
 
     private void Update()
     {
-        // check if stage cleared, then deactivate autoshoot and return from here
         if (GameManager.instance.gameEnded)
         {
             autoShoot = false;

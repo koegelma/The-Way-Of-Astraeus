@@ -10,7 +10,7 @@ public class PauseMenu : MonoBehaviour
 
     private void Update()
     {
-        if(GameManager.instance.gameEnded) return;
+        if (GameManager.instance.gameEnded) return;
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             TogglePauseMenu();
@@ -22,8 +22,16 @@ public class PauseMenu : MonoBehaviour
     public void TogglePauseMenu()
     {
         ui.SetActive(!ui.activeSelf);
-        if (ui.activeSelf) Time.timeScale = 0;
-        else Time.timeScale = 1;
+        if (ui.activeSelf)
+        {
+            Time.timeScale = 0;
+            Cursor.visible = true;
+        }
+        else
+        {
+            Time.timeScale = 1;
+            Cursor.visible = false;
+        }
     }
 
     public void ToggleOptions()
