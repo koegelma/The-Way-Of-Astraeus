@@ -8,6 +8,7 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] private GameObject smallHealthBuff;
     [SerializeField] private float ammoPickupChance; // 0 - 1.0
     [SerializeField] private GameObject ammoPickup;
+    [SerializeField] private int cWorth;
 
     private void Start()
     {
@@ -30,6 +31,12 @@ public class EnemyHealth : MonoBehaviour
     {
         if (IsLucky(smallHealthChance)) Instantiate(smallHealthBuff, transform.position, Quaternion.identity);
         if (IsLucky(ammoPickupChance)) Instantiate(ammoPickup, transform.position, Quaternion.identity);
+
+        for (int i = 0; i < cWorth; i++)
+        {
+            ObjectPooler.instance.SpawnFromPool(PoolTag.COIN.ToString(), transform.position, Quaternion.identity);
+        }
+        
         ObjectPooler.instance.SpawnFromPool(PoolTag.SHIPEXPLOSION.ToString(), transform.position, Quaternion.identity);
         EnemySpawner.enemiesToDie--;
         Destroy(gameObject);

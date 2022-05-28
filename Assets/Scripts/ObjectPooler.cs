@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PoolTag { LASERPROJECTILE, MISSILEPROJECTILE, SMALLHITEXPLOSION, LARGEHITEXPLOSION, SHIPEXPLOSION, DAMAGEUI, BULLETPROJECTILE, PLASMAPROJECTILE}
+public enum PoolTag { LASERPROJECTILE, MISSILEPROJECTILE, SMALLHITEXPLOSION, LARGEHITEXPLOSION, SHIPEXPLOSION, DAMAGEUI, BULLETPROJECTILE, PLASMAPROJECTILE, COIN }
 public class ObjectPooler : MonoBehaviour
 {
     [System.Serializable]
@@ -26,9 +26,10 @@ public class ObjectPooler : MonoBehaviour
         AllocateObjectPool(PoolTag.SMALLHITEXPLOSION.ToString(), PoolTag.SMALLHITEXPLOSION, 30);
         AllocateObjectPool(PoolTag.LARGEHITEXPLOSION.ToString(), PoolTag.LARGEHITEXPLOSION, 15);
         AllocateObjectPool(PoolTag.SHIPEXPLOSION.ToString(), PoolTag.SHIPEXPLOSION, 10);
+        AllocateObjectPool(PoolTag.COIN.ToString(), PoolTag.COIN, 100);
     }
 
-    public void CreatePool(string _tag, GameObject _gameObject, int _size) // not used atm
+   /*  public void CreatePool(string _tag, GameObject _gameObject, int _size) // not used atm
     {
         Queue<GameObject> objectPool = new Queue<GameObject>();
         for (int i = 0; i < _size; i++)
@@ -38,9 +39,9 @@ public class ObjectPooler : MonoBehaviour
             objectPool.Enqueue(obj);
         }
         poolDictionary.Add(_tag, objectPool);
-    }
+    } */
 
-    public void CreatePoolFromArray(string _tag, GameObject[] _gameObjects, int _size) // not used atm
+   /*  public void CreatePoolFromArray(string _tag, GameObject[] _gameObjects, int _size) // not used atm
     {
         Queue<GameObject> objectPool = new Queue<GameObject>();
         for (int i = 0; i < _gameObjects.Length; i++)
@@ -53,7 +54,7 @@ public class ObjectPooler : MonoBehaviour
             }
         }
         poolDictionary.Add(_tag, objectPool);
-    }
+    } */
 
     public void AllocateObjectPool(string _tag, PoolTag _poolTag, int _size)
     {
@@ -106,9 +107,9 @@ public class ObjectPooler : MonoBehaviour
             return null;
         }
         GameObject objToSpawn = poolDictionary[_tag].Dequeue();
-        objToSpawn.SetActive(true);
         objToSpawn.transform.position = _position;
         objToSpawn.transform.rotation = _rotation;
+        objToSpawn.SetActive(true);
         poolDictionary[_tag].Enqueue(objToSpawn);
         return objToSpawn;
     }

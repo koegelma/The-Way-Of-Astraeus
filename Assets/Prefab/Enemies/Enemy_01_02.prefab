@@ -208,6 +208,7 @@ MonoBehaviour:
   smallHealthBuff: {fileID: 1313511603319146065, guid: d30b55f3cc6ed4547a12db5d6a89fb87, type: 3}
   ammoPickupChance: 0.1
   ammoPickup: {fileID: 1313511603319146065, guid: 6596571b531d55d47a1673e6fa9a824a, type: 3}
+  cWorth: 10
 --- !u!114 &805032080796172243
 MonoBehaviour:
   m_ObjectHideFlags: 0

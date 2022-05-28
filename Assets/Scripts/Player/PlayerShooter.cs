@@ -11,6 +11,7 @@ public class PlayerShooter : MonoBehaviour
     private float primFireCountdown = 0;
     private bool autoShoot = true;
     private string primProjectilePool;
+    private int projectileAmount = 5;
 
     [Header("Secondary Weapon")]
     [SerializeField] private PoolTag secProjectile;
@@ -37,7 +38,7 @@ public class PlayerShooter : MonoBehaviour
 
     private void Start()
     {
-        if (PlayerUpgrades.instance.isBallistic)
+        if (PlayerStats.instance.isBallistic)
         {
             primProjectile = PoolTag.BULLETPROJECTILE;
             secProjectile = PoolTag.MISSILEPROJECTILE;
@@ -52,8 +53,8 @@ public class PlayerShooter : MonoBehaviour
         primProjectilePool = gameObject.name + primProjectile;
         secProjectilePool = gameObject.name + secProjectile;
 
-        objectPooler.AllocateObjectPool(primProjectilePool, primProjectile, Mathf.RoundToInt(primFireRate * 5)); // adjust when multiple locations implemented, or fireRate changes over time
-        objectPooler.AllocateObjectPool(secProjectilePool, secProjectile, Mathf.RoundToInt(primFireRate * 5)); // adjust when multiple locations implemented, or fireRate changes over time
+        objectPooler.AllocateObjectPool(primProjectilePool, primProjectile, Mathf.RoundToInt(100));//primFireRate * 5)); // adjust when multiple locations implemented, or fireRate changes over time
+        objectPooler.AllocateObjectPool(secProjectilePool, secProjectile, Mathf.RoundToInt(10));//primFireRate * 5)); // adjust when multiple locations implemented, or fireRate changes over time
         objectPooler.AllocateObjectPool(PoolTag.DAMAGEUI.ToString(), PoolTag.DAMAGEUI, Mathf.RoundToInt(primFireRate * 5)); // properly adjust to include possible hits from enemies -> move to objPooler?
 
         secCurAmmo = secMaxAmmo;
@@ -79,13 +80,17 @@ public class PlayerShooter : MonoBehaviour
         {
             if (autoShoot) //|| Input.GetMouseButton(0))
             {
-                GameObject leftProjectile = objectPooler.SpawnFromPool(primProjectilePool, leftFirePosition.position, Quaternion.identity);
-                leftProjectile.GetComponent<Projectile>().SetProjectileValues(primProjectileSpeed, primProjectileDamage, 0);
-                leftShootingParticle.Play();
+                for (int i = 0; i < projectileAmount; i++)
+                {
+                    GameObject leftProjectile = objectPooler.SpawnFromPool(primProjectilePool, leftFirePosition.position, Quaternion.identity);
+                    leftProjectile.GetComponent<Projectile>().SetProjectileValues(primProjectileSpeed, primProjectileDamage, 0);
+                    leftShootingParticle.Play();
 
-                GameObject rightProjectile = objectPooler.SpawnFromPool(primProjectilePool, rightFirePosition.position, Quaternion.identity);
-                rightProjectile.GetComponent<Projectile>().SetProjectileValues(primProjectileSpeed, primProjectileDamage, 0);
-                rightShootingParticle.Play();
+                    GameObject rightProjectile = objectPooler.SpawnFromPool(primProjectilePool, rightFirePosition.position, Quaternion.identity);
+                    rightProjectile.GetComponent<Projectile>().SetProjectileValues(primProjectileSpeed, primProjectileDamage, 0);
+                    rightShootingParticle.Play();
+                }
+
 
                 primFireCountdown = 1 / primFireRate;
             }

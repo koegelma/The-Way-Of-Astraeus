@@ -15,5 +15,6 @@ public class Powerup : MonoBehaviour
     private void Update()
     {
         transform.position += Vector3.back * 20 * Time.deltaTime;
+        if (transform.position.z <= -350) Destroy(gameObject);
     }
 }
