@@ -9,12 +9,12 @@ public class MainMenu : MonoBehaviour
     //[SerializeField] private GameObject talentsUI;
     [SerializeField] private GameObject optionsUI;
     [SerializeField] private SaveLoadSystem saveLoadSystem;
-    private Animator animator;
+    //private Animator animator;
 
     private void Start()
     {
         Time.timeScale = 1;
-        animator = GetComponent<Animator>();
+        //animator = GetComponent<Animator>();
     }
 
     public void ToggleNewRunUI()
@@ -26,17 +26,18 @@ public class MainMenu : MonoBehaviour
 
     public void NewRun()
     {
-        saveLoadSystem.Save();
-        StartCoroutine(StartNewRun());
+        SceneChanger.instance.ChangeScene("1_Stage", true);
+        //saveLoadSystem.Save();
+        //StartCoroutine(StartNewRun());
     }
 
-    private IEnumerator StartNewRun()
+    /* private IEnumerator StartNewRun()
     {
-        animator.SetTrigger("TrFadeOut"); // delete and delegate to SceneChanger
+        //animator.SetTrigger("TrFadeOut"); // delete and delegate to SceneChanger
         //menuShip.newGameStarting = true;
         yield return new WaitUntil(() => saveLoadSystem.hasSaved); //menuShip.shipIsInPosition
         SceneManager.LoadScene("1_Stage");
-    }
+    } */
 
     public void ToggleTalents()
     {

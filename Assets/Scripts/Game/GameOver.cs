@@ -6,6 +6,12 @@ public class GameOver : MonoBehaviour
 {
     [SerializeField] private Text totalDamage;
     private float damageDisp;
+    private PlayerStats playerStats;
+
+    private void Start()
+    {
+        playerStats = PlayerStats.instance;
+    }
 
     private void OnEnable()
     {
@@ -14,8 +20,8 @@ public class GameOver : MonoBehaviour
 
     private void Update()
     {
-        damageDisp += Time.deltaTime * GameManager.instance.TotalDamage;
-        if (damageDisp >= GameManager.instance.TotalDamage) damageDisp = GameManager.instance.TotalDamage;
+        damageDisp += Time.deltaTime *  playerStats.totalDamage;//GameManager.instance.TotalDamage;
+        if (damageDisp >= playerStats.totalDamage) damageDisp = playerStats.totalDamage;
         totalDamage.text = Mathf.RoundToInt(damageDisp).ToString("#,#");
     }
 
@@ -23,6 +29,7 @@ public class GameOver : MonoBehaviour
     {
         //saveLoadSystem.Save();
         //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        SceneManager.LoadScene("0_Menu"); // go to perma talent tree, or menu and invest talents there?
+        //SceneManager.LoadScene("0_Menu"); // go to perma talent tree, or menu and invest talents there?
+        SceneChanger.instance.ChangeScene("0_Menu", false);
     }
 }

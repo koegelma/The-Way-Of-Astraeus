@@ -3,16 +3,15 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour, ISaveable
 {
-    [SerializeField] private float maxHealth;
+    
     [SerializeField] private ParticleSystem addHealthEffect;
-    private float health;
-    public float MaxHealth { get { return maxHealth; } }
-    public float Health { get { return health; } }
+    public float maxHealth = 100;
+    public float health = 100;
 
-    private void Start()
+    /* private void Start()
     {
         health = maxHealth;
-    }
+    } */
 
     private void Update()
     {
@@ -43,7 +42,8 @@ public class PlayerHealth : MonoBehaviour, ISaveable
     {
         return new SaveData()
         {
-            maxHealth = this.maxHealth
+            maxHealth = this.maxHealth,
+            health = this.health
         };
     }
 
@@ -51,12 +51,14 @@ public class PlayerHealth : MonoBehaviour, ISaveable
     {
         var saveData = (SaveData)state;
         maxHealth = saveData.maxHealth;
+        health = saveData.health;
     }
 
     [Serializable]
     private struct SaveData
     {
         public float maxHealth;
+        public float health;
     }
 
 }

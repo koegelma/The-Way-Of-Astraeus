@@ -12,10 +12,12 @@ public class Projectile : MonoBehaviour
     private bool isEnemyProjectile;
     private PoolTag hitExplosion;
     private ObjectPooler objectPooler;
+    private PlayerStats playerStats;
 
     private void Start()
     {
         objectPooler = ObjectPooler.instance;
+        playerStats = PlayerStats.instance;
     }
 
     private void OnEnable()
@@ -98,7 +100,28 @@ public class Projectile : MonoBehaviour
 
         if (_target.GetComponentInParent<EnemyHealth>())
         {
-            GameManager.instance.AddTotalDamage(damageAmount);
+            //GameManager.instance.AddTotalDamage(damageAmount);
+            if (playerStats.CritHit > 0)
+            {
+                if (!isSecondaryProjectile || playerStats.secHasCrit)
+                {
+                    if (IsLucky(playerStats.critChance))
+                    {
+                        damageAmount *= playerStats.critDMG;
+                        damageUI.SetDamageAmount(damageAmount);
+                    }
+                }
+            }
+            if (playerStats.Leech > 0)
+            {
+                if (IsLucky(playerStats.leechChance))
+                {
+                    GameManager.instance.playerShip.GetComponent<PlayerHealth>().AddHealth(damageAmount * playerStats.leechAmount);
+                    Debug.Log("Health leeched: " + damageAmount * playerStats.leechAmount);
+                }
+            }
+            playerStats.totalDamage += damageAmount;
+
             if (_target.GetComponentInParent<Shield>())
             {
                 if (_target.GetComponentInParent<Shield>().ShieldActive)
@@ -119,11 +142,33 @@ public class Projectile : MonoBehaviour
     {
         foreach (Transform target in _targets)
         {
-            GameManager.instance.AddTotalDamage(damageAmount);
+
             objectPooler.SpawnFromPool(hitExplosion.ToString(), target.position, Quaternion.identity);
             GameObject damageUIGameObject = objectPooler.SpawnFromPool(PoolTag.DAMAGEUI.ToString(), target.position, Quaternion.identity);
             DamageUI damageUI = damageUIGameObject.GetComponent<DamageUI>();
             damageUI.SetDamageAmount(damageAmount);
+
+            if (playerStats.CritHit > 0)
+            {
+                if (!isSecondaryProjectile || playerStats.secHasCrit)
+                {
+                    if (IsLucky(playerStats.critChance))
+                    {
+                        damageAmount *= playerStats.critDMG;
+                        damageUI.SetDamageAmount(damageAmount);
+                    }
+                }
+            }
+
+            if (playerStats.Leech > 0)
+            {
+                if (IsLucky(playerStats.leechChance))
+                {
+                    GameManager.instance.playerShip.GetComponent<PlayerHealth>().AddHealth(damageAmount * playerStats.leechAmount);
+                    Debug.Log("Health leeched: " + damageAmount * playerStats.leechAmount);
+                }
+            }
+            playerStats.totalDamage += damageAmount;
 
             if (target.GetComponentInParent<Shield>())
             {
@@ -142,6 +187,12 @@ public class Projectile : MonoBehaviour
             }
         }
         gameObject.SetActive(false);
+    }
+
+    private bool IsLucky(float _chance)
+    {
+        if (Random.value <= _chance) return true;
+        return false;
     }
 
     private IEnumerator DisableGameObject(float _seconds)

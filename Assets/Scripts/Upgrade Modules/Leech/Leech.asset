@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 842140b4171552f458251c849adde961, type: 3}
+  m_Name: Leech
+  m_EditorClassIdentifier: 
+  name: LEECH
+  descriptions:
+  - When hitting an enemy there is a 10% chance to recover health equal to 1% of
+    DMG done
+  - When hitting an enemy there is a 20% chance to recover health equal to 1% of
+    DMG done
+  - When hitting an enemy there is a 20% chance to recover health equal to 2% of
+    DMG done
+  - When hitting an enemy there is a 30% chance to recover health equal to 2% of
+    DMG done
+  - When hitting an enemy there is a 30% chance to recover health equal to 3% of
+    DMG done
+  - When hitting an enemy there is a 50% chance to recover health equal to 5% of
+    DMG done
+  stage: 0
+  upgradeModuleBehaviour: {fileID: 11400000, guid: 08a1f6f91176a164fbd67c37b6571ffd, type: 2}

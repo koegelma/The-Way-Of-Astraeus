@@ -2,16 +2,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private PlayerHealth playerHealth;
     [SerializeField] private GameObject gameOverUI;
     [SerializeField] private SaveLoadSystem saveLoadSystem;
-    private float totalDamage;
-    public float TotalDamage { get { return totalDamage; } }
+    private PlayerStats playerStats;
+    //private float totalDamage;
+    //public float TotalDamage { get { return totalDamage; } }
     public static GameManager instance;
     public bool gameEnded;
+    public GameObject playerShip;
 
     private void Awake()
     {
@@ -22,13 +25,14 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1;
         gameEnded = false;
-        totalDamage = 0;
+        playerStats = PlayerStats.instance;
+        //totalDamage = 0;
         Cursor.visible = false;
     }
 
     private void Update()
     {
-        if (playerHealth.Health <= 0) StartCoroutine(EndGame());
+        if (playerHealth.health <= 0) StartCoroutine(EndGame());
     }
 
     private IEnumerator EndGame()
@@ -39,8 +43,16 @@ public class GameManager : MonoBehaviour
         Cursor.visible = true;
     }
 
-    public void AddTotalDamage(float _damage)
+    /* public void AddTotalDamage(float _damage)
     {
         totalDamage += _damage;
+    } */
+
+    public IEnumerator SaveAndReloadScene()
+    {
+        saveLoadSystem.Save();
+        yield return new WaitUntil(() => saveLoadSystem.hasSaved);
+        SceneChanger.instance.ChangeScene(SceneManager.GetActiveScene().name, false);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

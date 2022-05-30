@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 842140b4171552f458251c849adde961, type: 3}
+  m_Name: Critical Damage
+  m_EditorClassIdentifier: 
+  name: CRITICAL DAMAGE
+  descriptions:
+  - 10% crit chance and 50% crit DMG for primary weapon
+  - 10% crit chance and 75% crit DMG for primary weapon
+  - 25% crit chance and 75% crit DMG for primary weapon
+  - 25% crit chance and 100% crit DMG for primary weapon
+  - 50% crit chance and 100% crit DMG for primary weapon
+  - 100% crit chance and 200% crit DMG for primary and secondary weapon
+  stage: 0
+  upgradeModuleBehaviour: {fileID: 11400000, guid: 1a2da5ae2ee578840b336ab2cc1adc77, type: 2}

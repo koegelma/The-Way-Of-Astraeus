@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75c632cf78ece0d4d9f47b33a03a1b6e, type: 3}
-  m_Name: Projectile Madness
+  m_Script: {fileID: 11500000, guid: 842140b4171552f458251c849adde961, type: 3}
+  m_Name: ProjectileMadness
   m_EditorClassIdentifier: 
   name: PROJECTILE MADNESS
   descriptions:
@@ -19,5 +19,6 @@ MonoBehaviour:
   - Primary weapon shoots an additional projectile (4 projectiles total)
   - Primary weapon shoots an additional projectile (5 projectiles total)
   - Primary weapon shoots an additional projectile (6 projectiles total)
-  - Effects also apply to secondary weapon
+  - 'Effects also apply to secondary weapon '
   stage: 0
+  upgradeModuleBehaviour: {fileID: 11400000, guid: bf6b215b627a25b41b9521525214fca9, type: 2}
