@@ -6,21 +6,21 @@ using UnityEngine.UI;
 public class UpgradeModuleDisplay : MonoBehaviour
 {
     private PlayerStats playerStats;
-    private List<UpgradeModule> validUpgradeModules; // save on scene change. only remove upgrade module if last stage is acquired
+    private List<UpgradeModule> validUpgradeModules;
     private UpgradeModule[] upgradeModulesDisplayed;
-    private bool firstPicked;
-    private bool secondPicked;
-    private bool thirdPicked;
     public UpgradeModule[] upgradeModules;
+    UpgradeModule upgradeModulePicked = null;
     public Text[] nameTexts;
     public Text[] descriptionTexts;
     public Text[] stageTexts;
+    public Toggle[] toggles;
+    public Canvas[] upgradeCanvass;
 
     private void Start()
     {
         playerStats = PlayerStats.instance;
-        validUpgradeModules = new List<UpgradeModule>();
 
+        validUpgradeModules = new List<UpgradeModule>();
         for (int i = 0; i < upgradeModules.Length; i++)
         {
             if (playerStats.GetCurrentStage(upgradeModules[i].name) < 6) validUpgradeModules.Add(upgradeModules[i]);
@@ -38,25 +38,22 @@ public class UpgradeModuleDisplay : MonoBehaviour
             if (upgradeModulesDisplayed[i] == null)
             {
                 nullCounter++;
+                toggles[i].interactable = false;
+                upgradeCanvass[i].enabled = false;
                 continue;
             }
             nameTexts[i].text = upgradeModulesDisplayed[i].name;
             descriptionTexts[i].text = upgradeModulesDisplayed[i].GetDescription();
             stageTexts[i].text = (upgradeModulesDisplayed[i].stage + 1).ToString();
         }
-        if (nullCounter >= 3) SceneChanger.instance.ChangeScene("0_Menu", false);
-    }
-
-    private void OnEnable()
-    {
-        firstPicked = true;
+        if (nullCounter >= 3) SceneChanger.instance.ChangeScene("0_Menu", false); // ----- TESTING -----
+        upgradeModulePicked = upgradeModulesDisplayed[0];
     }
 
     private UpgradeModule GetRandomUpgradeModule()
     {
         if (validUpgradeModules.Count < 1) return null;
         int random = Random.Range(0, validUpgradeModules.Count);
-
         UpgradeModule randomUpgrade = validUpgradeModules[random];
         validUpgradeModules.Remove(validUpgradeModules[random]);
         return randomUpgrade;
@@ -64,51 +61,31 @@ public class UpgradeModuleDisplay : MonoBehaviour
 
     public void ToggleFirstCard(bool _value)
     {
-        if (_value)
-        {
-            firstPicked = true;
-            secondPicked = false;
-            thirdPicked = false;
-        }
+        if (_value) upgradeModulePicked = upgradeModulesDisplayed[0];
     }
 
     public void ToggleSecondCard(bool _value)
     {
-        if (_value)
-        {
-            firstPicked = false;
-            secondPicked = true;
-            thirdPicked = false;
-        }
+        if (_value) upgradeModulePicked = upgradeModulesDisplayed[1];
     }
 
     public void ToggleThirdCard(bool _value)
     {
-        if (_value)
-        {
-            firstPicked = false;
-            secondPicked = false;
-            thirdPicked = true;
-        }
+        if (_value) upgradeModulePicked = upgradeModulesDisplayed[2];
     }
 
     public void Continue()
     {
-        UpgradeModule upgradeModulePicked = null;
-
-        if (firstPicked) upgradeModulePicked = upgradeModulesDisplayed[0];//newStage = upgradeModulesDisplayed[0].Apply();
-        if (secondPicked) upgradeModulePicked = upgradeModulesDisplayed[1];//newStage = upgradeModulesDisplayed[1].Apply();
-        if (thirdPicked) upgradeModulePicked = upgradeModulesDisplayed[2];//newStage = upgradeModulesDisplayed[2].Apply();
-
         if (upgradeModulePicked == null)
         {
-            Debug.Log("Pick other upgrade");
+            Debug.Log("No upgrade picked");
             return;
         }
 
-        int newStage = upgradeModulePicked.Apply();
+        //int newStage = 
+        upgradeModulePicked.Apply();
 
-        if (newStage == 6)
+       /*  if (newStage == 6)
         {
             foreach (UpgradeModule validUpgradeModule in validUpgradeModules)
             {
@@ -118,9 +95,7 @@ public class UpgradeModuleDisplay : MonoBehaviour
                     Debug.Log(validUpgradeModule.name + " max stage reached.");
                 }
             }
-        }
-
-
+        } */
         // change to shop / next scene
 
         StartCoroutine(GameManager.instance.SaveAndReloadScene());

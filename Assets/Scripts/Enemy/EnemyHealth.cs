@@ -9,10 +9,12 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] private float ammoPickupChance; // 0 - 1.0
     [SerializeField] private GameObject ammoPickup;
     [SerializeField] private int cWorth;
+    private PlayerStats playerStats;
 
     private void Start()
     {
         health = startHealth;
+        playerStats = PlayerStats.instance;
     }
 
     private void Update()
@@ -36,7 +38,12 @@ public class EnemyHealth : MonoBehaviour
         {
             ObjectPooler.instance.SpawnFromPool(PoolTag.COIN.ToString(), transform.position, Quaternion.identity);
         }
-        
+
+        if (playerStats.Carnage > 0)
+        {
+            if (playerStats.carnageCurrStacks <= playerStats.carnageMaxStacks) playerStats.ActivateCarnageStack();
+        }
+
         ObjectPooler.instance.SpawnFromPool(PoolTag.SHIPEXPLOSION.ToString(), transform.position, Quaternion.identity);
         EnemySpawner.enemiesToDie--;
         Destroy(gameObject);

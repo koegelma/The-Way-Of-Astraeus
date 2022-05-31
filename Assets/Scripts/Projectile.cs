@@ -58,7 +58,7 @@ public class Projectile : MonoBehaviour
 
         if (isEnemyProjectile && _collObj.GetComponentInParent<PlayerHealth>())
         {
-            Damage(_collObj.transform);
+            DamagePlayer(_collObj.transform);
             return;
         }
 
@@ -76,115 +76,106 @@ public class Projectile : MonoBehaviour
                         if (!collidedEnemies.Contains(rootTransform)) collidedEnemies.Add(rootTransform);
                     }
                 }
-                AoEDamage(collidedEnemies);
+                SecondaryAoEDamage(collidedEnemies);
                 return;
             }
-            Damage(_collObj.transform);
+
+            if (playerStats.MassDestruction > 0)
+            {
+                Transform initialRootTransform = _collObj.transform.root;
+                List<Transform> collidedEnemies = new List<Transform>();
+                Collider[] colliders = Physics.OverlapSphere(transform.position, playerStats.aoeRange);
+                foreach (Collider collider in colliders)
+                {
+                    if (collider.GetComponentInParent<EnemyHealth>())
+                    {
+                        Transform rootTransform = collider.transform.root;
+                        if (!collidedEnemies.Contains(rootTransform) && rootTransform != initialRootTransform) collidedEnemies.Add(rootTransform);
+                    }
+                }
+                MassDestructionAoEDamage(_collObj.transform, collidedEnemies);
+                return;
+            }
+            DamageEnemy(_collObj.transform);
+            gameObject.SetActive(false);
         }
     }
 
-    private void Damage(Transform _target)
+    private void DamagePlayer(Transform _target)
     {
         objectPooler.SpawnFromPool(hitExplosion.ToString(), _target.position, Quaternion.identity);
         GameObject damageUIGameObject = objectPooler.SpawnFromPool(PoolTag.DAMAGEUI.ToString(), _target.position, Quaternion.identity);
         DamageUI damageUI = damageUIGameObject.GetComponent<DamageUI>();
         damageUI.SetDamageAmount(damageAmount);
 
-        if (_target.GetComponentInParent<PlayerHealth>())
-        {
-            _target.GetComponentInParent<PlayerHealth>().SubtractHealth(damageAmount);
-            damageUI.SetColor(Color.red);
-            gameObject.SetActive(false);
-            return;
-        }
-
-        if (_target.GetComponentInParent<EnemyHealth>())
-        {
-            //GameManager.instance.AddTotalDamage(damageAmount);
-            if (playerStats.CritHit > 0)
-            {
-                if (!isSecondaryProjectile || playerStats.secHasCrit)
-                {
-                    if (IsLucky(playerStats.critChance))
-                    {
-                        damageAmount *= playerStats.critDMG;
-                        damageUI.SetDamageAmount(damageAmount);
-                    }
-                }
-            }
-            if (playerStats.Leech > 0)
-            {
-                if (IsLucky(playerStats.leechChance))
-                {
-                    GameManager.instance.playerShip.GetComponent<PlayerHealth>().AddHealth(damageAmount * playerStats.leechAmount);
-                    Debug.Log("Health leeched: " + damageAmount * playerStats.leechAmount);
-                }
-            }
-            playerStats.totalDamage += damageAmount;
-
-            if (_target.GetComponentInParent<Shield>())
-            {
-                if (_target.GetComponentInParent<Shield>().ShieldActive)
-                {
-                    _target.GetComponentInParent<Shield>().SubtractHealth(damageAmount);
-                    damageUI.SetColor(Color.cyan);
-                    gameObject.SetActive(false);
-                    return;
-                }
-            }
-            _target.GetComponentInParent<EnemyHealth>().SubtractHealth(damageAmount);
-            damageUI.SetColor(Color.yellow);
-            gameObject.SetActive(false);
-        }
+        _target.GetComponentInParent<PlayerHealth>().SubtractHealth(damageAmount);
+        damageUI.SetColor(Color.red);
+        gameObject.SetActive(false);
     }
 
-    private void AoEDamage(List<Transform> _targets)
+    private void DamageEnemy(Transform _target)
+    {
+        float currentDamage = damageAmount;
+        if (playerStats.carnageActive) currentDamage += playerStats.carnageDMG * currentDamage * playerStats.carnageCurrStacks;
+
+        objectPooler.SpawnFromPool(hitExplosion.ToString(), _target.position, Quaternion.identity);
+        GameObject damageUIGameObject = objectPooler.SpawnFromPool(PoolTag.DAMAGEUI.ToString(), _target.position, Quaternion.identity);
+        DamageUI damageUI = damageUIGameObject.GetComponent<DamageUI>();
+        damageUI.SetDamageAmount(currentDamage);
+
+        bool isCrit = false;
+        if (playerStats.CritHit > 0)
+        {
+            if (!isSecondaryProjectile || playerStats.secHasCrit)
+            {
+                if (IsLucky(playerStats.critChance))
+                {
+                    currentDamage += playerStats.critDMG * currentDamage;
+                    damageUI.SetDamageAmount(currentDamage);
+                    isCrit = true;
+                    damageUI.SetColor(Color.magenta);
+                }
+            }
+        }
+        if (playerStats.Leech > 0)
+        {
+            if (IsLucky(playerStats.leechChance)) GameManager.instance.playerShip.GetComponent<PlayerHealth>().AddHealth(currentDamage * playerStats.leechAmount);
+        }
+        playerStats.totalDamage += currentDamage;
+
+        if (_target.GetComponentInParent<Shield>())
+        {
+            if (_target.GetComponentInParent<Shield>().ShieldActive)
+            {
+                _target.GetComponentInParent<Shield>().SubtractHealth(currentDamage);
+                if (!isCrit) damageUI.SetColor(Color.cyan);
+                return;
+            }
+        }
+        _target.GetComponentInParent<EnemyHealth>().SubtractHealth(currentDamage);
+        if (!isCrit) damageUI.SetColor(Color.yellow);
+    }
+
+    private void MassDestructionAoEDamage(Transform _initialTarget, List<Transform> _targets)
+    {
+        if (playerStats.MassDestruction > 5 && _targets.Count > 0) _targets.Add(_initialTarget);
+        else DamageEnemy(_initialTarget);
+
+        damageAmount *= playerStats.aoeDMG;
+
+        foreach (Transform target in _targets)
+        {
+            DamageEnemy(target);
+        }
+
+        gameObject.SetActive(false);
+    }
+
+    private void SecondaryAoEDamage(List<Transform> _targets)
     {
         foreach (Transform target in _targets)
         {
-
-            objectPooler.SpawnFromPool(hitExplosion.ToString(), target.position, Quaternion.identity);
-            GameObject damageUIGameObject = objectPooler.SpawnFromPool(PoolTag.DAMAGEUI.ToString(), target.position, Quaternion.identity);
-            DamageUI damageUI = damageUIGameObject.GetComponent<DamageUI>();
-            damageUI.SetDamageAmount(damageAmount);
-
-            if (playerStats.CritHit > 0)
-            {
-                if (!isSecondaryProjectile || playerStats.secHasCrit)
-                {
-                    if (IsLucky(playerStats.critChance))
-                    {
-                        damageAmount *= playerStats.critDMG;
-                        damageUI.SetDamageAmount(damageAmount);
-                    }
-                }
-            }
-
-            if (playerStats.Leech > 0)
-            {
-                if (IsLucky(playerStats.leechChance))
-                {
-                    GameManager.instance.playerShip.GetComponent<PlayerHealth>().AddHealth(damageAmount * playerStats.leechAmount);
-                    Debug.Log("Health leeched: " + damageAmount * playerStats.leechAmount);
-                }
-            }
-            playerStats.totalDamage += damageAmount;
-
-            if (target.GetComponentInParent<Shield>())
-            {
-                if (target.GetComponentInParent<Shield>().ShieldActive)
-                {
-                    target.GetComponentInParent<Shield>().SubtractHealth(damageAmount);
-                    damageUI.SetColor(Color.cyan);
-                    return;
-                }
-            }
-
-            if (target.GetComponentInParent<EnemyHealth>())
-            {
-                target.GetComponentInParent<EnemyHealth>().SubtractHealth(damageAmount);
-                damageUI.SetColor(Color.yellow);
-            }
+            DamageEnemy(target);
         }
         gameObject.SetActive(false);
     }

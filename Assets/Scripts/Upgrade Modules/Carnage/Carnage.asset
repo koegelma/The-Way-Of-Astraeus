@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 842140b4171552f458251c849adde961, type: 3}
+  m_Name: Carnage
+  m_EditorClassIdentifier: 
+  name: CARNAGE
+  descriptions:
+  - After defeating an enemy gain Carnage for 3 seconds. Carnage increases base weapon
+    DMG by 50%. Killing an enemy while Carnage is active resets the buff-timer
+  - After defeating an enemy gain Carnage for 3 seconds. Carnage increases base weapon
+    DMG by 50%. Buff can be stacked 2 times. Killing an enemy while having max stacks
+    resets the buff-timer of the oldest stack
+  - After defeating an enemy gain Carnage for 5 seconds. Carnage increases base weapon
+    DMG by 50%. Buff can be stacked 2 times. Killing an enemy while having max stacks
+    resets the buff-timer of the oldest stack
+  - After defeating an enemy gain Carnage for 5 seconds. Carnage increases base weapon
+    DMG by 50%. Buff can be stacked 3 times. Killing an enemy while having max stacks
+    resets the buff-timer of the oldest stack
+  - After defeating an enemy gain Carnage for 7 seconds. Carnage increases base weapon
+    DMG by 50%. Buff can be stacked 3 times. Killing an enemy while having max stacks
+    resets the buff-timer of the oldest stack
+  - After defeating an enemy gain Carnage for 7 seconds. Carnage increases base weapon
+    DMG by 75%. Buff can be stacked 5 times. Killing an enemy while having max stacks
+    resets the buff-timer of the oldest stack
+  stage: 6
+  upgradeModuleBehaviour: {fileID: 11400000, guid: 3570f7af83f0caf43a82614c1090a176, type: 2}

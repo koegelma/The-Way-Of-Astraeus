@@ -32,14 +32,14 @@ public class SceneChanger : MonoBehaviour, ISaveable
 
     private IEnumerator FadeIn()
     {
-        float t = 1f;
+        float t = 1;
 
-        while (t > 0f)
+        while (t > 0)
         {
             t -= Time.deltaTime * speed;
             float a = curve.Evaluate(t);
-            fadeImg.color = new Color(0f, 0f, 0f, a);
-            yield return 0;
+            fadeImg.color = new Color(0, 0, 0, a);
+            yield return null;
         }
 
         yield return new WaitUntil(() => hasLoaded);
@@ -50,14 +50,14 @@ public class SceneChanger : MonoBehaviour, ISaveable
     {
         Time.timeScale = 1;
         
-        float t = 0f;
+        float t = 0;
 
-        while (t < 1f)
+        while (t < 1)
         {
             t += Time.deltaTime * speed;
             float a = curve.Evaluate(t);
-            fadeImg.color = new Color(0f, 0f, 0f, a);
-            yield return 0;
+            fadeImg.color = new Color(0, 0, 0, a);
+            yield return null;
         }
         saveLoadSystem.Save();
         yield return new WaitUntil(() => saveLoadSystem.hasSaved);

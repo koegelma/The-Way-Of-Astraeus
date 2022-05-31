@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 842140b4171552f458251c849adde961, type: 3}
+  m_Name: Mass Destruction
+  m_EditorClassIdentifier: 
+  name: MASS DESTRUCTION
+  descriptions:
+  - When hitting an enemy with your primary weapon all enemies within 10m range also
+    receive 50% of DMG
+  - 'When hitting an enemy with your primary weapon all enemies within 15m range
+    also receive 50% of DMG '
+  - When hitting an enemy with your primary weapon all enemies within 15m range also
+    receive 75% of DMG
+  - When hitting an enemy with your primary weapon all enemies within 20m range also
+    receive 75% of DMG
+  - When hitting an enemy with your primary weapon all enemies within 25m range also
+    receive 100% of DMG
+  - When hitting multiple enemies with your primary weapon every enemy receives 150%
+    of normal DMG
+  stage: 0
+  upgradeModuleBehaviour: {fileID: 11400000, guid: eb67ccf0576760040b08403b705bca16, type: 2}

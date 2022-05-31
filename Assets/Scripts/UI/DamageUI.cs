@@ -7,6 +7,7 @@ public class DamageUI : MonoBehaviour
 {
     [SerializeField] private Text damageAmount;
     private float scaleFactor;
+    private float speed = 5;
 
     private void OnEnable()
     {
@@ -29,6 +30,7 @@ public class DamageUI : MonoBehaviour
             gameObject.SetActive(false);
         }
         transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
+        transform.Translate(Vector3.forward * speed * Time.deltaTime);
     }
 
     public void SetDamageAmount(float _damageAmount)

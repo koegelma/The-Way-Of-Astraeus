@@ -1,6 +1,8 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerStats : MonoBehaviour, ISaveable
 {
@@ -23,8 +25,8 @@ public class PlayerStats : MonoBehaviour, ISaveable
     public int CritHit { get { return critHit; } }
     private int carnage;
     public int Carnage { get { return carnage; } }
-    private int splash;
-    public int Splash { get { return splash; } }
+    private int massDestruction;
+    public int MassDestruction { get { return massDestruction; } }
     private int leech;
     public int Leech { get { return leech; } }
 
@@ -33,9 +35,19 @@ public class PlayerStats : MonoBehaviour, ISaveable
     public bool secHasMultipleProjectiles;
     public float critChance;
     public float critDMG;
+    public float aoeRange;
+    public float aoeDMG;
     public bool secHasCrit;
     public float leechChance;
     public float leechAmount;
+    public float carnageDMG;
+    public float carnageTime;
+    public int carnageMaxStacks;
+    public int carnageCurrStacks;
+    public bool carnageActive;
+    private Queue<Coroutine> carnageCoroutines;
+    public Text carnageStackText;
+    public Text carnageText;
 
     public bool hasLoaded = false;
 
@@ -48,6 +60,7 @@ public class PlayerStats : MonoBehaviour, ISaveable
     {
         playerHealth = GetComponent<PlayerHealth>();
         playerShooter = GetComponent<PlayerShooter>();
+        carnageCoroutines = new Queue<Coroutine>();
     }
 
     public IEnumerator InitializeNewRun()
@@ -58,18 +71,27 @@ public class PlayerStats : MonoBehaviour, ISaveable
         hasShield = false;
         hasArmor = false;
         totalDamage = 0;
+
         projectileMadness = 0;
         critHit = 0;
         carnage = 0;
-        splash = 0;
+        massDestruction = 0;
         leech = 0;
+
         projectileAmount = 1;
         secHasMultipleProjectiles = false;
         critChance = 0;
         critDMG = 0;
+        aoeRange = 0;
+        aoeDMG = 0;
         secHasCrit = false;
         leechChance = 0;
         leechAmount = 0;
+        carnageDMG = 0;
+        carnageTime = 0;
+        carnageMaxStacks = 0;
+        carnageCurrStacks = 0;
+        carnageActive = false;
 
         playerHealth.maxHealth = 100;
         playerHealth.health = playerHealth.maxHealth;
@@ -104,8 +126,8 @@ public class PlayerStats : MonoBehaviour, ISaveable
             case "CARNAGE":
                 stage = carnage;
                 break;
-            case "SPLASH":
-                stage = splash;
+            case "MASS DESTRUCTION":
+                stage = massDestruction;
                 break;
             case "LEECH":
                 stage = leech;
@@ -131,9 +153,9 @@ public class PlayerStats : MonoBehaviour, ISaveable
                 carnage++;
                 newStage = carnage;
                 break;
-            case "SPLASH":
-                splash++;
-                newStage = splash;
+            case "MASS DESTRUCTION":
+                massDestruction++;
+                newStage = massDestruction;
                 break;
             case "LEECH":
                 leech++;
@@ -141,6 +163,40 @@ public class PlayerStats : MonoBehaviour, ISaveable
                 break;
         }
         return newStage;
+    }
+
+    public void ActivateCarnageStack()
+    {
+        if (carnageCurrStacks == carnageMaxStacks && carnageCoroutines.Count == carnageMaxStacks)
+        {
+            Coroutine coroutineToReset = carnageCoroutines.Dequeue();
+            StopCoroutine(coroutineToReset);
+            carnageCurrStacks--;
+        }
+
+        Coroutine newCarnageCoroutine = StartCoroutine(StartCarnageStack());
+        carnageCoroutines.Enqueue(newCarnageCoroutine);
+    }
+
+    private IEnumerator StartCarnageStack()
+    {
+        carnageCurrStacks++;
+        UpdateCarnageUI();
+        carnageActive = true;
+
+        yield return new WaitForSeconds(carnageTime);
+
+        carnageCurrStacks--;
+        UpdateCarnageUI();
+        if (carnageCurrStacks < 1) carnageActive = false;
+        carnageCoroutines.Dequeue();
+    }
+
+    private void UpdateCarnageUI()
+    {
+        if (carnageCurrStacks < 1) carnageText.text = null;
+        else carnageText.text = "CARNAGE STACKS   ";
+        carnageStackText.text = carnageCurrStacks.ToString("#");
     }
 
     public object SaveState()
@@ -158,16 +214,23 @@ public class PlayerStats : MonoBehaviour, ISaveable
             projectileMadness = this.projectileMadness,
             critHit = this.critHit,
             carnage = this.carnage,
-            splash = this.splash,
+            splash = this.massDestruction,
             leech = this.leech,
 
             projectileAmount = this.projectileAmount,
             secHasMultipleProjectiles = this.secHasMultipleProjectiles,
             critChance = this.critChance,
             critDMG = this.critDMG,
+            aoeRange = this.aoeRange,
+            aoeDMG = this.aoeDMG,
             secHasCrit = this.secHasCrit,
             leechChance = this.leechChance,
-            leechAmount = this.leechAmount
+            leechAmount = this.leechAmount,
+            carnageDMG = this.carnageDMG,
+            carnageTime = this.carnageTime,
+            carnageMaxStacks = this.carnageMaxStacks,
+            carnageCurrStacks = 0,
+            carnageActive = false
         };
     }
 
@@ -187,16 +250,23 @@ public class PlayerStats : MonoBehaviour, ISaveable
         projectileMadness = saveData.projectileMadness;
         critHit = saveData.critHit;
         carnage = saveData.carnage;
-        splash = saveData.splash;
+        massDestruction = saveData.splash;
         leech = saveData.leech;
 
         projectileAmount = saveData.projectileAmount;
         secHasMultipleProjectiles = saveData.secHasMultipleProjectiles;
         critChance = saveData.critChance;
         critDMG = saveData.critDMG;
+        aoeRange = saveData.aoeRange;
+        aoeDMG = saveData.aoeDMG;
         secHasCrit = saveData.secHasCrit;
         leechChance = saveData.leechChance;
         leechAmount = saveData.leechAmount;
+        carnageDMG = saveData.carnageDMG;
+        carnageTime = saveData.carnageTime;
+        carnageMaxStacks = saveData.carnageMaxStacks;
+        carnageCurrStacks = saveData.carnageCurrStacks;
+        carnageActive = saveData.carnageActive;
 
         hasLoaded = true;
     }
@@ -223,8 +293,15 @@ public class PlayerStats : MonoBehaviour, ISaveable
         public bool secHasMultipleProjectiles;
         public float critChance;
         public float critDMG;
+        public float aoeRange;
+        public float aoeDMG;
         public bool secHasCrit;
         public float leechChance;
         public float leechAmount;
+        public float carnageDMG;
+        public float carnageTime;
+        public int carnageMaxStacks;
+        public int carnageCurrStacks;
+        public bool carnageActive;
     }
 }

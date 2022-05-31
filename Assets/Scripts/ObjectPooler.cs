@@ -90,7 +90,7 @@ public class ObjectPooler : MonoBehaviour
         if (!poolDictionary.ContainsKey(_tag))
         {
             Debug.LogError("Pool with tag " + _tag + " doesn't exist.");
-            yield return null;
+            yield break;
         }
         foreach (GameObject obj in poolDictionary[_tag])
         {
