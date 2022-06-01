@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Shield : MonoBehaviour
@@ -15,18 +16,21 @@ public class Shield : MonoBehaviour
     private float opacity;
     private float maxOpacity;
     public bool ShieldActive { get { return shield.activeSelf; } }
+    private bool hasEMP;
+    public GameObject burstEffectGO;
+    private ParticleSystem burstEffect;
 
     private void Start()
     {
+        if (GetComponent<PlayerStats>()) GetShieldValues();
         health = maxHealth;
+        cooldown = cooldownTime;
         shield = Instantiate(shieldPrefab, transform.position, Quaternion.identity);
         shield.transform.SetParent(gameObject.transform);
 
         shield.GetComponent<Renderer>().sharedMaterial = new Material(shield.GetComponent<Renderer>().sharedMaterial);
         shieldMat = shield.GetComponent<Renderer>().sharedMaterial;
         maxOpacity = shieldMat.GetFloat("_Opacity");
-
-        cooldown = cooldownTime;
     }
 
     private void Update()
@@ -41,9 +45,19 @@ public class Shield : MonoBehaviour
         if (recharging) Recharge();
     }
 
+    public void GetShieldValues()
+    {
+        PlayerStats playerStats = PlayerStats.instance;
+        maxHealth = playerStats.shieldAmount;
+        cooldownTime = playerStats.shieldCooldown;
+        if (playerStats.Shield > 5) hasEMP = true;
+    }
+
     private void SetOpacity()
     {
-        opacity = (health / maxHealth) * maxOpacity;
+        float low = health;
+        if (low < 15) low = 15;
+        opacity = (low / maxHealth) * maxOpacity;
         shieldMat.SetFloat("_Opacity", opacity);
     }
 
@@ -77,8 +91,32 @@ public class Shield : MonoBehaviour
         {
             health = 0;
             shield.SetActive(false);
+            if (hasEMP) SendEMP();
         }
         SetToCooldown();
+    }
+
+    private void SendEMP()
+    {
+        GameObject burst = Instantiate(burstEffectGO, transform.position, transform.rotation);
+        burst.transform.SetParent(gameObject.transform);
+        Destroy(burst, 3);
+
+        List<Transform> collidedEnemies = new List<Transform>();
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 200);
+        foreach (Collider collider in colliders)
+        {
+            if (collider.GetComponentInParent<EnemyHealth>())
+            {
+                Transform rootTransform = collider.transform.root;
+                if (!collidedEnemies.Contains(rootTransform)) collidedEnemies.Add(rootTransform);
+            }
+        }
+
+        foreach (Transform enemy in collidedEnemies)
+        {
+            StartCoroutine(enemy.GetComponent<EnemyMovement>().HndEMP(3));
+        }
     }
 
     private void SetToCooldown()

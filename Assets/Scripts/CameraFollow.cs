@@ -14,8 +14,9 @@ public class CameraFollow : MonoBehaviour
     private void Start()
     {
         playerMovement = player.GetComponent<PlayerMovement>();
-        InvokeRepeating("GetPlayerMoveSpeed", 0, 1); // maybe change to start of location, if it's not possible to change speed during location
+        InvokeRepeating("GetPlayerMoveSpeed", 0, 1); // change to get playerspeed only at start of location, if it's not possible to change speed during location (via pickup)
         newSpeed = moveSpeed / 10;
+        transform.position = player.position + offset;
     }
 
     private void FixedUpdate()

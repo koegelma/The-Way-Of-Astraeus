@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class EnemySpawner : MonoBehaviour
 {
+    private GameManager gameManager;
     [SerializeField] private GameObject stageClearedUI;
     [SerializeField] private Text waveCountdown;
     [SerializeField] private Text waveCounter;
@@ -17,6 +18,8 @@ public class EnemySpawner : MonoBehaviour
 
     private void Start()
     {
+        gameManager = GameManager.instance;
+
         spawnpoints = new Transform[transform.childCount];
         for (int i = 0; i < spawnpoints.Length; i++)
         {
@@ -29,7 +32,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.instance.gameEnded) StopAllCoroutines();
+        if (gameManager.gameEnded) StopAllCoroutines();
         if (enemiesToDie <= 0)
         {
             if (countdown <= 0)
@@ -40,7 +43,7 @@ public class EnemySpawner : MonoBehaviour
                 {
                     StopAllCoroutines();
                     stageClearedUI.SetActive(true);
-                    GameManager.instance.gameEnded = true;
+                    gameManager.gameEnded = true;
                     Cursor.visible = true;
                     this.enabled = false;
                     return;

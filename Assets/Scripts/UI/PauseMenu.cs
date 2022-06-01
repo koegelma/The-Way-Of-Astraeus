@@ -1,16 +1,20 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
-
 
 public class PauseMenu : MonoBehaviour
 {
+    private GameManager gameManager;
     [SerializeField] private GameObject ui;
     [SerializeField] private GameObject optionsUI;
     [SerializeField] private GameObject exitRunUI;
 
+    private void Start()
+    {
+        gameManager = GameManager.instance;
+    }
+
     private void Update()
     {
-        if (GameManager.instance.gameEnded) return;
+        if (gameManager.gameEnded) return;
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             TogglePauseMenu();
@@ -49,6 +53,5 @@ public class PauseMenu : MonoBehaviour
     public void ConfirmExitRun()
     {
         SceneChanger.instance.ChangeScene("0_Menu", false);
-        //SceneManager.LoadScene("0_Menu");
     }
 }

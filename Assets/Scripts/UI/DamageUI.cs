@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,7 +9,6 @@ public class DamageUI : MonoBehaviour
 
     private void OnEnable()
     {
-        //StartCoroutine(DisableGameObject(1));
         scaleFactor = 1;
         transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
     }
@@ -42,11 +39,4 @@ public class DamageUI : MonoBehaviour
     {
         damageAmount.color = _color;
     }
-
-    /*  private IEnumerator DisableGameObject(float _seconds)
-     {
-         yield return new WaitForSeconds(_seconds);
-         damageAmount.text = null;
-         gameObject.SetActive(false);
-     } */
 }

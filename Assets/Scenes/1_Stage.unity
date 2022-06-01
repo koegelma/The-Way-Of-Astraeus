@@ -6387,8 +6387,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -51.41101, y: -0.000247}
-  m_SizeDelta: {x: 103.18, y: 67.431}
+  m_AnchoredPosition: {x: -25.795, y: 0.00050366}
+  m_SizeDelta: {x: 51.59, y: 67.431}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &200817442
 MonoBehaviour:
@@ -6624,6 +6624,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 223974227}
+  - component: {fileID: 223974228}
   m_Layer: 0
   m_Name: Sounds
   m_TagString: Untagged
@@ -6639,13 +6640,28 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 223974226}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 49.566784, y: -1.7040503, z: -28.943645}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 732587186}
+  - {fileID: 1041288960}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &223974228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 223974226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02b6416a4eed0cb4a99d98d71e61c303, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ammoPickupSFX: {fileID: 732587185}
+  coinPickupSFX: {fileID: 1041288961}
 --- !u!1 &226681887
 GameObject:
   m_ObjectHideFlags: 0
@@ -12948,7 +12964,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   backgroundPrefab: {fileID: 7271270527723512385, guid: 00b562ffb352866409493f5ef45bd945, type: 3}
-  isMenu: 1
+  isMenu: 0
   blueSpritePrefabs:
   - {fileID: 21300000, guid: a1d69ece93c905d4cb621bbbfb8879b1, type: 3}
   - {fileID: 21300000, guid: 09dac41bd6c04b841a51810f736aa278, type: 3}
@@ -30839,7 +30855,7 @@ GameObject:
   - component: {fileID: 732587186}
   - component: {fileID: 732587185}
   m_Layer: 0
-  m_Name: Reloading_Magazine
+  m_Name: AmmoPickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37450,8 +37466,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -353.18, y: 33.715}
-  m_SizeDelta: {x: 206.35248, y: 67.42999}
+  m_AnchoredPosition: {x: -334.18896, y: 33.714996}
+  m_SizeDelta: {x: 168.3705, y: 67.43}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &943640412
 MonoBehaviour:
@@ -37609,6 +37625,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: efd42e9c64b22954d9808e527ca47c1f, type: 2}
   - {fileID: 11400000, guid: 7c5ef4938c6827b40b18a21a0aa474e6, type: 2}
   - {fileID: 11400000, guid: 6049bc21356d59d43af4a07ed90c4784, type: 2}
+  - {fileID: 11400000, guid: 2174ec69830a30746a60ea8721e117fe, type: 2}
+  - {fileID: 11400000, guid: ff63cefb7d9fbdd438517d8c19516b0a, type: 2}
   nameTexts:
   - {fileID: 579441502}
   - {fileID: 829657541}
@@ -38379,6 +38397,133 @@ MonoBehaviour:
   m_EffectColor: {r: 0.6509804, g: 0.6509804, b: 0.6509804, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
+--- !u!1 &1041288959
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1041288960}
+  - component: {fileID: 1041288961}
+  m_Layer: 0
+  m_Name: CoinPickup
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1041288960
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1041288959}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 223974227}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &1041288961
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1041288959}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 1ef5b28ff0b80614bb85396c42d661ce, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1048713896
 GameObject:
   m_ObjectHideFlags: 0
@@ -45232,7 +45377,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1419616314}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -10, z: -25}
+  m_LocalPosition: {x: 0, y: -15, z: -25}
   m_LocalScale: {x: 20, y: 1, z: 12}
   m_Children: []
   m_Father: {fileID: 0}
@@ -52456,8 +52601,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -51.501007, y: 2.2823}
-  m_SizeDelta: {x: 103.35, y: 62.8659}
+  m_AnchoredPosition: {x: -25.795, y: 2.2831}
+  m_SizeDelta: {x: 116.78, y: 62.8659}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1782340616
 MonoBehaviour:
@@ -64878,6 +65023,7 @@ GameObject:
   - component: {fileID: 5233427633972404516}
   - component: {fileID: 5233427633972404515}
   - component: {fileID: 5233427633972404518}
+  - component: {fileID: 5233427633972404521}
   m_Layer: 0
   m_Name: PlayerShip
   m_TagString: Untagged
@@ -64945,6 +65091,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2219abec1206ae944a83df932da21914, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundManager: {fileID: 223974228}
   primProjectile: 0
   primProjectileSpeed: 350
   primProjectileDamage: 5
@@ -64959,7 +65106,6 @@ MonoBehaviour:
   secCurAmmo: 6
   secMaxAmmoText: {fileID: 1329254938}
   secCurAmmoText: {fileID: 296656312}
-  reloadSound: {fileID: 732587185}
   leftFirePosition: {fileID: 807804137}
   leftShootingParticle: {fileID: 460730607}
   rightFirePosition: {fileID: 1548432732}
@@ -64990,19 +65136,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currencyUI: {fileID: 192542717}
+  soundManager: {fileID: 223974228}
   cAmount: 0
   sAmount: 0
+  cDropMultiplier: 1
   isBallistic: 0
-  hasShield: 0
-  hasArmor: 0
   totalDamage: 0
+  healthDropChance: 0.1
+  ammoDropChance: 0.1
   projectileAmount: 1
-  secHasMultipleProjectiles: 0
   critChance: 0
   critDMG: 0
   aoeRange: 0
   aoeDMG: 0
-  secHasCrit: 0
   leechChance: 0.1
   leechAmount: 0.01
   carnageDMG: 0
@@ -65012,7 +65158,27 @@ MonoBehaviour:
   carnageActive: 0
   carnageStackText: {fileID: 200817442}
   carnageText: {fileID: 1782340616}
-  hasLoaded: 0
+  shieldAmount: 0
+  shieldCooldown: 0
+  armorAmount: 0
+  armorReflAmount: 0
+--- !u!114 &5233427633972404521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5233427633972404514}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a66e8c0f5fd80b459c7a1355704d00c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shieldPrefab: {fileID: 9002960658843183268, guid: 07d19113e67cf974f9595e9aa91a4c19, type: 3}
+  maxHealth: 0
+  rechargeTime: 3
+  cooldownTime: 0
+  burstEffectGO: {fileID: 1216530786548470724, guid: e1f1569b758e7a34d84f1a4ebbd1f2fb, type: 3}
 --- !u!4 &5236071983523838746
 Transform:
   m_ObjectHideFlags: 0

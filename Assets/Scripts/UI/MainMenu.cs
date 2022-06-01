@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
@@ -9,12 +8,10 @@ public class MainMenu : MonoBehaviour
     //[SerializeField] private GameObject talentsUI;
     [SerializeField] private GameObject optionsUI;
     [SerializeField] private SaveLoadSystem saveLoadSystem;
-    //private Animator animator;
 
     private void Start()
     {
         Time.timeScale = 1;
-        //animator = GetComponent<Animator>();
     }
 
     public void ToggleNewRunUI()
@@ -27,17 +24,8 @@ public class MainMenu : MonoBehaviour
     public void NewRun()
     {
         SceneChanger.instance.ChangeScene("1_Stage", true);
-        //saveLoadSystem.Save();
-        //StartCoroutine(StartNewRun());
     }
 
-    /* private IEnumerator StartNewRun()
-    {
-        //animator.SetTrigger("TrFadeOut"); // delete and delegate to SceneChanger
-        //menuShip.newGameStarting = true;
-        yield return new WaitUntil(() => saveLoadSystem.hasSaved); //menuShip.shipIsInPosition
-        SceneManager.LoadScene("1_Stage");
-    } */
 
     public void ToggleTalents()
     {
@@ -62,5 +50,4 @@ public class MainMenu : MonoBehaviour
         yield return new WaitUntil(() => saveLoadSystem.hasSaved);
         Application.Quit();
     }
-
 }

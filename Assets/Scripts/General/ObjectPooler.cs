@@ -29,33 +29,6 @@ public class ObjectPooler : MonoBehaviour
         AllocateObjectPool(PoolTag.COIN.ToString(), PoolTag.COIN, 100);
     }
 
-   /*  public void CreatePool(string _tag, GameObject _gameObject, int _size) // not used atm
-    {
-        Queue<GameObject> objectPool = new Queue<GameObject>();
-        for (int i = 0; i < _size; i++)
-        {
-            GameObject obj = Instantiate(_gameObject);
-            obj.SetActive(false);
-            objectPool.Enqueue(obj);
-        }
-        poolDictionary.Add(_tag, objectPool);
-    } */
-
-   /*  public void CreatePoolFromArray(string _tag, GameObject[] _gameObjects, int _size) // not used atm
-    {
-        Queue<GameObject> objectPool = new Queue<GameObject>();
-        for (int i = 0; i < _gameObjects.Length; i++)
-        {
-            for (int s = 0; s < _size; s++)
-            {
-                GameObject obj = Instantiate(_gameObjects[i]);
-                obj.SetActive(false);
-                objectPool.Enqueue(obj);
-            }
-        }
-        poolDictionary.Add(_tag, objectPool);
-    } */
-
     public void AllocateObjectPool(string _tag, PoolTag _poolTag, int _size)
     {
         PoolObject poolObjectRef = null;

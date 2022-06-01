@@ -31,7 +31,6 @@ public class CriticalDamageBehaviour : UpgradeModuleBehaviour
             case 6:
                 playerStats.critChance = 1;
                 playerStats.critDMG = 2;
-                playerStats.secHasCrit = true;
                 break;
         }
     }

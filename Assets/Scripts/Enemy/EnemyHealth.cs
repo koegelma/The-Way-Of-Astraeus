@@ -2,24 +2,24 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
+    private GameManager gameManager;
+    private PlayerStats playerStats;
     [SerializeField] private float startHealth;
     private float health;
-    [SerializeField] private float smallHealthChance; // 0 - 1.0
     [SerializeField] private GameObject smallHealthBuff;
-    [SerializeField] private float ammoPickupChance; // 0 - 1.0
     [SerializeField] private GameObject ammoPickup;
     [SerializeField] private int cWorth;
-    private PlayerStats playerStats;
 
     private void Start()
     {
         health = startHealth;
         playerStats = PlayerStats.instance;
+        gameManager = GameManager.instance;
     }
 
     private void Update()
     {
-        if (GameManager.instance.gameEnded) gameObject.SetActive(false);
+        if (gameManager.gameEnded) gameObject.SetActive(false);
         if (health <= 0) Die();
     }
 
@@ -31,10 +31,11 @@ public class EnemyHealth : MonoBehaviour
 
     private void Die()
     {
-        if (IsLucky(smallHealthChance)) Instantiate(smallHealthBuff, transform.position, Quaternion.identity);
-        if (IsLucky(ammoPickupChance)) Instantiate(ammoPickup, transform.position, Quaternion.identity);
+        if (IsLucky(playerStats.healthDropChance)) Instantiate(smallHealthBuff, transform.position, Quaternion.identity);
+        if (IsLucky(playerStats.ammoDropChance)) Instantiate(ammoPickup, transform.position, Quaternion.identity);
 
-        for (int i = 0; i < cWorth; i++)
+        int cAmount = Mathf.RoundToInt(cWorth * playerStats.cDropMultiplier);
+        for (int i = 0; i < cAmount; i++)
         {
             ObjectPooler.instance.SpawnFromPool(PoolTag.COIN.ToString(), transform.position, Quaternion.identity);
         }

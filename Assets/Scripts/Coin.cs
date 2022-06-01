@@ -28,6 +28,8 @@ public class Coin : MonoBehaviour
 
     private void Update()
     {
+        if (!player.activeSelf) gameObject.SetActive(false);
+
         if (playerIsTarget)
         {
             TranslateToPlayer();

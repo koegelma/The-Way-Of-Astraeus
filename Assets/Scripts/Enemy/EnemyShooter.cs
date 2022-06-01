@@ -14,6 +14,7 @@ public class EnemyShooter : MonoBehaviour
     private ObjectPooler objectPooler;
     private string projectilePool;
     private string myID = Guid.NewGuid().ToString();
+    public bool isStunned;
 
     private void Start()
     {
@@ -24,6 +25,7 @@ public class EnemyShooter : MonoBehaviour
     }
     private void Update()
     {
+        if (isStunned) return;
         if (fireCountdown <= 0f)
         {
             Shoot();
@@ -37,7 +39,7 @@ public class EnemyShooter : MonoBehaviour
     {
         GameObject newProjectile = objectPooler.SpawnFromPool(projectilePool, firePosition.position, Quaternion.identity);
         newProjectile.GetComponent<Projectile>().SetToEnemyProjectile();
-        newProjectile.GetComponent<Projectile>().SetProjectileValues(projectileSpeed, projectileDamage, 0);
+        newProjectile.GetComponent<Projectile>().SetProjectileValues(projectileSpeed, projectileDamage, 0, gameObject);
         shootingParticle.Play();
     }
 

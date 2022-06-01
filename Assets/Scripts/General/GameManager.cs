@@ -1,17 +1,13 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    private PlayerStats playerStats;
     [SerializeField] private PlayerHealth playerHealth;
     [SerializeField] private GameObject gameOverUI;
     [SerializeField] private SaveLoadSystem saveLoadSystem;
-    private PlayerStats playerStats;
-    //private float totalDamage;
-    //public float TotalDamage { get { return totalDamage; } }
     public static GameManager instance;
     public bool gameEnded;
     public GameObject playerShip;
@@ -26,7 +22,6 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
         gameEnded = false;
         playerStats = PlayerStats.instance;
-        //totalDamage = 0;
         Cursor.visible = false;
     }
 
@@ -43,16 +38,10 @@ public class GameManager : MonoBehaviour
         Cursor.visible = true;
     }
 
-    /* public void AddTotalDamage(float _damage)
-    {
-        totalDamage += _damage;
-    } */
-
     public IEnumerator SaveAndReloadScene()
     {
         saveLoadSystem.Save();
         yield return new WaitUntil(() => saveLoadSystem.hasSaved);
         SceneChanger.instance.ChangeScene(SceneManager.GetActiveScene().name, false);
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

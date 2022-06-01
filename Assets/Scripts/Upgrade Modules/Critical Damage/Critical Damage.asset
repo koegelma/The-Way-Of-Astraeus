@@ -20,5 +20,5 @@ MonoBehaviour:
   - 25% crit chance and 100% crit DMG for primary weapon
   - 50% crit chance and 100% crit DMG for primary weapon
   - 100% crit chance and 200% crit DMG for primary and secondary weapon
-  stage: 3
+  stage: 0
   upgradeModuleBehaviour: {fileID: 11400000, guid: 1a2da5ae2ee578840b336ab2cc1adc77, type: 2}

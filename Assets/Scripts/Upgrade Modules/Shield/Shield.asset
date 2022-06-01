@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 842140b4171552f458251c849adde961, type: 3}
+  m_Name: Shield
+  m_EditorClassIdentifier: 
+  name: SHIELD
+  descriptions:
+  - Gain a shield. Shield amount 25 and cooldown 7 seconds
+  - Shield amount 25 and cooldown 5 seconds
+  - Shield amount 50 and cooldown 5 seconds
+  - Shield amount 50 and cooldown 3 seconds
+  - Shield amount 75 and cooldown 3 seconds
+  - Shield amount 100 and cooldown 2 seconds. When your shield bursts you send out
+    an EMP that shortly stuns all normal enemies
+  stage: 2
+  upgradeModuleBehaviour: {fileID: 11400000, guid: c59243d148ce7b542b2033bc8bc1abb6, type: 2}

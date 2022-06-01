@@ -26,7 +26,7 @@ public class ProjectileMadnessBehaviour : UpgradeModuleBehaviour
                 playerStats.projectileAmount = 6;
                 break;
             case 6:
-                playerStats.secHasMultipleProjectiles = true;
+                playerStats.projectileAmount = 7;
                 break;
         }
     }

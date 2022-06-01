@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -32,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (boundsColl.bounds.Contains(new Vector3(position.x, boundsColl.transform.position.y, position.z))) rb.MovePosition(position); // checks if position is within bounds (x,z) of groundPlane
+        if (boundsColl.bounds.Contains(new Vector3(position.x, boundsColl.transform.position.y, position.z))) rb.MovePosition(position); // check if position is within bounds (x,z) of groundPlane
     }
 
     private void HndInput()

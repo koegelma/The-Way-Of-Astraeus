@@ -6,19 +6,23 @@ using System.Collections.Generic;
 
 public class PlayerStats : MonoBehaviour, ISaveable
 {
+    [Header("Scripts")]
     private PlayerHealth playerHealth;
     private PlayerShooter playerShooter;
     public static PlayerStats instance;
     public CurrencyUI currencyUI;
+    public SoundManager soundManager;
+
+    [Header("General Vars")]
     public int cAmount;
     public int sAmount;
+    public float cDropMultiplier;
     public bool isBallistic;
-    public bool hasShield;
-    public bool hasArmor;
-
     public float totalDamage;
+    public float healthDropChance;
+    public float ammoDropChance;
 
-    // SHIP UPGRADE MODULE STAGES (0: not active - 6 fully upgraded)
+    [Header("Ship Upgrade Module Stages (0: not active - 6 fully upgraded)")]
     private int projectileMadness;
     public int ProjectileMadness { get { return projectileMadness; } }
     private int critHit;
@@ -29,15 +33,17 @@ public class PlayerStats : MonoBehaviour, ISaveable
     public int MassDestruction { get { return massDestruction; } }
     private int leech;
     public int Leech { get { return leech; } }
+    private int shield;
+    public int Shield { get { return shield; } }
+    private int armor;
+    public int Armor { get { return armor; } }
 
-    // UPGRADE VARS
+    [Header("Ship Upgrade Module Vars")]
     public int projectileAmount;
-    public bool secHasMultipleProjectiles;
     public float critChance;
     public float critDMG;
     public float aoeRange;
     public float aoeDMG;
-    public bool secHasCrit;
     public float leechChance;
     public float leechAmount;
     public float carnageDMG;
@@ -48,8 +54,12 @@ public class PlayerStats : MonoBehaviour, ISaveable
     private Queue<Coroutine> carnageCoroutines;
     public Text carnageStackText;
     public Text carnageText;
+    public float shieldAmount;
+    public float shieldCooldown;
+    public float armorAmount;
+    public float armorReflAmount;
 
-    public bool hasLoaded = false;
+    private bool hasLoaded = false;
 
     private void Awake()
     {
@@ -68,23 +78,24 @@ public class PlayerStats : MonoBehaviour, ISaveable
         yield return new WaitUntil(() => hasLoaded);
 
         cAmount = 0;
-        hasShield = false;
-        hasArmor = false;
+        cDropMultiplier = 1;
         totalDamage = 0;
+        healthDropChance = 0.1f;
+        ammoDropChance = 0.1f;
 
         projectileMadness = 0;
         critHit = 0;
         carnage = 0;
         massDestruction = 0;
         leech = 0;
+        shield = 0;
+        armor = 0;
 
         projectileAmount = 1;
-        secHasMultipleProjectiles = false;
         critChance = 0;
         critDMG = 0;
         aoeRange = 0;
         aoeDMG = 0;
-        secHasCrit = false;
         leechChance = 0;
         leechAmount = 0;
         carnageDMG = 0;
@@ -92,6 +103,8 @@ public class PlayerStats : MonoBehaviour, ISaveable
         carnageMaxStacks = 0;
         carnageCurrStacks = 0;
         carnageActive = false;
+        armorAmount = 0;
+        armorReflAmount = 0;
 
         playerHealth.maxHealth = 100;
         playerHealth.health = playerHealth.maxHealth;
@@ -104,6 +117,7 @@ public class PlayerStats : MonoBehaviour, ISaveable
     {
         cAmount += _amount;
         currencyUI.UpdateCoinText();
+        StartCoroutine(soundManager.QueuePlayCoinPickup());
     }
 
     public void AddSkillCurr(int _amount)
@@ -112,10 +126,10 @@ public class PlayerStats : MonoBehaviour, ISaveable
         currencyUI.UpdateSkillCurrText();
     }
 
-    public int GetCurrentStage(string _name)
+    public int GetCurrentStage(string _moduleName)
     {
         int stage = 0;
-        switch (_name)
+        switch (_moduleName)
         {
             case "PROJECTILE MADNESS":
                 stage = projectileMadness;
@@ -132,14 +146,20 @@ public class PlayerStats : MonoBehaviour, ISaveable
             case "LEECH":
                 stage = leech;
                 break;
+            case "SHIELD":
+                stage = shield;
+                break;
+            case "ARMOR":
+                stage = armor;
+                break;
         }
         return stage;
     }
 
-    public int IncrementStage(string _name)
+    public int IncrementStage(string _moduleName)
     {
         int newStage = -1;
-        switch (_name)
+        switch (_moduleName)
         {
             case "PROJECTILE MADNESS":
                 projectileMadness++;
@@ -160,6 +180,14 @@ public class PlayerStats : MonoBehaviour, ISaveable
             case "LEECH":
                 leech++;
                 newStage = leech;
+                break;
+            case "SHIELD":
+                shield++;
+                newStage = shield;
+                break;
+            case "ARMOR":
+                armor++;
+                newStage = armor;
                 break;
         }
         return newStage;
@@ -199,38 +227,49 @@ public class PlayerStats : MonoBehaviour, ISaveable
         carnageStackText.text = carnageCurrStacks.ToString("#");
     }
 
+    public void ActivateShield()
+    {
+        Shield shield = GetComponent<Shield>();
+        shield.enabled = true;
+    }
+
+    // ----- SAVE LOAD SYSTEM ------
     public object SaveState()
     {
         return new SaveData()
         {
             cAmount = this.cAmount,
             sAmount = this.sAmount,
-            hasShield = this.hasShield,
-            hasArmor = this.hasArmor,
+            cDropMultiplier = this.cDropMultiplier,
             isBallistic = this.isBallistic,
-
             totalDamage = this.totalDamage,
+            healthDropChance = this.healthDropChance,
+            ammoDropChance = this.ammoDropChance,
 
             projectileMadness = this.projectileMadness,
             critHit = this.critHit,
             carnage = this.carnage,
             splash = this.massDestruction,
             leech = this.leech,
+            shield = this.shield,
+            armor = this.armor,
 
             projectileAmount = this.projectileAmount,
-            secHasMultipleProjectiles = this.secHasMultipleProjectiles,
             critChance = this.critChance,
             critDMG = this.critDMG,
             aoeRange = this.aoeRange,
             aoeDMG = this.aoeDMG,
-            secHasCrit = this.secHasCrit,
             leechChance = this.leechChance,
             leechAmount = this.leechAmount,
             carnageDMG = this.carnageDMG,
             carnageTime = this.carnageTime,
             carnageMaxStacks = this.carnageMaxStacks,
             carnageCurrStacks = 0,
-            carnageActive = false
+            carnageActive = false,
+            shieldAmount = this.shieldAmount,
+            shieldCooldown = this.shieldCooldown,
+            armorAmount = this.armorAmount,
+            armorReflAmount = this.armorReflAmount
         };
     }
 
@@ -240,26 +279,25 @@ public class PlayerStats : MonoBehaviour, ISaveable
 
         cAmount = saveData.cAmount;
         sAmount = saveData.sAmount;
-
-        hasShield = saveData.hasShield;
-        hasArmor = saveData.hasArmor;
+        cDropMultiplier = saveData.cDropMultiplier;
         isBallistic = saveData.isBallistic;
-
         totalDamage = saveData.totalDamage;
+        healthDropChance = saveData.healthDropChance;
+        ammoDropChance = saveData.ammoDropChance;
 
         projectileMadness = saveData.projectileMadness;
         critHit = saveData.critHit;
         carnage = saveData.carnage;
         massDestruction = saveData.splash;
         leech = saveData.leech;
+        shield = saveData.shield;
+        armor = saveData.armor;
 
         projectileAmount = saveData.projectileAmount;
-        secHasMultipleProjectiles = saveData.secHasMultipleProjectiles;
         critChance = saveData.critChance;
         critDMG = saveData.critDMG;
         aoeRange = saveData.aoeRange;
         aoeDMG = saveData.aoeDMG;
-        secHasCrit = saveData.secHasCrit;
         leechChance = saveData.leechChance;
         leechAmount = saveData.leechAmount;
         carnageDMG = saveData.carnageDMG;
@@ -267,8 +305,14 @@ public class PlayerStats : MonoBehaviour, ISaveable
         carnageMaxStacks = saveData.carnageMaxStacks;
         carnageCurrStacks = saveData.carnageCurrStacks;
         carnageActive = saveData.carnageActive;
+        shieldAmount = saveData.shieldAmount;
+        shieldCooldown = saveData.shieldCooldown;
+        armorAmount = saveData.armorAmount;
+        armorReflAmount = saveData.armorReflAmount;
 
         hasLoaded = true;
+
+        if (shield > 0) ActivateShield();
     }
 
     [Serializable]
@@ -276,26 +320,25 @@ public class PlayerStats : MonoBehaviour, ISaveable
     {
         public int cAmount;
         public int sAmount;
-
-        public bool hasShield;
-        public bool hasArmor;
+        public float cDropMultiplier;
         public bool isBallistic;
-
         public float totalDamage;
+        public float healthDropChance;
+        public float ammoDropChance;
 
         public int projectileMadness;
         public int critHit;
         public int carnage;
         public int splash;
         public int leech;
+        public int shield;
+        public int armor;
 
         public int projectileAmount;
-        public bool secHasMultipleProjectiles;
         public float critChance;
         public float critDMG;
         public float aoeRange;
         public float aoeDMG;
-        public bool secHasCrit;
         public float leechChance;
         public float leechAmount;
         public float carnageDMG;
@@ -303,5 +346,9 @@ public class PlayerStats : MonoBehaviour, ISaveable
         public int carnageMaxStacks;
         public int carnageCurrStacks;
         public bool carnageActive;
+        public float shieldAmount;
+        public float shieldCooldown;
+        public float armorAmount;
+        public float armorReflAmount;
     }
 }

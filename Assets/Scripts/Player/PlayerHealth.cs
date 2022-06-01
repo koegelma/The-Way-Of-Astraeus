@@ -3,15 +3,9 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour, ISaveable
 {
-    
-    [SerializeField] private ParticleSystem addHealthEffect;
+    public ParticleSystem addHealthEffect;
     public float maxHealth = 100;
     public float health = 100;
-
-    /* private void Start()
-    {
-        health = maxHealth;
-    } */
 
     private void Update()
     {
@@ -37,7 +31,7 @@ public class PlayerHealth : MonoBehaviour, ISaveable
         gameObject.SetActive(false);
     }
 
-    // SAVE LOAD SYSTEM
+     // ----- SAVE LOAD SYSTEM ------
     public object SaveState()
     {
         return new SaveData()

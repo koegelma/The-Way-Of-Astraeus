@@ -4,18 +4,22 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    private GameManager gameManager;
+    private ObjectPooler objectPooler;
+    private PlayerStats playerStats;
     [SerializeField] private float lifeTimeSeconds;
     [SerializeField] private bool isSecondaryProjectile;
     private float speed;
     private float damageAmount;
     private float aoeRadius;
     private bool isEnemyProjectile;
+    private GameObject shooter;
     private PoolTag hitExplosion;
-    private ObjectPooler objectPooler;
-    private PlayerStats playerStats;
+
 
     private void Start()
     {
+        gameManager = GameManager.instance;
         objectPooler = ObjectPooler.instance;
         playerStats = PlayerStats.instance;
     }
@@ -31,11 +35,12 @@ public class Projectile : MonoBehaviour
         Translate();
     }
 
-    public void SetProjectileValues(float _speed, float _damage, float _aoeRadius)
+    public void SetProjectileValues(float _speed, float _damage, float _aoeRadius, GameObject _shooter)
     {
         speed = _speed;
         damageAmount = _damage;
         aoeRadius = _aoeRadius;
+        shooter = _shooter;
 
         if (isSecondaryProjectile) hitExplosion = PoolTag.LARGEHITEXPLOSION;
         else hitExplosion = PoolTag.SMALLHITEXPLOSION;
@@ -54,46 +59,27 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider _collObj)
     {
-        if (GameManager.instance.gameEnded) return;
+        if (gameManager.gameEnded) return;
 
+        // ----- DAMAGE PLAYER BEHAVIOUR -----
         if (isEnemyProjectile && _collObj.GetComponentInParent<PlayerHealth>())
         {
             DamagePlayer(_collObj.transform);
             return;
         }
 
+        // ----- DAMAGE ENEMY BEHAVIOUR -----
         if (!isEnemyProjectile && _collObj.GetComponentInParent<EnemyHealth>())
         {
             if (aoeRadius > 0)
             {
-                List<Transform> collidedEnemies = new List<Transform>();
-                Collider[] colliders = Physics.OverlapSphere(transform.position, aoeRadius);
-                foreach (Collider collider in colliders)
-                {
-                    if (collider.GetComponentInParent<EnemyHealth>())
-                    {
-                        Transform rootTransform = collider.transform.root;
-                        if (!collidedEnemies.Contains(rootTransform)) collidedEnemies.Add(rootTransform);
-                    }
-                }
-                SecondaryAoEDamage(collidedEnemies);
+                HndSecondary();
                 return;
             }
 
             if (playerStats.MassDestruction > 0)
             {
-                Transform initialRootTransform = _collObj.transform.root;
-                List<Transform> collidedEnemies = new List<Transform>();
-                Collider[] colliders = Physics.OverlapSphere(transform.position, playerStats.aoeRange);
-                foreach (Collider collider in colliders)
-                {
-                    if (collider.GetComponentInParent<EnemyHealth>())
-                    {
-                        Transform rootTransform = collider.transform.root;
-                        if (!collidedEnemies.Contains(rootTransform) && rootTransform != initialRootTransform) collidedEnemies.Add(rootTransform);
-                    }
-                }
-                MassDestructionAoEDamage(_collObj.transform, collidedEnemies);
+                HndMassDestruction(_collObj);
                 return;
             }
             DamageEnemy(_collObj.transform);
@@ -101,18 +87,61 @@ public class Projectile : MonoBehaviour
         }
     }
 
+    // ----- DAMAGE PLAYER BEHAVIOUR -----
     private void DamagePlayer(Transform _target)
     {
+        bool shieldActive = false;
+        Shield shield = null;
+        if (playerStats.Shield > 0)
+        {
+            shield = _target.GetComponentInParent<Shield>();
+            shieldActive = shield.ShieldActive;
+        }
+
+        if (playerStats.Armor > 0 && !shieldActive)
+        {
+            damageAmount -= playerStats.armorAmount;
+            if (playerStats.Armor > 5 && shooter != null) ReflectDamage(shooter.transform, damageAmount * playerStats.armorReflAmount);
+        }
+
         objectPooler.SpawnFromPool(hitExplosion.ToString(), _target.position, Quaternion.identity);
         GameObject damageUIGameObject = objectPooler.SpawnFromPool(PoolTag.DAMAGEUI.ToString(), _target.position, Quaternion.identity);
         DamageUI damageUI = damageUIGameObject.GetComponent<DamageUI>();
         damageUI.SetDamageAmount(damageAmount);
 
-        _target.GetComponentInParent<PlayerHealth>().SubtractHealth(damageAmount);
-        damageUI.SetColor(Color.red);
+        if (shieldActive)
+        {
+            shield.SubtractHealth(damageAmount);
+            damageUI.SetColor(Color.cyan);
+        }
+        else
+        {
+            _target.GetComponentInParent<PlayerHealth>().SubtractHealth(damageAmount);
+            damageUI.SetColor(Color.red);
+        }
         gameObject.SetActive(false);
     }
 
+    private void ReflectDamage(Transform _target, float _amount)
+    {
+        if (_target == null) return;
+        GameObject damageUIGameObject = objectPooler.SpawnFromPool(PoolTag.DAMAGEUI.ToString(), _target.position, Quaternion.identity);
+        DamageUI damageUI = damageUIGameObject.GetComponent<DamageUI>();
+        damageUI.SetDamageAmount(_amount);
+        damageUI.SetColor(Color.white);
+
+        if (_target.GetComponentInParent<Shield>())
+        {
+            if (_target.GetComponentInParent<Shield>().ShieldActive)
+            {
+                _target.GetComponentInParent<Shield>().SubtractHealth(_amount);
+                return;
+            }
+        }
+        _target.GetComponentInParent<EnemyHealth>().SubtractHealth(_amount);
+    }
+
+    // ----- DAMAGE ENEMY BEHAVIOUR -----
     private void DamageEnemy(Transform _target)
     {
         float currentDamage = damageAmount;
@@ -126,7 +155,7 @@ public class Projectile : MonoBehaviour
         bool isCrit = false;
         if (playerStats.CritHit > 0)
         {
-            if (!isSecondaryProjectile || playerStats.secHasCrit)
+            if (!isSecondaryProjectile || playerStats.CritHit > 5)
             {
                 if (IsLucky(playerStats.critChance))
                 {
@@ -156,24 +185,45 @@ public class Projectile : MonoBehaviour
         if (!isCrit) damageUI.SetColor(Color.yellow);
     }
 
-    private void MassDestructionAoEDamage(Transform _initialTarget, List<Transform> _targets)
+    private void HndSecondary()
     {
-        if (playerStats.MassDestruction > 5 && _targets.Count > 0) _targets.Add(_initialTarget);
-        else DamageEnemy(_initialTarget);
-
-        damageAmount *= playerStats.aoeDMG;
-
-        foreach (Transform target in _targets)
+        List<Transform> collidedEnemies = new List<Transform>();
+        Collider[] colliders = Physics.OverlapSphere(transform.position, aoeRadius);
+        foreach (Collider collider in colliders)
+        {
+            if (collider.GetComponentInParent<EnemyHealth>())
+            {
+                Transform rootTransform = collider.transform.root;
+                if (!collidedEnemies.Contains(rootTransform)) collidedEnemies.Add(rootTransform);
+            }
+        }
+        foreach (Transform target in collidedEnemies)
         {
             DamageEnemy(target);
         }
-
         gameObject.SetActive(false);
     }
 
-    private void SecondaryAoEDamage(List<Transform> _targets)
+    private void HndMassDestruction(Collider _collObj)
     {
-        foreach (Transform target in _targets)
+        Transform initialRootTransform = _collObj.transform.root;
+        List<Transform> collidedEnemies = new List<Transform>();
+        Collider[] colliders = Physics.OverlapSphere(transform.position, playerStats.aoeRange);
+        foreach (Collider collider in colliders)
+        {
+            if (collider.GetComponentInParent<EnemyHealth>())
+            {
+                Transform rootTransform = collider.transform.root;
+                if (!collidedEnemies.Contains(rootTransform) && rootTransform != initialRootTransform) collidedEnemies.Add(rootTransform);
+            }
+        }
+
+        if (playerStats.MassDestruction > 5 && collidedEnemies.Count > 0) collidedEnemies.Add(_collObj.transform);
+        else DamageEnemy(_collObj.transform);
+
+        damageAmount *= playerStats.aoeDMG;
+
+        foreach (Transform target in collidedEnemies)
         {
             DamageEnemy(target);
         }

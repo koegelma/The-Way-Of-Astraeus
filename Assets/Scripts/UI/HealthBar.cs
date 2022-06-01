@@ -16,13 +16,6 @@ public class HealthBar : MonoBehaviour
     private void Start()
     {
         animator = GetComponent<Animator>();
-
-        /* if (playerHealth.health < playerHealth.maxHealth)
-        {
-            healthBarEnabled = true;
-            return;
-        } */
-
         healthbar.SetActive(false);
     }
 
@@ -38,7 +31,6 @@ public class HealthBar : MonoBehaviour
             StopAllCoroutines();
             EnableHealthbar();
         }
-
         healthBar.fillAmount = playerHealth.health / playerHealth.maxHealth;
         currentLife.text = Mathf.Round(playerHealth.health).ToString() + " ";
         maxLife.text = "| " + playerHealth.maxHealth.ToString();

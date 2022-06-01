@@ -4,7 +4,11 @@ using System;
 
 public class PlayerShooter : MonoBehaviour, ISaveable
 {
+    public SoundManager soundManager;
+    private ObjectPooler objectPooler;
     private PlayerStats playerStats;
+    private GameManager gameManager;
+
     [Header("Primary Weapon")]
     [SerializeField] private PoolTag primProjectile;
     [SerializeField] private float primProjectileSpeed;
@@ -13,7 +17,6 @@ public class PlayerShooter : MonoBehaviour, ISaveable
     private float primFireCountdown = 0;
     private bool autoShoot = true;
     private string primProjectilePool;
-    //public int projectileAmount = 1;
 
     [Header("Secondary Weapon")]
     [SerializeField] private PoolTag secProjectile;
@@ -28,20 +31,18 @@ public class PlayerShooter : MonoBehaviour, ISaveable
     public int secCurAmmo = 6;
     [SerializeField] private Text secMaxAmmoText;
     [SerializeField] private Text secCurAmmoText;
-    [SerializeField] private AudioSource reloadSound;
-    //public bool secHasMultipleProjectiles;
 
-
-    [Header("General Setup")]
+    [Header("General Weapon Setup")]
     [SerializeField] private Transform leftFirePosition;
     [SerializeField] private ParticleSystem leftShootingParticle;
     [SerializeField] private Transform rightFirePosition;
     [SerializeField] private ParticleSystem rightShootingParticle;
-    private ObjectPooler objectPooler;
 
     private void Start()
     {
         playerStats = PlayerStats.instance;
+        gameManager = GameManager.instance;
+
         if (playerStats.isBallistic)
         {
             primProjectile = PoolTag.BULLETPROJECTILE;
@@ -61,14 +62,13 @@ public class PlayerShooter : MonoBehaviour, ISaveable
         objectPooler.AllocateObjectPool(secProjectilePool, secProjectile, Mathf.RoundToInt(10));//primFireRate * 5)); // adjust when multiple locations implemented, or fireRate changes over time
         objectPooler.AllocateObjectPool(PoolTag.DAMAGEUI.ToString(), PoolTag.DAMAGEUI, Mathf.RoundToInt(primFireRate * 5)); // properly adjust to include possible hits from enemies -> move to objPooler?
 
-        //secCurAmmo = secMaxAmmo;
         secCurAmmoText.text = secCurAmmo.ToString();
         secMaxAmmoText.text = " | " + secMaxAmmo;
     }
 
     private void Update()
     {
-        if (GameManager.instance.gameEnded)
+        if (gameManager.gameEnded)
         {
             autoShoot = false;
             return;
@@ -88,11 +88,11 @@ public class PlayerShooter : MonoBehaviour, ISaveable
                 else
                 {
                     GameObject leftProjectile = objectPooler.SpawnFromPool(primProjectilePool, leftFirePosition.position, Quaternion.identity);
-                    leftProjectile.GetComponent<Projectile>().SetProjectileValues(primProjectileSpeed, primProjectileDamage, 0);
+                    leftProjectile.GetComponent<Projectile>().SetProjectileValues(primProjectileSpeed, primProjectileDamage, 0, gameObject);
 
 
                     GameObject rightProjectile = objectPooler.SpawnFromPool(primProjectilePool, rightFirePosition.position, Quaternion.identity);
-                    rightProjectile.GetComponent<Projectile>().SetProjectileValues(primProjectileSpeed, primProjectileDamage, 0);
+                    rightProjectile.GetComponent<Projectile>().SetProjectileValues(primProjectileSpeed, primProjectileDamage, 0, gameObject);
                 }
                 leftShootingParticle.Play();
                 rightShootingParticle.Play();
@@ -110,11 +110,11 @@ public class PlayerShooter : MonoBehaviour, ISaveable
         for (int i = 0; i < playerStats.projectileAmount; i++)
         {
             GameObject leftProjectile = objectPooler.SpawnFromPool(primProjectilePool, leftFirePosition.position, Quaternion.Euler(0, -yRotation, 0));
-            leftProjectile.GetComponent<Projectile>().SetProjectileValues(primProjectileSpeed, primProjectileDamage, 0);
+            leftProjectile.GetComponent<Projectile>().SetProjectileValues(primProjectileSpeed, primProjectileDamage, 0, gameObject);
 
             GameObject rightProjectile = objectPooler.SpawnFromPool(primProjectilePool, rightFirePosition.position, Quaternion.Euler(0, yRotation, 0));
-            rightProjectile.GetComponent<Projectile>().SetProjectileValues(primProjectileSpeed, primProjectileDamage, 0);
-            yRotation +=  7.5f;
+            rightProjectile.GetComponent<Projectile>().SetProjectileValues(primProjectileSpeed, primProjectileDamage, 0, gameObject);
+            yRotation += 7.5f;
         }
     }
 
@@ -124,11 +124,11 @@ public class PlayerShooter : MonoBehaviour, ISaveable
         {
             if (Input.GetKey(KeyCode.Space) && secCurAmmo > 0)
             {
-                if (playerStats.secHasMultipleProjectiles) ShootMultipleSecProjectiles();
+                if (playerStats.ProjectileMadness > 5) ShootMultipleSecProjectiles();
                 else
                 {
                     GameObject projectile = objectPooler.SpawnFromPool(secProjectilePool, secFirePosition.position, Quaternion.identity);
-                    projectile.GetComponent<Projectile>().SetProjectileValues(secProjectileSpeed, secProjectileDamage, aoeRadius);
+                    projectile.GetComponent<Projectile>().SetProjectileValues(secProjectileSpeed, secProjectileDamage, aoeRadius, gameObject);
                 }
 
                 secFireCountdown = 1 / secFireRate;
@@ -146,7 +146,7 @@ public class PlayerShooter : MonoBehaviour, ISaveable
         for (int i = 0; i < playerStats.projectileAmount; i++)
         {
             GameObject projectile = objectPooler.SpawnFromPool(secProjectilePool, secFirePosition.position, Quaternion.Euler(0, yRotation, 0));
-            projectile.GetComponent<Projectile>().SetProjectileValues(secProjectileSpeed, secProjectileDamage, aoeRadius);
+            projectile.GetComponent<Projectile>().SetProjectileValues(secProjectileSpeed, secProjectileDamage, aoeRadius, gameObject);
 
             if (yRotation > 0) yRotation += 7.5f;
             else yRotation -= 7.5f;
@@ -164,7 +164,7 @@ public class PlayerShooter : MonoBehaviour, ISaveable
         if (secCurAmmo + _amount <= secMaxAmmo) secCurAmmo += (int)_amount;
         else secCurAmmo = secMaxAmmo;
         secCurAmmoText.text = secCurAmmo.ToString();
-        reloadSound.Play();
+        soundManager.PlayAmmoPickup();
     }
 
     // ----- SAVE LOAD SYSTEM ------
