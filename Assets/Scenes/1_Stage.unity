@@ -54243,7 +54243,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Choose a Ship Module to upgrade
+  m_Text: Choose a Ship Module Upgrade
 --- !u!222 &1971822794
 CanvasRenderer:
   m_ObjectHideFlags: 0

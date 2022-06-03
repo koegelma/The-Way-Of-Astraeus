@@ -135,7 +135,7 @@ public class PlayerShooter : MonoBehaviour, ISaveable
 
             GameObject rightProjectile = objectPooler.SpawnFromPool(primProjectilePool, rightFirePosition.position, Quaternion.Euler(0, yRotation, 0));
             rightProjectile.GetComponent<Projectile>().SetProjectileValues(primProjectileSpeed, primProjectileDamage, 0, gameObject);
-            yRotation += 7.5f;
+            yRotation += 5f;
         }
     }
 
@@ -175,8 +175,8 @@ public class PlayerShooter : MonoBehaviour, ISaveable
             GameObject projectile = objectPooler.SpawnFromPool(secProjectilePool, secFirePosition.position, Quaternion.Euler(0, yRotation, 0));
             projectile.GetComponent<Projectile>().SetProjectileValues(secProjectileSpeed, secProjectileDamage, aoeRadius, gameObject);
 
-            if (yRotation > 0) yRotation += 7.5f;
-            else yRotation -= 7.5f;
+            if (yRotation > 0) yRotation += 5f;
+            else yRotation -= 5f;
             yRotation = -yRotation;
         }
     }
