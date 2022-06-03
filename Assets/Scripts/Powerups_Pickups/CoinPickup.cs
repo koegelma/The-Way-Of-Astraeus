@@ -6,6 +6,6 @@ public class CoinPickup : PowerupEffect
     public int amount;
     public override void Apply(GameObject target)
     {
-        PlayerStats.instance.AddCoins(amount);
+        target.GetComponent<PlayerStats>().AddCoins(amount);
     }
 }

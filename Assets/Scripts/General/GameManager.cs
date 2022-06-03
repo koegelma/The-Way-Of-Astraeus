@@ -4,11 +4,12 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance;
+    public SoundManager soundManager;
     private PlayerStats playerStats;
     [SerializeField] private PlayerHealth playerHealth;
     [SerializeField] private GameObject gameOverUI;
     [SerializeField] private SaveLoadSystem saveLoadSystem;
-    public static GameManager instance;
     public bool gameEnded;
     public GameObject playerShip;
 

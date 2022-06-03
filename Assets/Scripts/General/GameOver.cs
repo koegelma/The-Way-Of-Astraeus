@@ -3,10 +3,12 @@ using UnityEngine.UI;
 
 public class GameOver : MonoBehaviour
 {
+    public SoundManager soundManager;
     private PlayerStats playerStats;
     [SerializeField] private Text totalDamage;
     private float damageDisp;
     private bool totalDamageReached;
+    public GameObject inGameCanvass;
 
     private void Start()
     {
@@ -16,6 +18,8 @@ public class GameOver : MonoBehaviour
     private void OnEnable()
     {
         damageDisp = 0;
+        soundManager.PlayGameOver();
+        inGameCanvass.SetActive(false);
     }
 
     private void Update()

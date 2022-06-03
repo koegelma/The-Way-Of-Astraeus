@@ -205,9 +205,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startHealth: 50
-  smallHealthChance: 0.1
   smallHealthBuff: {fileID: 1313511603319146065, guid: d30b55f3cc6ed4547a12db5d6a89fb87, type: 3}
-  ammoPickupChance: 0.1
   ammoPickup: {fileID: 1313511603319146065, guid: 6596571b531d55d47a1673e6fa9a824a, type: 3}
   cWorth: 5
 --- !u!114 &805032080796172243
@@ -228,6 +226,7 @@ MonoBehaviour:
   firePosition: {fileID: 4147726485629749182}
   shootingParticle: {fileID: 4147726484632019747}
   fireRate: 1
+  isStunned: 0
 --- !u!114 &3846821825053763552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -450,7 +449,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.26414672, y: 1.050695, z: 4.3737807}
+  m_Size: {x: 1.4, y: 1.050695, z: 4.3737807}
   m_Center: {x: 0, y: -1.1291342, z: -0.75876737}
 --- !u!1 &3713852595554408101
 GameObject:
@@ -494,7 +493,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.26414672, y: 1.2689642, z: 3.73}
+  m_Size: {x: 1.4, y: 1.2689642, z: 3.73}
   m_Center: {x: 0, y: -0.55046827, z: -0.5599999}
 --- !u!1 &4147726484632019744
 GameObject:
@@ -15086,7 +15085,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.26414672, y: 1.050695, z: 4.3737807}
+  m_Size: {x: 1.4, y: 1.050695, z: 4.3737807}
   m_Center: {x: 0, y: -1.1291342, z: -0.75876737}
 --- !u!1 &5129647738470166257
 GameObject:
@@ -15263,7 +15262,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.26414672, y: 3.2555733, z: 1.5417309}
+  m_Size: {x: 1.4, y: 3.2555733, z: 1.5417309}
   m_Center: {x: 0, y: -0.026695013, z: -2.1747923}
 --- !u!1 &7311073361700329841
 GameObject:
@@ -15307,7 +15306,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.26414672, y: 1.2689642, z: 3.73}
+  m_Size: {x: 1.4, y: 1.2689642, z: 3.73}
   m_Center: {x: 0, y: -0.55046827, z: -0.5599999}
 --- !u!1 &7540769786228588281
 GameObject:
@@ -15351,7 +15350,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.26414672, y: 3.2555733, z: 1.5417309}
+  m_Size: {x: 1.4, y: 3.2555733, z: 1.5417309}
   m_Center: {x: 0, y: -0.026695013, z: -2.1747923}
 --- !u!1 &8115751803750436164
 GameObject:
@@ -15397,7 +15396,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.0874813, y: 0.92567253, z: 3.7363143}
+  m_Size: {x: 1.0874813, y: 1.4, z: 3.7363143}
   m_Center: {x: 0, y: -0.037163734, z: 0.10587764}
 --- !u!1 &8517818297513766485
 GameObject:

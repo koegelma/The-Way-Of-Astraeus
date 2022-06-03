@@ -14,12 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: SHIELD
   descriptions:
-  - Gain a shield. Shield amount 25 and cooldown 7 seconds
-  - Shield amount 25 and cooldown 5 seconds
-  - Shield amount 50 and cooldown 5 seconds
-  - Shield amount 50 and cooldown 3 seconds
-  - Shield amount 75 and cooldown 3 seconds
-  - Shield amount 100 and cooldown 2 seconds. When your shield bursts you send out
-    an EMP that shortly stuns all normal enemies
-  stage: 2
+  - Gain a shield. Shield amount <color=green><b>25</b></color> and cooldown <color=green><b>7</b></color>
+    seconds
+  - Shield amount 25 and cooldown <color=green><b>5</b></color> seconds
+  - Shield amount <color=green><b>50</b></color> and cooldown 5 seconds
+  - Shield amount 50 and cooldown <color=green><b>3</b></color> seconds
+  - Shield amount <color=green><b>75</b></color> and cooldown 3 seconds
+  - Shield amount <color=green><b>100</b></color> and cooldown <color=green><b>2</b></color>
+    seconds. When your shield bursts you send out an EMP that shortly stuns all normal
+    enemies
+  stage: 3
   upgradeModuleBehaviour: {fileID: 11400000, guid: c59243d148ce7b542b2033bc8bc1abb6, type: 2}

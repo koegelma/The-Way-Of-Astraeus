@@ -6,6 +6,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject ui;
     [SerializeField] private GameObject optionsUI;
     [SerializeField] private GameObject exitRunUI;
+    public GameObject upgradeModuleUI;
 
     private void Start()
     {
@@ -21,7 +22,26 @@ public class PauseMenu : MonoBehaviour
             if (optionsUI.activeSelf) ToggleOptions();
             if (exitRunUI.activeSelf) ToggleExitRun();
         }
+        // ----- TESTING -----
+        //if (Input.GetKeyDown(KeyCode.U)) ToggleUpgrades();
     }
+
+    // ----- TESTING -----
+    public void ToggleUpgrades()
+    {
+        upgradeModuleUI.SetActive(!upgradeModuleUI.activeSelf);
+        if (upgradeModuleUI.activeSelf)
+        {
+            Time.timeScale = 0;
+            Cursor.visible = true;
+        }
+        else
+        {
+            Time.timeScale = 1;
+            Cursor.visible = false;
+        }
+    }
+    // ----- TESTING -----
 
     public void TogglePauseMenu()
     {

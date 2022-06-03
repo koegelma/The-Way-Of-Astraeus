@@ -3468,6 +3468,36 @@ MonoBehaviour:
   m_EffectColor: {r: 1, g: 1, b: 1, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
+--- !u!1 &433097472
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 433097473}
+  m_Layer: 0
+  m_Name: Sounds
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &433097473
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 433097472}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 858.5, y: 480.43335, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &433373200
 GameObject:
   m_ObjectHideFlags: 0
@@ -5939,7 +5969,7 @@ RectTransform:
   - {fileID: 1503449429}
   - {fileID: 991997779}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -10141,7 +10171,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1636345660
 GameObject:
@@ -12568,20 +12598,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currencyUI: {fileID: 0}
+  soundManager: {fileID: 0}
   cAmount: 0
   sAmount: 0
+  cDropMultiplier: 0
   isBallistic: 0
-  hasShield: 0
-  hasArmor: 0
   totalDamage: 0
+  healthDropChance: 0
+  ammoDropChance: 0
   projectileAmount: 0
-  secHasMultipleProjectiles: 0
   critChance: 0
   critDMG: 0
-  secHasCrit: 0
+  aoeRange: 0
+  aoeDMG: 0
   leechChance: 0
   leechAmount: 0
-  hasLoaded: 0
+  carnageDMG: 0
+  carnageTime: 0
+  carnageMaxStacks: 0
+  carnageCurrStacks: 0
+  carnageActive: 0
+  carnageStackText: {fileID: 0}
+  carnageText: {fileID: 0}
+  shieldAmount: 0
+  shieldCooldown: 0
+  armorAmount: 0
+  armorReflAmount: 0
+  polarizeTime: 0
+  polarizeCooldown: 0
+  assaultTime: 0
+  assaultCooldown: 0
 --- !u!114 &4608150929326303619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12609,7 +12655,7 @@ Transform:
   - {fileID: 1172790008285908177}
   - {fileID: 5762327355142459961}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4620103825323289609
 GameObject:

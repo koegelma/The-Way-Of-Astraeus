@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.Collections;
 
 public class PlayerShooter : MonoBehaviour, ISaveable
 {
@@ -14,9 +15,16 @@ public class PlayerShooter : MonoBehaviour, ISaveable
     [SerializeField] private float primProjectileSpeed;
     [SerializeField] private float primProjectileDamage;
     [SerializeField] private float primFireRate;
+    private float primFireRateCurr;
     private float primFireCountdown = 0;
     private bool autoShoot = true;
     private string primProjectilePool;
+    private float assaultCooldown = 0;
+    private Coroutine assaultCoroutine;
+    private float polarizeCooldown = 0;
+    private Coroutine polarizeCoroutine;
+    public GameObject laserPrefab;
+    [SerializeField] private Image circularCooldown;
 
     [Header("Secondary Weapon")]
     [SerializeField] private PoolTag secProjectile;
@@ -58,12 +66,18 @@ public class PlayerShooter : MonoBehaviour, ISaveable
         primProjectilePool = gameObject.name + primProjectile;
         secProjectilePool = gameObject.name + secProjectile;
 
-        objectPooler.AllocateObjectPool(primProjectilePool, primProjectile, Mathf.RoundToInt(100));//primFireRate * 5)); // adjust when multiple locations implemented, or fireRate changes over time
-        objectPooler.AllocateObjectPool(secProjectilePool, secProjectile, Mathf.RoundToInt(10));//primFireRate * 5)); // adjust when multiple locations implemented, or fireRate changes over time
-        objectPooler.AllocateObjectPool(PoolTag.DAMAGEUI.ToString(), PoolTag.DAMAGEUI, Mathf.RoundToInt(primFireRate * 5)); // properly adjust to include possible hits from enemies -> move to objPooler?
+        float primProjectiles = 100;
+        if (playerStats.ProjectileMadness + playerStats.Assault > 8) primProjectiles *= 2;
+        objectPooler.AllocateObjectPool(primProjectilePool, primProjectile, Mathf.RoundToInt(primProjectiles));
+        objectPooler.AllocateObjectPool(secProjectilePool, secProjectile, Mathf.RoundToInt(20));//primFireRate * 5)); // adjust when multiple locations implemented, or fireRate changes over time
+        objectPooler.AllocateObjectPool(PoolTag.DAMAGEUI.ToString(), PoolTag.DAMAGEUI, Mathf.RoundToInt(50)); // properly adjust to include possible hits from enemies -> move to objPooler?
 
         secCurAmmoText.text = secCurAmmo.ToString();
         secMaxAmmoText.text = " | " + secMaxAmmo;
+
+        primFireRateCurr = primFireRate;
+
+        circularCooldown.fillAmount = 0;
     }
 
     private void Update()
@@ -73,16 +87,24 @@ public class PlayerShooter : MonoBehaviour, ISaveable
             autoShoot = false;
             return;
         }
-        if (Input.GetKeyDown(KeyCode.E)) ToggleAutoShoot();
-        HndPrimInput();
+        if (Input.GetKeyDown(KeyCode.Q)) ToggleAutoShoot();
+
+        if (playerStats.Assault > 0) HndAssault();
+        if (playerStats.Polarize > 0) HndPolarize();
+
         HndSecInput();
+
+        if (polarizeCoroutine != null) return;
+
+        HndPrimInput();
     }
 
+    // ----- PRIMARY -----
     private void HndPrimInput()
     {
         if (primFireCountdown <= 0)
         {
-            if (autoShoot) //|| Input.GetMouseButton(0))
+            if (autoShoot)
             {
                 if (playerStats.projectileAmount > 1) ShootMultiplePrimProjectiles();
                 else
@@ -90,14 +112,13 @@ public class PlayerShooter : MonoBehaviour, ISaveable
                     GameObject leftProjectile = objectPooler.SpawnFromPool(primProjectilePool, leftFirePosition.position, Quaternion.identity);
                     leftProjectile.GetComponent<Projectile>().SetProjectileValues(primProjectileSpeed, primProjectileDamage, 0, gameObject);
 
-
                     GameObject rightProjectile = objectPooler.SpawnFromPool(primProjectilePool, rightFirePosition.position, Quaternion.identity);
                     rightProjectile.GetComponent<Projectile>().SetProjectileValues(primProjectileSpeed, primProjectileDamage, 0, gameObject);
                 }
                 leftShootingParticle.Play();
                 rightShootingParticle.Play();
 
-                primFireCountdown = 1 / primFireRate;
+                primFireCountdown = 1 / primFireRateCurr;
             }
             return;
         }
@@ -118,6 +139,12 @@ public class PlayerShooter : MonoBehaviour, ISaveable
         }
     }
 
+    private void ToggleAutoShoot()
+    {
+        autoShoot = !autoShoot;
+    }
+
+    // ----- SECONDARY -----
     private void HndSecInput()
     {
         if (secFireCountdown <= 0)
@@ -154,10 +181,91 @@ public class PlayerShooter : MonoBehaviour, ISaveable
         }
     }
 
-    private void ToggleAutoShoot()
+    // ----- ASSAULT -----
+    private void HndAssault()
     {
-        autoShoot = !autoShoot;
+        if (assaultCooldown <= 0)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                if (!autoShoot) ToggleAutoShoot();
+                if (assaultCoroutine != null) StopCoroutine(assaultCoroutine);
+                assaultCoroutine = StartCoroutine(ActivateAssault());
+                assaultCooldown = Mathf.Infinity;
+            }
+        }
+        assaultCooldown -= Time.deltaTime;
+        UpdateAssaultCooldownUI();
     }
+
+    private IEnumerator ActivateAssault()
+    {
+        primFireRateCurr = primFireRate * 2;
+        yield return new WaitForSeconds(playerStats.assaultTime);
+        primFireRateCurr = primFireRate;
+        assaultCooldown = playerStats.assaultCooldown;
+        assaultCoroutine = null;
+    }
+
+    private void UpdateAssaultCooldownUI()
+    {
+        if (assaultCoroutine != null) return;
+        if (assaultCooldown <= 0) circularCooldown.fillAmount = 0;
+        if (assaultCooldown > 0) circularCooldown.fillAmount = assaultCooldown / playerStats.assaultCooldown;
+    }
+
+    // ----- POLARIZE -----
+    private void HndPolarize()
+    {
+        if (polarizeCooldown <= 0)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                if (!autoShoot) ToggleAutoShoot();
+                if (polarizeCoroutine != null) StopCoroutine(polarizeCoroutine);
+                polarizeCoroutine = StartCoroutine(ActivatePolarize());
+                polarizeCooldown = Mathf.Infinity;
+            }
+        }
+        polarizeCooldown -= Time.deltaTime;
+        UpdatePolarizeCooldownUI();
+    }
+
+    private IEnumerator ActivatePolarize()
+    {
+        GameObject newLaserRight = Instantiate(laserPrefab, rightFirePosition.position, Quaternion.identity);
+        newLaserRight.GetComponent<PolarizeLaser>().SetLaserValues(primProjectileDamage);
+        newLaserRight.transform.SetParent(rightFirePosition);
+        var mainRight = rightShootingParticle.main;
+        mainRight.loop = true;
+        rightShootingParticle.Play();
+
+        GameObject newLaserLeft = Instantiate(laserPrefab, leftFirePosition.position, Quaternion.identity);
+        newLaserLeft.GetComponent<PolarizeLaser>().SetLaserValues(primProjectileDamage);
+        newLaserLeft.transform.SetParent(leftFirePosition);
+        var mainLeft = leftShootingParticle.main;
+        mainLeft.loop = true;
+        leftShootingParticle.Play();
+
+        yield return new WaitForSeconds(playerStats.polarizeTime);
+
+        Destroy(newLaserRight);
+        Destroy(newLaserLeft);
+
+        mainRight.loop = false;
+        mainLeft.loop = false;
+
+        polarizeCooldown = playerStats.polarizeCooldown;
+        polarizeCoroutine = null;
+    }
+
+    private void UpdatePolarizeCooldownUI()
+    {
+        if (polarizeCoroutine != null) return;
+        if (polarizeCooldown <= 0) circularCooldown.fillAmount = 0;
+        if (polarizeCooldown > 0) circularCooldown.fillAmount = polarizeCooldown / playerStats.polarizeCooldown;
+    }
+
 
     public void AddAmmo(float _amount)
     {

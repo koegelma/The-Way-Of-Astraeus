@@ -31,8 +31,13 @@ public class EnemyHealth : MonoBehaviour
 
     private void Die()
     {
-        if (IsLucky(playerStats.healthDropChance)) Instantiate(smallHealthBuff, transform.position, Quaternion.identity);
-        if (IsLucky(playerStats.ammoDropChance)) Instantiate(ammoPickup, transform.position, Quaternion.identity);
+        Vector3 pickupSpawnPosition = transform.position;
+        if (IsLucky(playerStats.healthDropChance))
+        {
+            Instantiate(smallHealthBuff, pickupSpawnPosition, Quaternion.identity);
+            pickupSpawnPosition.x += 2;
+        }
+        if (IsLucky(playerStats.ammoDropChance)) Instantiate(ammoPickup, pickupSpawnPosition, Quaternion.identity);
 
         int cAmount = Mathf.RoundToInt(cWorth * playerStats.cDropMultiplier);
         for (int i = 0; i < cAmount; i++)

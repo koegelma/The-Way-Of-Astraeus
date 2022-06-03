@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: ARMOR
   descriptions:
-  - Reduce incoming DMG by 1
-  - Reduce incoming DMG by 2
-  - Reduce incoming DMG by 5
-  - Reduce incoming DMG by 10
-  - Reduce incoming DMG by 15
-  - Reduce incoming DMG by 20. The ships armor reflects 50% of the incoming DMG back
-    to the enemy
-  stage: 0
+  - Reduce incoming DMG by <color=green><b>1</b></color>
+  - Reduce incoming DMG by <color=green><b>2</b></color>
+  - Reduce incoming DMG by <color=green><b>5</b></color>
+  - Reduce incoming DMG by <color=green><b>10</b></color>
+  - Reduce incoming DMG by <color=green><b>15</b></color>
+  - Reduce incoming DMG by <color=green><b>20</b></color>. The ships armor reflects
+    <color=green><b>50%</b></color> of the incoming DMG back to the enemy
+  stage: 3
   upgradeModuleBehaviour: {fileID: 11400000, guid: 8d4e5296475d56547b455c5ad6761a1e, type: 2}

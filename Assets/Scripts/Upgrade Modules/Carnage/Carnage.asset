@@ -14,22 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: CARNAGE
   descriptions:
+  - After defeating an enemy gain Carnage for <color=green><b>3</b></color> seconds.
+    Carnage increases base weapon DMG by <color=green><b>50%</b></color>. Killing
+    an enemy while Carnage is active resets the buff-timer
   - After defeating an enemy gain Carnage for 3 seconds. Carnage increases base weapon
-    DMG by 50%. Killing an enemy while Carnage is active resets the buff-timer
-  - After defeating an enemy gain Carnage for 3 seconds. Carnage increases base weapon
-    DMG by 50%. Buff can be stacked 2 times. Killing an enemy while having max stacks
-    resets the buff-timer of the oldest stack
+    DMG by 50%. Buff can be stacked <color=green><b>2</b></color> times. Killing
+    an enemy while having max stacks resets the buff-timer of the oldest stack
+  - After defeating an enemy gain Carnage for <color=green><b>5</b></color> seconds.
+    Carnage increases base weapon DMG by 50%. Buff can be stacked 2 times. Killing
+    an enemy while having max stacks resets the buff-timer of the oldest stack
   - After defeating an enemy gain Carnage for 5 seconds. Carnage increases base weapon
-    DMG by 50%. Buff can be stacked 2 times. Killing an enemy while having max stacks
-    resets the buff-timer of the oldest stack
-  - After defeating an enemy gain Carnage for 5 seconds. Carnage increases base weapon
-    DMG by 50%. Buff can be stacked 3 times. Killing an enemy while having max stacks
-    resets the buff-timer of the oldest stack
-  - After defeating an enemy gain Carnage for 7 seconds. Carnage increases base weapon
-    DMG by 50%. Buff can be stacked 3 times. Killing an enemy while having max stacks
-    resets the buff-timer of the oldest stack
-  - After defeating an enemy gain Carnage for 7 seconds. Carnage increases base weapon
-    DMG by 75%. Buff can be stacked 5 times. Killing an enemy while having max stacks
-    resets the buff-timer of the oldest stack
-  stage: 0
+    DMG by 50%. Buff can be stacked <color=green><b>3</b></color> times. Killing
+    an enemy while having max stacks resets the buff-timer of the oldest stack
+  - After defeating an enemy gain Carnage for <color=green><b>7</b></color> seconds.
+    Carnage increases base weapon DMG by 50%. Buff can be stacked 3 times. Killing
+    an enemy while having max stacks resets the buff-timer of the oldest stack
+  - After defeating an enemy gain Carnage for <color=green><b>7</b></color> seconds.
+    Carnage increases base weapon DMG by <color=green><b>75%</b></color>. Buff can
+    be stacked <color=green><b>5</b></color> times. Killing an enemy while having
+    max stacks resets the buff-timer of the oldest stack
+  stage: 1
   upgradeModuleBehaviour: {fileID: 11400000, guid: 3570f7af83f0caf43a82614c1090a176, type: 2}

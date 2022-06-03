@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 842140b4171552f458251c849adde961, type: 3}
+  m_Name: Assault
+  m_EditorClassIdentifier: 
+  name: ASSAULT
+  descriptions:
+  - Unlock ability to double the fire rate for your primary weapon for <color=green><b>3</b></color>
+    seconds (<color=green><b>10</b></color> second cooldown). Can be used with <b>E</b>
+  - Assault doubles the fire rate for your primary weapon for <color=green><b>5</b></color>
+    seconds (10 second cooldown). Can be used with <b>E</b>
+  - Assault doubles the fire rate for your primary weapon for 5 seconds (<color=green><b>7</b></color>
+    second cooldown). Can be used with <b>E</b>
+  - Assault doubles the fire rate for your primary weapon for <color=green><b>7</b></color>
+    seconds (7 second cooldown). Can be used with <b>E</b>
+  - Assault doubles the fire rate for your primary weapon for 7 seconds (<color=green><b>5</b></color>
+    second cooldown). Can be used with <b>E</b>
+  - Assault doubles the fire rate for your primary weapon for <color=green><b>10</b></color>
+    seconds (5 second cooldown). Can be used with <b>E</b>
+  stage: 0
+  upgradeModuleBehaviour: {fileID: 11400000, guid: 00821ab7c8cab1f489fc635b2bfc17de, type: 2}

@@ -14,17 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: LEECH
   descriptions:
-  - When hitting an enemy there is a 10% chance to recover health equal to 1% of
-    DMG done
-  - When hitting an enemy there is a 20% chance to recover health equal to 1% of
-    DMG done
-  - When hitting an enemy there is a 20% chance to recover health equal to 2% of
-    DMG done
-  - When hitting an enemy there is a 30% chance to recover health equal to 2% of
-    DMG done
-  - When hitting an enemy there is a 30% chance to recover health equal to 3% of
-    DMG done
-  - When hitting an enemy there is a 50% chance to recover health equal to 5% of
-    DMG done
-  stage: 0
+  - When hitting an enemy there is a <color=green><b>10%</b></color> chance to recover
+    health equal to <color=green><b>1%</b></color> of DMG done
+  - When hitting an enemy there is a <color=green><b>20%</b></color> chance to recover
+    health equal to 1% of DMG done
+  - When hitting an enemy there is a 20% chance to recover health equal to <color=green><b>2%</b></color>
+    of DMG done
+  - When hitting an enemy there is a <color=green><b>30%</b></color> chance to recover
+    health equal to 2% of DMG done
+  - When hitting an enemy there is a 30% chance to recover health equal to <color=green><b>3%</b></color>
+    of DMG done
+  - When hitting an enemy there is a <color=green><b>50%</b></color> chance to recover
+    health equal to <color=green><b>5%</b></color> of DMG done
+  stage: 3
   upgradeModuleBehaviour: {fileID: 11400000, guid: 08a1f6f91176a164fbd67c37b6571ffd, type: 2}

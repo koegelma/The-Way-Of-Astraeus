@@ -15,6 +15,7 @@ public class EnemySpawner : MonoBehaviour
     private float countdown;
     private int Spawnpoint { get { return Random.Range(0, spawnpoints.Length); } }
     public static int enemiesToDie;
+    private int totalEnemies = 0;
 
     private void Start()
     {
@@ -32,6 +33,9 @@ public class EnemySpawner : MonoBehaviour
 
     private void Update()
     {
+        // ----- TESTING -----
+        if (Input.GetKeyDown(KeyCode.F9)) EndStage();
+        // ----- TESTING -----
         if (gameManager.gameEnded) StopAllCoroutines();
         if (enemiesToDie <= 0)
         {
@@ -41,11 +45,7 @@ public class EnemySpawner : MonoBehaviour
                 waveCountdown.text = null;
                 if (waveIndex == waves.Length)
                 {
-                    StopAllCoroutines();
-                    stageClearedUI.SetActive(true);
-                    gameManager.gameEnded = true;
-                    Cursor.visible = true;
-                    this.enabled = false;
+                    EndStage();
                     return;
                 }
                 waveCounter.text = (waveIndex + 1) + " | " + waves.Length;
@@ -55,6 +55,17 @@ public class EnemySpawner : MonoBehaviour
             waveCountdown.text = Mathf.Round(countdown) + "...";
             countdown -= Time.deltaTime;
         }
+    }
+
+    private void EndStage()
+    {
+        StopAllCoroutines();
+        stageClearedUI.SetActive(true);
+        StageCleared stageCleared = stageClearedUI.GetComponent<StageCleared>();
+        stageCleared.enemiesKilled = totalEnemies;
+        gameManager.gameEnded = true;
+        Cursor.visible = true;
+        this.enabled = false;
     }
 
     private void SpawnWave()
@@ -96,6 +107,7 @@ public class EnemySpawner : MonoBehaviour
             foreach (Enemy enemy in wave.enemies)
             {
                 currentDiff += enemy.difficulty * enemy.count;
+                totalEnemies += enemy.count;
             }
 
             while (wave.difficulty > currentDiff)

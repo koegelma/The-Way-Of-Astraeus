@@ -21,7 +21,7 @@ public class UpgradeModule : ScriptableObject
         int newStage = PlayerStats.instance.IncrementStage(this.name);
         if (newStage == -1)
         {
-            Debug.Log("Something went wrong when incrementing stage (return -1).");
+            Debug.Log("Something went wrong when incrementing stage (return " + newStage + ").");
             return newStage;
         }
         stage = newStage;

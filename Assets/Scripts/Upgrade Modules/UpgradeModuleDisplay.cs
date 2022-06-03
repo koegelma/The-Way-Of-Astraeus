@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class UpgradeModuleDisplay : MonoBehaviour
 {
+    public SoundManager soundManager;
     private PlayerStats playerStats;
     private List<UpgradeModule> validUpgradeModules;
     private UpgradeModule[] upgradeModulesDisplayed;
@@ -23,6 +24,8 @@ public class UpgradeModuleDisplay : MonoBehaviour
         validUpgradeModules = new List<UpgradeModule>();
         for (int i = 0; i < upgradeModules.Length; i++)
         {
+            if (upgradeModules[i].name == "ASSAULT" && !playerStats.isBallistic) continue;
+            if (upgradeModules[i].name == "POLARIZE" && playerStats.isBallistic) continue;
             if (playerStats.GetCurrentStage(upgradeModules[i].name) < 6) validUpgradeModules.Add(upgradeModules[i]);
         }
 
@@ -45,8 +48,9 @@ public class UpgradeModuleDisplay : MonoBehaviour
             nameTexts[i].text = upgradeModulesDisplayed[i].name;
             descriptionTexts[i].text = upgradeModulesDisplayed[i].GetDescription();
             stageTexts[i].text = (upgradeModulesDisplayed[i].stage + 1).ToString();
+            if (upgradeModulesDisplayed[i].stage + 1 == 6) stageTexts[i].text += " - <color=green>MAX</color>";
         }
-        if (nullCounter >= 3) SceneChanger.instance.ChangeScene("0_Menu", false); // ----- TESTING -----
+        if (nullCounter == upgradeModulesDisplayed.Length) SceneChanger.instance.ChangeScene("0_Menu", false); // ----- TESTING -----
         upgradeModulePicked = upgradeModulesDisplayed[0];
     }
 
@@ -81,23 +85,8 @@ public class UpgradeModuleDisplay : MonoBehaviour
             Debug.Log("No upgrade picked");
             return;
         }
-
-        //int newStage = 
         upgradeModulePicked.Apply();
-
-       /*  if (newStage == 6)
-        {
-            foreach (UpgradeModule validUpgradeModule in validUpgradeModules)
-            {
-                if (validUpgradeModule.name == upgradeModulePicked.name)
-                {
-                    validUpgradeModules.Remove(validUpgradeModule);
-                    Debug.Log(validUpgradeModule.name + " max stage reached.");
-                }
-            }
-        } */
         // change to shop / next scene
-
         StartCoroutine(GameManager.instance.SaveAndReloadScene());
     }
 }

@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Shield : MonoBehaviour
 {
+    public SoundManager soundManager;
     [SerializeField] private GameObject shieldPrefab;
     private GameObject shield;
     [SerializeField] private float maxHealth;
@@ -117,6 +118,7 @@ public class Shield : MonoBehaviour
         {
             StartCoroutine(enemy.GetComponent<EnemyMovement>().HndEMP(3));
         }
+        StartCoroutine(soundManager.DelayPlayEMP(0.25f));
     }
 
     private void SetToCooldown()

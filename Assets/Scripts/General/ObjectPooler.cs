@@ -26,7 +26,7 @@ public class ObjectPooler : MonoBehaviour
         AllocateObjectPool(PoolTag.SMALLHITEXPLOSION.ToString(), PoolTag.SMALLHITEXPLOSION, 30);
         AllocateObjectPool(PoolTag.LARGEHITEXPLOSION.ToString(), PoolTag.LARGEHITEXPLOSION, 15);
         AllocateObjectPool(PoolTag.SHIPEXPLOSION.ToString(), PoolTag.SHIPEXPLOSION, 10);
-        AllocateObjectPool(PoolTag.COIN.ToString(), PoolTag.COIN, 100);
+        AllocateObjectPool(PoolTag.COIN.ToString(), PoolTag.COIN, 250);
     }
 
     public void AllocateObjectPool(string _tag, PoolTag _poolTag, int _size)

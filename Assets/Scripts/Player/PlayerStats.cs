@@ -37,6 +37,10 @@ public class PlayerStats : MonoBehaviour, ISaveable
     public int Shield { get { return shield; } }
     private int armor;
     public int Armor { get { return armor; } }
+    private int polarize;
+    public int Polarize { get { return polarize; } }
+    private int assault;
+    public int Assault { get { return assault; } }
 
     [Header("Ship Upgrade Module Vars")]
     public int projectileAmount;
@@ -58,6 +62,10 @@ public class PlayerStats : MonoBehaviour, ISaveable
     public float shieldCooldown;
     public float armorAmount;
     public float armorReflAmount;
+    public float polarizeTime;
+    public float polarizeCooldown;
+    public float assaultTime;
+    public float assaultCooldown;
 
     private bool hasLoaded = false;
 
@@ -90,6 +98,8 @@ public class PlayerStats : MonoBehaviour, ISaveable
         leech = 0;
         shield = 0;
         armor = 0;
+        polarize = 0;
+        assault = 0;
 
         projectileAmount = 1;
         critChance = 0;
@@ -105,6 +115,10 @@ public class PlayerStats : MonoBehaviour, ISaveable
         carnageActive = false;
         armorAmount = 0;
         armorReflAmount = 0;
+        polarizeTime = 0;
+        polarizeCooldown = 0;
+        assaultTime = 0;
+        assaultCooldown = 0;
 
         playerHealth.maxHealth = 100;
         playerHealth.health = playerHealth.maxHealth;
@@ -117,7 +131,8 @@ public class PlayerStats : MonoBehaviour, ISaveable
     {
         cAmount += _amount;
         currencyUI.UpdateCoinText();
-        StartCoroutine(soundManager.QueuePlayCoinPickup());
+        //StartCoroutine(soundManager.QueuePlayCoinPickup());
+        soundManager.PlayCoinPickup();
     }
 
     public void AddSkillCurr(int _amount)
@@ -151,6 +166,12 @@ public class PlayerStats : MonoBehaviour, ISaveable
                 break;
             case "ARMOR":
                 stage = armor;
+                break;
+            case "POLARIZE":
+                stage = polarize;
+                break;
+            case "ASSAULT":
+                stage = assault;
                 break;
         }
         return stage;
@@ -188,6 +209,14 @@ public class PlayerStats : MonoBehaviour, ISaveable
             case "ARMOR":
                 armor++;
                 newStage = armor;
+                break;
+            case "POLARIZE":
+                polarize++;
+                newStage = polarize;
+                break;
+            case "ASSAULT":
+                assault++;
+                newStage = assault;
                 break;
         }
         return newStage;
@@ -253,6 +282,8 @@ public class PlayerStats : MonoBehaviour, ISaveable
             leech = this.leech,
             shield = this.shield,
             armor = this.armor,
+            polarize = this.polarize,
+            assault = this.assault,
 
             projectileAmount = this.projectileAmount,
             critChance = this.critChance,
@@ -269,7 +300,11 @@ public class PlayerStats : MonoBehaviour, ISaveable
             shieldAmount = this.shieldAmount,
             shieldCooldown = this.shieldCooldown,
             armorAmount = this.armorAmount,
-            armorReflAmount = this.armorReflAmount
+            armorReflAmount = this.armorReflAmount,
+            polarizeTime = this.polarizeTime,
+            polarizeCooldown = this.polarizeCooldown,
+            assaultTime = this.assaultTime,
+            assaultCooldown = this.assaultCooldown
         };
     }
 
@@ -292,6 +327,8 @@ public class PlayerStats : MonoBehaviour, ISaveable
         leech = saveData.leech;
         shield = saveData.shield;
         armor = saveData.armor;
+        polarize = saveData.polarize;
+        assault = saveData.assault;
 
         projectileAmount = saveData.projectileAmount;
         critChance = saveData.critChance;
@@ -309,6 +346,10 @@ public class PlayerStats : MonoBehaviour, ISaveable
         shieldCooldown = saveData.shieldCooldown;
         armorAmount = saveData.armorAmount;
         armorReflAmount = saveData.armorReflAmount;
+        polarizeTime = saveData.polarizeTime;
+        polarizeCooldown = saveData.polarizeCooldown;
+        assaultTime = saveData.assaultTime;
+        assaultCooldown = saveData.assaultCooldown;
 
         hasLoaded = true;
 
@@ -333,6 +374,8 @@ public class PlayerStats : MonoBehaviour, ISaveable
         public int leech;
         public int shield;
         public int armor;
+        public int polarize;
+        public int assault;
 
         public int projectileAmount;
         public float critChance;
@@ -350,5 +393,9 @@ public class PlayerStats : MonoBehaviour, ISaveable
         public float shieldCooldown;
         public float armorAmount;
         public float armorReflAmount;
+        public float polarizeTime;
+        public float polarizeCooldown;
+        public float assaultTime;
+        public float assaultCooldown;
     }
 }

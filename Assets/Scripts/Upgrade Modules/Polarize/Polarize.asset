@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 842140b4171552f458251c849adde961, type: 3}
+  m_Name: Polarize
+  m_EditorClassIdentifier: 
+  name: POLARIZE
+  descriptions:
+  - Unlock ability to change the projectiles of your primary weapon to a continuous
+    beam of energy (DoT) for <color=green><b>3</b></color> seconds (<color=green><b>10</b></color>
+    second cooldown). DMG per beam scales with Projectile Madness (projectile amount
+    x2). Can be used with <b>E</b>
+  - Polarize changes projectiles of your primary weapon to a continuous beam of energy
+    for <color=green><b>5</b></color> seconds (10 second cooldown). Can be used with
+    <b>E</b>
+  - Polarize changes projectiles of your primary weapon to a continuous beam of energy
+    for 5 seconds (<color=green><b>7</b></color> second cooldown). Can be used with
+    <b>E</b>
+  - Polarize changes projectiles of your primary weapon to a continuous beam of energy
+    for <color=green><b>7</b></color> seconds (7 second cooldown). Can be used with
+    <b>E</b>
+  - Polarize changes projectiles of your primary weapon to a continuous beam of energy
+    for 7 seconds (<color=green><b>5</b></color> second cooldown). Can be used with
+    <b>E</b>
+  - Polarize changes projectiles of your primary weapon to a continuous beam of energy
+    for <color=green><b>10</b></color> seconds (5 second cooldown). Can be used with
+    <b>E</b>
+  stage: 1
+  upgradeModuleBehaviour: {fileID: 11400000, guid: 072acb84978a0fa43904a9604d2092cc, type: 2}

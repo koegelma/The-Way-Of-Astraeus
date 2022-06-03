@@ -14,17 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: MASS DESTRUCTION
   descriptions:
-  - When hitting an enemy with your primary weapon all enemies within 10m range also
-    receive 50% of DMG
-  - 'When hitting an enemy with your primary weapon all enemies within 15m range
-    also receive 50% of DMG '
+  - When hitting an enemy with your primary weapon all enemies within <color=green><b>10m</b></color>
+    range also receive <color=green><b>50%</b></color> of DMG
+  - When hitting an enemy with your primary weapon all enemies within <color=green><b>15m</b></color>
+    range also receive 50% of DMG
   - When hitting an enemy with your primary weapon all enemies within 15m range also
-    receive 75% of DMG
-  - When hitting an enemy with your primary weapon all enemies within 20m range also
-    receive 75% of DMG
-  - When hitting an enemy with your primary weapon all enemies within 25m range also
-    receive 100% of DMG
-  - When hitting multiple enemies with your primary weapon every enemy receives 150%
-    of normal DMG
-  stage: 0
+    receive <color=green><b>75%</b></color> of DMG
+  - When hitting an enemy with your primary weapon all enemies within <color=green><b>20m</b></color>
+    range also receive 75% of DMG
+  - When hitting an enemy with your primary weapon all enemies within <color=green><b>25m</b></color>
+    range also receive <color=green><b>100%</b></color> of DMG
+  - When hitting multiple enemies with Mass Destruction <color=green><b>every</b></color>
+    enemy receives <color=green><b>150%</b></color> of normal DMG (including initial
+    target)
+  stage: 4
   upgradeModuleBehaviour: {fileID: 11400000, guid: eb67ccf0576760040b08403b705bca16, type: 2}

@@ -14,11 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: PROJECTILE MADNESS
   descriptions:
-  - Primary weapon shoots an additional projectile (2 projectiles per)
-  - Primary weapon shoots an additional projectile (3 projectiles per)
-  - Primary weapon shoots an additional projectile (4 projectiles per)
-  - Primary weapon shoots an additional projectile (5 projectiles per)
-  - Primary weapon shoots an additional projectile (6 projectiles per)
-  - Primary AND secondary weapon shoot 7 projectiles per shot
-  stage: 0
+  - Primary weapon shoots an additional projectile (<color=green><b>2</b></color>
+    projectiles per shot)
+  - Primary weapon shoots an additional projectile (<color=green><b>3</b></color>
+    projectiles per shot)
+  - Primary weapon shoots an additional projectile (<color=green><b>4</b></color>
+    projectiles per shot)
+  - Primary weapon shoots an additional projectile (<color=green><b>5</b></color>
+    projectiles per shot)
+  - Primary weapon shoots an additional projectile (<color=green><b>6</b></color>
+    projectiles per shot)
+  - Primary <color=green><b>AND</b></color> secondary weapon shoot <color=green><b>7</b></color>
+    projectiles per shot
+  stage: 5
   upgradeModuleBehaviour: {fileID: 11400000, guid: bf6b215b627a25b41b9521525214fca9, type: 2}
