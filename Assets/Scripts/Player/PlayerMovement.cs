@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     private float barrelRollDirection;
     [SerializeField] private float barrelCooldownTime;
     [SerializeField] private Image circularCooldown;
+    [SerializeField] private GameObject barrelRollText;
     private float barrelCooldown = 0;
     private bool barrelRoll;
     private MeshCollider boundsColl;
@@ -59,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         HndTranslation(new Vector2(horizAxisVal, vertAxisVal));
-        HndRotation(horizAxisVal); 
+        HndRotation(horizAxisVal);
     }
 
     private void HndTranslation(Vector2 _direction)
@@ -108,8 +109,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void UpdateCooldownUI()
     {
-        if (barrelCooldown <= 0) circularCooldown.fillAmount = 0;
-        if (barrelCooldown > 0) circularCooldown.fillAmount = barrelCooldown / barrelCooldownTime;
+        if (barrelCooldown <= 0)
+        {
+            circularCooldown.fillAmount = 0;
+            barrelRollText.SetActive(false);
+        }
+        if (barrelCooldown > 0)
+        {
+            circularCooldown.fillAmount = barrelCooldown / barrelCooldownTime;
+            barrelRollText.SetActive(true);
+        }
     }
 
 }

@@ -39,6 +39,8 @@ public class PlayerShooter : MonoBehaviour, ISaveable
     public int secCurAmmo = 6;
     [SerializeField] private Text secMaxAmmoText;
     [SerializeField] private Text secCurAmmoText;
+    [SerializeField] private Text weaponTypeText;
+    [SerializeField] private Text abilityText;
 
     [Header("General Weapon Setup")]
     [SerializeField] private Transform leftFirePosition;
@@ -55,11 +57,13 @@ public class PlayerShooter : MonoBehaviour, ISaveable
         {
             primProjectile = PoolTag.BULLETPROJECTILE;
             secProjectile = PoolTag.MISSILEPROJECTILE;
+            weaponTypeText.text = "MISSILE";
         }
         else
         {
             primProjectile = PoolTag.LASERPROJECTILE;
             secProjectile = PoolTag.PLASMAPROJECTILE;
+            weaponTypeText.text = "PLASMA";
         }
 
         objectPooler = ObjectPooler.instance;
@@ -201,6 +205,8 @@ public class PlayerShooter : MonoBehaviour, ISaveable
     private IEnumerator ActivateAssault()
     {
         primFireRateCurr = primFireRate * 2;
+        abilityText.text = "ASSAULT";
+        StartCoroutine(UpdateAbilityDurationUI(playerStats.assaultTime));
         yield return new WaitForSeconds(playerStats.assaultTime);
         primFireRateCurr = primFireRate;
         assaultCooldown = playerStats.assaultCooldown;
@@ -210,8 +216,16 @@ public class PlayerShooter : MonoBehaviour, ISaveable
     private void UpdateAssaultCooldownUI()
     {
         if (assaultCoroutine != null) return;
-        if (assaultCooldown <= 0) circularCooldown.fillAmount = 0;
-        if (assaultCooldown > 0) circularCooldown.fillAmount = assaultCooldown / playerStats.assaultCooldown;
+        if (assaultCooldown <= 0)
+        {
+            circularCooldown.fillAmount = 0;
+            abilityText.text = null;
+        }
+        if (assaultCooldown > 0)
+        {
+            circularCooldown.fillAmount = assaultCooldown / playerStats.assaultCooldown;
+            abilityText.text = "ASSAULT";
+        }
     }
 
     // ----- POLARIZE -----
@@ -247,6 +261,8 @@ public class PlayerShooter : MonoBehaviour, ISaveable
         mainLeft.loop = true;
         leftShootingParticle.Play();
 
+        abilityText.text = "POLARIZE";
+        StartCoroutine(UpdateAbilityDurationUI(playerStats.polarizeTime));
         yield return new WaitForSeconds(playerStats.polarizeTime);
 
         Destroy(newLaserRight);
@@ -262,8 +278,30 @@ public class PlayerShooter : MonoBehaviour, ISaveable
     private void UpdatePolarizeCooldownUI()
     {
         if (polarizeCoroutine != null) return;
-        if (polarizeCooldown <= 0) circularCooldown.fillAmount = 0;
-        if (polarizeCooldown > 0) circularCooldown.fillAmount = polarizeCooldown / playerStats.polarizeCooldown;
+        if (polarizeCooldown <= 0)
+        {
+            circularCooldown.fillAmount = 0;
+            abilityText.text = null;
+        }
+        if (polarizeCooldown > 0)
+        {
+            circularCooldown.fillAmount = polarizeCooldown / playerStats.polarizeCooldown;
+            abilityText.text = "POLARIZE";
+        }
+    }
+
+    private IEnumerator UpdateAbilityDurationUI(float _duration)
+    {
+        float t = 0;
+
+        while (t < _duration)
+        {
+            t += Time.deltaTime;
+            circularCooldown.fillAmount = t / _duration;
+            yield return null;
+        }
+        circularCooldown.fillAmount = 1;
+        //abilityText.text = null;
     }
 
 

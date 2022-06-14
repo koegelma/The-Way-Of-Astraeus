@@ -52,7 +52,7 @@ public class EnemySpawner : MonoBehaviour
                 SpawnWave();
                 return;
             }
-            waveCountdown.text = Mathf.Round(countdown) + "...";
+            waveCountdown.text = Mathf.Round(countdown).ToString(); //+ "...";
             countdown -= Time.deltaTime;
         }
     }

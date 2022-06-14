@@ -8628,7 +8628,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6039216, g: 0.6039216, b: 0.6039216, a: 0.19607843}
+  m_Color: {r: 0.21960784, g: 0.2784314, b: 0.5372549, a: 0.3137255}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -11415,7 +11415,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43169c7e90db3c54ea7bc652c1eef6ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundManager: {fileID: 0}
   totalDamage: {fileID: 1817908395}
+  inGameCanvass: {fileID: 0}
 --- !u!225 &2088201378
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -11497,7 +11499,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6039216, g: 0.6039216, b: 0.6039216, a: 0.19607843}
+  m_Color: {r: 0.21960784, g: 0.2784314, b: 0.5372549, a: 0.3137255}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

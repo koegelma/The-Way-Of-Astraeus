@@ -16,8 +16,8 @@ MonoBehaviour:
   descriptions:
   - Unlock ability to change the projectiles of your primary weapon to a continuous
     beam of energy (DoT) for <color=green><b>3</b></color> seconds (<color=green><b>10</b></color>
-    second cooldown). DMG per beam scales with Projectile Madness (projectile amount
-    x2). Can be used with <b>E</b>
+    second cooldown). DMG per beam scales with projectile amount (x2). Can be used
+    with <b>E</b>
   - Polarize changes projectiles of your primary weapon to a continuous beam of energy
     for <color=green><b>5</b></color> seconds (10 second cooldown). Can be used with
     <b>E</b>
